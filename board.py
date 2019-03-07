@@ -25,7 +25,7 @@ class Board:
             return 1
         return 0
 
-    def go_through_rows(self):
+    def save_cars_in_rows(self):
         for row in range(6):
             for col in range(5):
                 current_char = self.game_board[row][col]
@@ -37,7 +37,7 @@ class Board:
                     addition = current_car_length - 1
                     self.carsInformation[current_char] = [Direction.ROW, row, col, row, col + addition]
 
-    def go_through_cols(self):
+    def save_cars_in_cols(self):
         for row in range(5):
             for col in range(6):
                 current_char = self.game_board[row][col]
@@ -50,8 +50,8 @@ class Board:
                     self.carsInformation[current_char] = [Direction.ROW, row, col, row + addition, col]
 
     def get_cars_info(self):
-        self.go_through_rows()
-        self.go_through_cols()
+        self.save_cars_in_rows()
+        self.save_cars_in_cols()
 
     def __init__(self, game_data):
         self.game_board = Board.convert_data(game_data)
