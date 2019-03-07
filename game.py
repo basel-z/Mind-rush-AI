@@ -1,5 +1,7 @@
 import sys
 
+from board import Board
+
 
 def display_colored_text(color, text):
     colored_text = f"\033[{color}{text}\033[00m"
@@ -7,29 +9,32 @@ def display_colored_text(color, text):
 
 
 def read_input():
-    with open(sys.argv[1], 'r') as f:
+    try:
+        timer = sys.argv[2]
+        file = sys.argv[1]
+    except IndexError:
+        timer = 7
+        file = './Data/rh.txt'
+
+    with open(file, 'r') as f:
         contents = f.readlines()
 
     input_games = []
     i = contents.index('--- RH-input ---\n')
     for j in range(i + 1, contents.index('--- end RH-input ---\n')):
         input_games.append(contents[j].split('\n')[0])
-    return input_games, sys.argv[2]
-
-
-def convert_data(game_data):
-    return [game_data[start:start+6] for start in range(0, len(game_data), 6)]
+    return input_games, timer
 
 
 def convert_games(games_string_format):
-    game_matrices = []
+    boards = []
     for game in games_string_format:
-        game_matrices.append(convert_data(game))
-    return game_matrices
+        boards.append(Board(game))
+    return boards
 
 
 def print_game_comfortably(game):
-    for line in game:
+    for line in game.game_board:
         print(" ".join(line))
 
 
@@ -38,13 +43,14 @@ def main():
     input_games, timer = read_input()
     converted_games = convert_games(input_games)
     print_game_comfortably(converted_games[0])
+    print(converted_games[0].carsInformation)
 
 
 if __name__ == '__main__':
-    try:
+    # try:
         main()
-    except IndexError:
-        red = '31m'
-        print(display_colored_text(red, "Err: Did you initiate the program correctly?"))
-        print(display_colored_text(red, "Usage: python [main file name] [input games] [timeout]"))
-        print(display_colored_text(red, "Example: python game.py ./Data/rh.txt 7"))
+    # except IndexError:
+    #     red = '31m'
+    #     print(display_colored_text(red, "Err: Did you initiate the program correctly?"))
+    #     print(display_colored_text(red, "Usage: python [main file name] [input games] [timeout]"))
+    #     print(display_colored_text(red, "Example: python game.py ./Data/rh.txt 7"))
