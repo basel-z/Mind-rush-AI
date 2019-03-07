@@ -10,8 +10,8 @@ def display_colored_text(color, text):
 
 def read_input():
     try:
-        timer = sys.argv[2]
         file = sys.argv[1]
+        timer = sys.argv[2]
     except IndexError:
         timer = 7
         file = './Data/rh.txt'
@@ -44,6 +44,7 @@ def main():
     converted_games = convert_games(input_games)
     print_game_comfortably(converted_games[0])
     print(converted_games[0].carsInformation)
+    print(len(converted_games[0].carsInformation))
 
 
 if __name__ == '__main__':
