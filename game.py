@@ -21,6 +21,7 @@ def read_input(debugging):
             print(display_colored_text(red, "Err: Did you initiate the program correctly?"))
             print(display_colored_text(red, "Usage: python [main file name] [input games] [timeout]"))
             print(display_colored_text(red, "Example: python game.py ./Data/rh.txt 7"))
+        exit(1)
 
     with open(file, 'r') as f:
         contents = f.readlines()
@@ -53,4 +54,4 @@ def main():
 
 
 if __name__ == '__main__':
-     main()
+    main()
