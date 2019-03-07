@@ -6,7 +6,6 @@ def display_colored_text(color, text):
     return colored_text
 
 
-
 def read_input():
     with open(sys.argv[1], 'r') as f:
         contents = f.readlines()
