@@ -8,13 +8,19 @@ def display_colored_text(color, text):
     return colored_text
 
 
-def read_input():
+def read_input(debugging):
     try:
         file = sys.argv[1]
         timer = sys.argv[2]
     except IndexError:
-        timer = 7
-        file = './Data/rh.txt'
+        if debugging == 1:
+            timer = 7
+            file = './Data/rh.txt'
+        else:
+            red = '31m'
+            print(display_colored_text(red, "Err: Did you initiate the program correctly?"))
+            print(display_colored_text(red, "Usage: python [main file name] [input games] [timeout]"))
+            print(display_colored_text(red, "Example: python game.py ./Data/rh.txt 7"))
 
     with open(file, 'r') as f:
         contents = f.readlines()
@@ -39,8 +45,7 @@ def print_game_comfortably(game):
 
 
 def main():
-
-    input_games, timer = read_input()
+    input_games, timer = read_input(1)
     converted_games = convert_games(input_games)
     print_game_comfortably(converted_games[0])
     print(converted_games[0].carsInformation)
@@ -48,10 +53,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # try:
-        main()
-    # except IndexError:
-    #     red = '31m'
-    #     print(display_colored_text(red, "Err: Did you initiate the program correctly?"))
-    #     print(display_colored_text(red, "Usage: python [main file name] [input games] [timeout]"))
-    #     print(display_colored_text(red, "Example: python game.py ./Data/rh.txt 7"))
+     main()
