@@ -1,0 +1,694 @@
+
+Here are the standard 40 problems, followed by the solutions.
+
+   > AA...OP..Q.OPXXQ.OP..Q..B...CCB.RRR.
+
+I've used the nomenclature provided with the game.  They name each of the cars with A - K, trucks with O - R, and the object (red) car as X. The exit is right of the third row, which would be between the 18th and 19th character above (XXQ.O_>_P..Q).
+
+--- RH-input ---
+AA...OP..Q.OPXXQ.OP..Q..B...CCB.RRR.
+A..OOOA..B.PXX.BCPQQQ.CP..D.EEFFDGG.
+.............XXO...AAO.P.B.O.P.BCC.P
+O..P..O..P..OXXP....AQQQ..A..B..RRRB
+AA.O.BP..OQBPXXOQGPRRRQGD...EED...FF
+AA.B..CC.BOP.XXQOPDDEQOPF.EQ..F..RRR
+.ABBCD.A.ECD.XXE.F..II.F...H.....H..
+...AAO..BBCOXXDECOFFDEGGHHIPPPKKIQQQ
+.ABBCC.A.DEEXX.DOFPQQQOFP.G.OHP.G..H
+AAB.CCDDB..OPXX..OPQQQ.OP..EFFGG.EHH
+OAAP..O..P..OXXP....BQQQ..B..E..RRRE
+ABB..OA.P..OXXP..O..PQQQ....C.RRR.C.
+AABBC...D.CO.EDXXOPE.FFOP..GHHPIIGKK
+AAB.....B.CCDEXXFGDEHHFG..I.JJKKI...
+.AABB.CCDDOPQRXXOPQREFOPQREFGG.HHII.
+AABBCOD.EECODFPXXO.FPQQQ..P...GG....
+AOOO..A.BBCCXXD...EEDP..QQQPFGRRRPFG
+AABO..CCBO..PXXO..PQQQ..PDD...RRR...
+..ABB...A.J..DXXJ..DEEF..OOOF.......
+A..OOOABBC..XXDC.P..D..P..EFFP..EQQQ
+AABO..P.BO..PXXO..PQQQ...........RRR
+..AOOOB.APCCBXXP...D.PEEFDGG.HFQQQ.H
+..OOOP..ABBP..AXXP..CDEE..CDFF..QQQ.
+..ABB..CA...DCXXE.DFF.E.OOO.G.HH..G.
+AAB.CCDDB..OPXX.EOPQQQEOPF.GHH.F.GII
+.A.OOOBA.CP.BXXCPDERRRPDE.F..G..FHHG
+ABBO..ACCO..XXDO.P..DEEP..F..P..FRRR
+OOOA....PABBXXP...CDPEEQCDRRRQFFGG.Q
+OOO.P...A.P.XXA.PBCDDEEBCFFG.HRRRG.H
+O.APPPO.AB..OXXB..CCDD.Q.....QEEFF.Q
+AA.OOO...BCCDXXB.PD.QEEPFFQ..P..QRRR
+AAOBCC..OB..XXO...DEEFFPD..K.PHH.K.P
+.AR.BB.AR...XXR...IDDEEPIFFGHPQQQGHP
+A..RRRA..B.PXX.BCPQQQDCP..EDFFIIEHH.
+..OAAP..OB.PXXOB.PKQQQ..KDDEF.GG.EF.
+OPPPAAOBCC.QOBXX.QRRRD.Q..EDFFGGE...
+AAB.CCDDB.OPQXX.OPQRRROPQ..EFFGG.EHH
+A..OOOABBC..XXDC.R..DEER..FGGR..FQQQ
+..AOOO..AB..XXCB.RDDCEERFGHH.RFGII..
+OAA.B.OCD.BPOCDXXPQQQE.P..FEGGHHFII.
+--- end RH-input ---
+
+Here are the solutions given with the game. Some of them
+are not optimal.
+
+  Problem 1 (Beginner)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A A . . . O | 
+ 2 | P . . Q . O | 
+ 3 | P X X Q . O   ==>
+ 4 | P . . Q . . | 
+ 5 | B . . . C C | 
+ 6 | B . R R R . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: CL3 OD3 AR1 PU1 BU1 RL2 QD2 XR5 .
+
+  Problem 2 (Beginner)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A . . O O O | 
+ 2 | A . . B . P | 
+ 3 | X X . B C P   ==>
+ 4 | Q Q Q . C P | 
+ 5 | . . D . E E | 
+ 6 | F F D G G . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: EL1 PD2 XR1 AD1 OL3 CU2 BU1 XR5 .
+
+  Problem 3 (Beginner)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | . . . . . . | 
+ 2 | . . . . . . | 
+ 3 | . X X O . .   ==>
+ 4 | . A A O . P | 
+ 5 | . B . O . P | 
+ 6 | . B C C . P | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: PU3 OU2 CR2 AR3 OD3 XR1 BU4 XL1 OU3 CL3 AL3 PD3 OD3 XR5 .
+
+  Problem 4 (Beginner)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | O . . P . . | 
+ 2 | O . . P . . | 
+ 3 | O X X P . .   ==>
+ 4 | . . A Q Q Q | 
+ 5 | . . A . . B | 
+ 6 | . . R R R B | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: OD3 XL1 AU3 XR1 OU3 RL2 QL3 PD3 XR5 .
+
+  Problem 5 (Beginner)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A A . O . B | 
+ 2 | P . . O Q B | 
+ 3 | P X X O Q G   ==>
+ 4 | P R R R Q G | 
+ 5 | D . . . E E | 
+ 6 | D . . . F F | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: EL3 GD1 FL3 QD2 AR1 PU1 RL1 OD3 XR5 .
+
+  Problem 6 (Beginner)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A A . B . . | 
+ 2 | C C . B O P | 
+ 3 | . X X Q O P   ==>
+ 4 | D D E Q O P | 
+ 5 | F . E Q . . | 
+ 6 | F . . R R R | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: XL1 EU3 DR1 FU1 RL3 PD2 OD2 QD1 XR6 .
+
+  Problem 7 (Beginner)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | . A B B C D | 
+ 2 | . A . E C D | 
+ 3 | . X X E . F   ==>
+ 4 | . . I I . F | 
+ 5 | . . . H . . | 
+ 6 | . . . H . . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: FD1 DD1 CD3 BR2 EU1 XR1 AD3 XL1 ED1 BL3 DU1 EU1 XR5 .
+
+  Problem 8 (Beginner)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | . . . A A O | 
+ 2 | . . B B C O | 
+ 3 | X X D E C O   ==>
+ 4 | F F D E G G | 
+ 5 | H H I P P P | 
+ 6 | K K I Q Q Q | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: AL3 CU1 BL2 EU2 DU2 XR3 IU2 QL1 PL1 GL1 OD3 XR3 .
+
+  Problem 9 (Beginner)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | . A B B C C | 
+ 2 | . A . D E E | 
+ 3 | X X . D O F   ==>
+ 4 | P Q Q Q O F | 
+ 5 | P . G . O H | 
+ 6 | P . G . . H | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: OD1 XR1 PU3 QL1 DD2 XR2 AD1 EL1 BL1 CL1 FU2 XR3 .
+
+  Problem 10 (Beginner)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A A B . C C | 
+ 2 | D D B . . O | 
+ 3 | P X X . . O   ==>
+ 4 | P Q Q Q . O | 
+ 5 | P . . E F F | 
+ 6 | G G . E H H | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: CL1 OU1 QR2 XR2 BD4 DR1 AR1 PU2 QL3 XL2 EU3 HL1 FL1 OD3 CR1 EU1 XR5 .
+
+  Problem 11 (Intermediate)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | O A A P . . | 
+ 2 | O . . P . . | 
+ 3 | O X X P . .   ==>
+ 4 | . . B Q Q Q | 
+ 5 | . . B . . E | 
+ 6 | . . R R R E | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: OD3 XL1 BU2 QL1 EU3 RR1 QR1 BD3 XR1 OU3 QL3 PD1 AR3 PU1 QR3
+        OD3 XL1 BU4 XR1 OU3 QL3 ED2 RL3 PD3 XR5 .
+
+  Problem 12 (Intermediate)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A B B . . O | 
+ 2 | A . P . . O | 
+ 3 | X X P . . O   ==>
+ 4 | . . P Q Q Q | 
+ 5 | . . . . C . | 
+ 6 | R R R . C . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: BR2 PU1 QL2 CU3 RR3 QR2 PD3 BL2 CU1 XR3 AD1 BL1 PU3 RL1 QL1 OD3 XR3 .
+
+  Problem 13 (Intermediate)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A A B B C . | 
+ 2 | . . D . C O | 
+ 3 | . E D X X O   ==>
+ 4 | P E . F F O | 
+ 5 | P . . G H H | 
+ 6 | P I I G K K | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: OU1 DD2 ED1 FR1 XL3 GU3 DU2 KL1 HL2 FL2 OD3 CD3 BR2 GU1 DU1 XR6 .
+
+  Problem 14 (Intermediate)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A A B . . . | 
+ 2 | . . B . C C | 
+ 3 | D E X X F G   ==>
+ 4 | D E H H F G | 
+ 5 | . . I . J J | 
+ 6 | K K I . . . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: ED1 DD1 XL2 BD1 AR3 BU1 XR2 EU3 DU3 HL2 XL2 IU2 JL4 GD1 FD1
+        ID1 XR6 .
+
+  Problem 15 (Intermediate)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | . A A B B . | 
+ 2 | C C D D O P | 
+ 3 | Q R X X O P   ==>
+ 4 | Q R E F O P | 
+ 5 | Q R E F G G | 
+ 6 | . H H I I . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: IR1 HR1 RD1 QD1 XL2 FU1 EU1 GL2 PD1 OD1 DR2 BR1 FU2 AL1 EU2
+        XR2 RU1 QU1 HL2 IL2 PD1 OD1 XR4 .
+
+  Problem 16 (Intermediate)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A A B B C O | 
+ 2 | D . E E C O | 
+ 3 | D F P X X O   ==>
+ 4 | . F P Q Q Q | 
+ 5 | . . P . . . | 
+ 6 | G G . . . . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: GR3 PD1 FD2 DD2 XL3 CD1 EL2 BR1 PU3 GL1 QL2 CD3 QR2 FU1 GL2
+        PD3 XR3 PU3 QL1 OD3 XR3 .
+
+  Problem 17 (Intermediate)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A O O O . . | 
+ 2 | A . B B C C | 
+ 3 | X X D . . .   ==>
+ 4 | E E D P . . | 
+ 5 | Q Q Q P F G | 
+ 6 | R R R P F G | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: GU2 FU2 BL1 PU2 RR3 QR3 DD2 ER1 XR1 AD4 EL1 XL1 BL1 OR2 DU4
+        ER1 XR1 AU2 QL3 GD1 FD1 RL3 PD2 XR5 .
+
+  Problem 18 (Intermediate)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A A B O . . | 
+ 2 | C C B O . . | 
+ 3 | P X X O . .   ==>
+ 4 | P Q Q Q . . | 
+ 5 | P D D . . . | 
+ 6 | R R R . . . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: RR3 PD1 DR3 QR2 XL1 BD4 XR1 CR1 AR1 PU3 QL3 OD2 CR3 AR3 OU2
+        QR3 PD3 XL1 BU4 XR1 PU3 RL3 QL3 OD3 XR5 .
+
+  Problem 19 (Intermediate)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | . . A B B . | 
+ 2 | . . A . J . | 
+ 3 | . D X X J .   ==>
+ 4 | . D E E F . | 
+ 5 | . O O O F . | 
+ 6 | . . . . . . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: DU2 EL2 XL2 AD2 BL1 JU1 FU1 OR2 AD2 ER2 XR2 DD4 EL2 XL2 BL2
+        AU4 ER2 XR2 DU2 OL2 FD1 XR4 .
+
+  Problem 20 (Intermediate)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A . . O O O | 
+ 2 | A B B C . . | 
+ 3 | X X D C . P   ==>
+ 4 | . . D . . P | 
+ 5 | . . E F F P | 
+ 6 | . . E Q Q Q | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: CD1 BR2 DU2 EU2 QL1 PD1 FL3 CD1 ED1 XR6 .
+
+  Problem 21 (Advanced)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A A B O . . | 
+ 2 | P . B O . . | 
+ 3 | P X X O . .   ==>
+ 4 | P Q Q Q . . | 
+ 5 | . . . . . . | 
+ 6 | . . . R R R | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: PD2 QR2 XL1 BD4 XR1 AR1 PU3 QL3 OD1 AR3 OU1 QR3 PD3 XL1 BU4
+        XR1 PU3 RL3 QL3 OD3 XR5 .
+
+  Problem 22 (Advanced)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | . . A O O O | 
+ 2 | B . A P C C | 
+ 3 | B X X P . .   ==>
+ 4 | . D . P E E | 
+ 5 | F D G G . H | 
+ 6 | F Q Q Q . H | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: BU1 GR1 XL1 AD3 XR1 BD1 OL3 PU1 EL1 HU2 QR2 AD1 DD1 GR1 EL2
+        PD2 CL3 HU2 PU2 ER3 AU1 DU1 FU1 QL3 PD3 XR5 .
+
+  Problem 23 (Advanced)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | . . O O O P | 
+ 2 | . . A B B P | 
+ 3 | . . A X X P   ==>
+ 4 | . . C D E E | 
+ 5 | . . C D F F | 
+ 6 | . . Q Q Q . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: QL2 DD1 EL1 PD1 OR1 AU1 XL3 AD1 OL1 PU1 ER1 DU2 QR3 CD1 AD1
+        BL3 DU1 EL1 PD1 OR1 AU2 EL3 CU2 QL1 FL4 PD2 DD2 CD1 XR6 .
+
+  Problem 24 (Advanced)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | . . A B B . | 
+ 2 | . C A . . . | 
+ 3 | D C X X E .   ==>
+ 4 | D F F . E . | 
+ 5 | O O O . G . | 
+ 6 | H H . . G . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: CU1 DU2 FL1 XL2 AD2 BL1 EU2 GU2 HR3 OR3 AD2 FR2 XR2 CD4 DD4
+        FL2 XL2 BL2 AU4 FR2 XR2 CU2 OL2 GD1 XR4 .
+
+  Problem 25 (Advanced)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A A B . C C | 
+ 2 | D D B . . O | 
+ 3 | P X X . E O   ==>
+ 4 | P Q Q Q E O | 
+ 5 | P F . G H H | 
+ 6 | . F . G I I | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: CL1 OU1 EU1 PD1 QR2 XL1 BD4 XR1 DR1 AR1 PU3 QL3 GU3 QR3 PD3
+        XL1 DL1 AL1 BU4 IL1 HL2 QL2 OD3 ED2 CR1 GU1 XR6 .
+
+  Problem 26 (Advanced)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | . A . O O O | 
+ 2 | B A . C P . | 
+ 3 | B X X C P D   ==>
+ 4 | E R R R P D | 
+ 5 | E . F . . G | 
+ 6 | . . F H H G | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: DU1 GU1 ED1 HR1 RL1 CD3 XR1 AD1 OL3 PU1 RR2 AD3 RL2 XL1 CU4
+        HL1 GD1 DU1 RR3 FU1 XR1 AU3 EU1 HL3 FD1 RL2 PD3 XR4 .
+
+  Problem 27 (Advanced)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A B B O . . | 
+ 2 | A C C O . . | 
+ 3 | X X D O . P   ==>
+ 4 | . . D E E P | 
+ 5 | . . F . . P | 
+ 6 | . . F R R R | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: PU2 ER1 OD2 CR2 BR2 DU2 XR1 AD4 XL1 DD2 CL3 BL3 OU2 DU1 EL4
+        OD2 DD1 CR3 DU2 ER1 XR1 AU3 EL1 FU1 RL3 PD3 OD1 XR5 .
+
+  Problem 28 (Advanced)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | O O O A . . | 
+ 2 | . . P A B B | 
+ 3 | X X P . . .   ==>
+ 4 | C D P E E Q | 
+ 5 | C D R R R Q | 
+ 6 | F F G G . Q | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: QU1 AD1 OR3 PU1 GR2 FR2 DD1 CD1 EL3 AD1 BL1 QU1 RR1 PD2 BL3
+        AU1 PU2 ER3 DU1 CU1 FL2 PD3 OL3 AU1 XR3 PU2 GL1 RL1 QD2 XR3 .
+
+  Problem 29 (Advanced)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | O O O . P . | 
+ 2 | . . A . P . | 
+ 3 | X X A . P B   ==>
+ 4 | C D D E E B | 
+ 5 | C F F G . H | 
+ 6 | R R R G . H | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: BU1 ER1 GU3 EL1 HU1 RR3 CD1 FR2 DL1 AD3 DR1 XR1 OR1 CU4 DL1
+        XL1 AU3 RL3 HD1 FL2 ER1 GD3 EL2 PD3 OR2 AU1 XR3 AD1 OL1 BU1 XR3 .
+
+  Problem 30 (Advanced)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | O . A P P P | 
+ 2 | O . A B . . | 
+ 3 | O X X B . .   ==>
+ 4 | C C D D . Q | 
+ 5 | . . . . . Q | 
+ 6 | E E F F . Q | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: FR1 ER1 DR1 CR1 OD3 XL1 AD1 PL1 QU3 FR1 DR1 BD3 DL1 QD1 PR1
+        AU1 XR3 OU3 EL1 CL1 AD4 CR1 OD1 PL3 QU1 DR1 XL2 BU4 FL1 DL1
+        QD3 XR5 .
+
+  Problem 31 (Expert)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A A . O O O | 
+ 2 | . . . B C C | 
+ 3 | D X X B . P   ==>
+ 4 | D . Q E E P | 
+ 5 | F F Q . . P | 
+ 6 | . . Q R R R | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: AR1 DU2 XL1 QU2 FR3 QD2 XR1 DD4 XL1 AL1 QU3 EL3 BD1 CL1 PU1
+        FR1 BD1 QD3 XR3 QU3 ER1 DU3 EL1 QD3 AR1 DU1 XL3 BU1 QU2 FL4
+        BD1 QD2 XR3 QU1 RL1 PD2 XR3 .
+
+  Problem 32 (Expert)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A A O B C C | 
+ 2 | . . O B . . | 
+ 3 | X X O . . .   ==>
+ 4 | D E E F F P | 
+ 5 | D . . K . P | 
+ 6 | H H . K . P | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: BD1 CL1 PU3 FR1 KU1 HR4 KD1 FL1 PD1 CR1 BU1 DD1 EL1 OD3 XR3
+        OU3 ER1 DU3 EL1 OD3 AR1 DU1 XL3 BD1 CL1 PU1 FR1 KU1 OU1 HL4
+        KD1 FL1 PD3 CR1 BU1 OD1 XR6 .
+
+  Problem 33 (Expert)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | . A R . B B | 
+ 2 | . A R . . . | 
+ 3 | X X R . . .   ==>
+ 4 | I D D E E P | 
+ 5 | I F F G H P | 
+ 6 | Q Q Q G H P | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: BL1 PU3 ER1 GU3 QR1 ID1 DL1 EL2 HU3 QR2 FR3 ER2 RD3 BL1 HU1
+        GD2 XR3 AD1 BL2 RU3 DR1 IU3 DL1 RD3 BR2 AU1 IU1 XL3 GU1 RU2
+        FL4 GD1 RD2 XR3 RU1 QL3 GD1 EL1 PD3 XR3 .
+
+  Problem 34 (Expert)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A . . R R R | 
+ 2 | A . . B . P | 
+ 3 | X X . B C P   ==>
+ 4 | Q Q Q D C P | 
+ 5 | . . E D F F | 
+ 6 | I I E H H . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: RL2 PU1 CU1 HR1 DD1 QR3 XR1 AD3 XL1 EU3 IR1 AD1 QL3 PD1 RL1
+        BU1 DU2 FL3 DD2 BD1 RR3 EU1 QR2 XR1 AU4 XL1 ED1 RL2 PU1 IL1
+        FL1 QR1 ED3 QL3 DU1 HL1 PD3 CU1 XR1 AD1 RL1 BU1 XR5 .
+
+  Problem 35 (Expert)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | . . O A A P | 
+ 2 | . . O B . P | 
+ 3 | X X O B . P   ==>
+ 4 | K Q Q Q . . | 
+ 5 | K D D E F . | 
+ 6 | G G . E F . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: PD1 FU3 AR1 BU1 GR1 KD1 QL1 EU2 GR3 DR3 ED2 BD1 AL1 PU1 QR3
+        OD3 XR1 KU4 XL1 OU3 QL3 PD1 AR1 BU1 EU2 GL4 DL4 ED2 BD1 AL1
+        PU1 FD3 QR3 OD3 AL2 BU1 XR3 KD1 AL1 OU3 QL1 PD3 XR3 .
+
+  Problem 36 (Expert)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | O P P P A A | 
+ 2 | O B C C . Q | 
+ 3 | O B X X . Q   ==>
+ 4 | R R R D . Q | 
+ 5 | . . E D F F | 
+ 6 | G G E . . . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: DD1 RR2 OD1 PL1 AL1 QU1 RR1 XR1 CR1 EU3 RL2 QD1 AR1 PR1 OU1
+        RL1 DU1 GR4 DD1 RR2 OD1 PL1 AL1 QU1 RR1 ED3 BD3 RL2 QD1 AR1
+        PR1 OU1 RL1 XL2 CL2 DU3 GL1 FL1 QD2 RR1 OD1 PL1 DU1 XR5 .
+
+  Problem 37 (Expert)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A A B . C C | 
+ 2 | D D B . O P | 
+ 3 | Q X X . O P   ==>
+ 4 | Q R R R O P | 
+ 5 | Q . . E F F | 
+ 6 | G G . E H H | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: GR1 QD1 XL1 BD1 CL2 PU1 OU1 RR2 BD2 XR1 DR1 QU2 GL1 BD1 RL2
+        OD1 CR1 AR1 QU1 RL1 EU3 RR1 QD2 AL1 CL1 OU1 RR2 BU1 GR1 QD1
+        XL1 DL1 BU2 HL1 FL2 RL2 PD3 OD2 CR2 EU1 BU1 XR2 QU1 GL1 HL1
+        OD1 XR4 .
+
+  Problem 38 (Expert)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | A . . O O O | 
+ 2 | A B B C . . | 
+ 3 | X X D C . R   ==>
+ 4 | . . D E E R | 
+ 5 | . . F G G R | 
+ 6 | . . F Q Q Q | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: OL1 RU2 GR1 ER1 CD2 BR2 DU1 FU1 QL3 CD1 EL1 RD1 OR1 DU1 XR1
+        AD3 XL1 DD1 OL1 RU1 ER1 CU2 QR3 FD1 DD1 BL3 CU1 DU1 AD1 EL4
+        RD1 CD1 DD1 BR3 OR1 DU2 ER1 XR1 AU4 EL1 XL1 FU2 QL1 GL4 RD2
+        CD1 FD1 XR6 .
+
+  Problem 39 (Expert)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | . . A O O O | 
+ 2 | . . A B . . | 
+ 3 | X X C B . R   ==>
+ 4 | D D C E E R | 
+ 5 | F G H H . R | 
+ 6 | F G I I . . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: IR2 HR1 CD2 AD1 OL1 RU2 HR1 ER1 BD3 EL1 RD1 OR1 AU1 XR3 AD1
+        OL1 RU1 ER1 DR2 GU4 FU4 DL2 EL1 RD1 OR1 AU1 XL3 AD1 OL1 RU1
+        ER1 BU3 EL1 RD1 OR1 AU1 CU2 HL4 CD1 AD1 OL1 RU1 IL3 ER1 BD3
+        EL1 RD3 OR1 AU1 XR6 .
+
+  Problem 40 (Expert)
+
+     1 2 3 4 5 6
+   +-------------+ 
+ 1 | O A A . B . | 
+ 2 | O C D . B P | 
+ 3 | O C D X X P   ==>
+ 4 | Q Q Q E . P | 
+ 5 | . . F E G G | 
+ 6 | H H F I I . | 
+   +-------------+ 
+     a b c d e f
+
+  Soln: PU1 IR1 ED1 QR3 FU1 HR1 OD3 AL1 DU1 CD2 XL3 BD1 DD1 AR3 DU1
+        XR2 OU3 HL1 FD1 CU3 QL3 PD1 XL1 AR1 EU4 QR2 XR1 CD3 XL1 ED1
+        AL1 PU1 QR1 FU1 HR1 OD3 XL1 DD1 AL3 BU1 EU1 DU1 XR3 OU1 HL1
+        FD1 IL1 GL1 QL1 PD3 XR3 .
