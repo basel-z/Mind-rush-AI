@@ -44,7 +44,8 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-    except:
+    except IndexError:
         red = '31m'
+        print(display_colored_text(red, "Err: Did you initiate the program correctly?"))
         print(display_colored_text(red, "Usage: python [main file name] [input games] [timeout]"))
         print(display_colored_text(red, "Example: python game.py ./Data/rh.txt 7"))
