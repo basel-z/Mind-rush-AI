@@ -1,6 +1,12 @@
 import sys
 
 
+def display_colored_text(color, text):
+    colored_text = f"\033[{color}{text}\033[00m"
+    return colored_text
+
+
+
 def read_input():
     with open(sys.argv[1], 'r') as f:
         contents = f.readlines()
@@ -36,4 +42,9 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except:
+        red = '31m'
+        print(display_colored_text(red, "Usage: python [main file name] [input games] [timeout]"))
+        print(display_colored_text(red, "Example: python game.py ./Data/rh.txt 7"))
