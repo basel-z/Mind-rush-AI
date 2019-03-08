@@ -15,15 +15,20 @@ class Board:
     def convert_data(game_data):
         return [game_data[start:start + 6] for start in range(0, len(game_data), 6)]
 
-    @staticmethod
-    def get_car_length_by_character(char):
-        if char in ['A', 'B', 'C', 'X']:
-            return 2
-        elif char in ['O', 'P', 'Q', 'R']:
-            return 3
-        elif char == '.':
-            return 1
-        return 0
+    def infer_car_length(self, direction, row, col):
+        if row >= 6 or row < 0:
+            raise IndexError("infer_car_length received out of Bounds parameters")
+        length = 0
+        if direction == Direction.COL:
+            length = self.get_car_length_in_column(row, col)
+        elif direction == Direction.ROW:
+            length = self.get_car_length_in_row(row,col)
+        else:
+            raise Exception("infer_car_length received incorrect direction parameter. Was: {}".format(direction))
+
+        if length == 1:
+            raise Exception("infer_car_length attempted to return an incorrect car length of 1")
+        return length
 
     def save_cars_in_rows(self):
         for row in range(6):
@@ -33,7 +38,7 @@ class Board:
                 if current_char == '.' or current_char in self.carsInformation.keys():
                     continue
                 if current_char == next_char:
-                    current_car_length = Board.get_car_length_by_character(current_char)
+                    current_car_length = self.infer_car_length(Direction.ROW, row, col)
                     addition = current_car_length - 1
                     self.carsInformation[current_char] = [Direction.ROW, row, col, row, col + addition]
 
@@ -45,7 +50,7 @@ class Board:
                 if current_char == '.' or current_char in self.carsInformation.keys():
                     continue
                 if current_char == next_char:
-                    current_car_length = Board.get_car_length_by_character(current_char)
+                    current_car_length = self.infer_car_length(Direction.COL, row, col)
                     addition = current_car_length - 1
                     self.carsInformation[current_char] = [Direction.ROW, row, col, row + addition, col]
 
@@ -58,3 +63,28 @@ class Board:
         self.carsInformation = {}
         self.get_cars_info()
 
+    def get_car_length_in_column(self, row, col):
+        length = 1
+        current_character = self.game_board[row][col]
+        if row + 1 < 6 and current_character == self.game_board[row + 1][col]:
+            length += 1
+            if row + 2 < 6 and current_character == self.game_board[row + 2][col]:
+                length += 1
+        elif row - 1 >= 0 and current_character == self.game_board[row - 1][col]:
+            length += 1
+            if row - 2 >= 0 and current_character == self.game_board[row - 2][col]:
+                length+=1
+        return length
+
+    def get_car_length_in_row(self, row, col):
+        length = 1
+        current_character = self.game_board[row][col]
+        if col + 1 < 6 and current_character == self.game_board[row][col + 1]:
+            length += 1
+            if col + 2 < 6 and current_character == self.game_board[row][col + 2]:
+                length += 1
+        elif col - 1 >= 0 and current_character == self.game_board[row][col - 1]:
+            length += 1
+            if col - 2 >= 0 and current_character == self.game_board[row][col - 2]:
+                length += 1
+        return length

@@ -2,6 +2,7 @@ import sys
 
 from board import Board
 
+IS_DEBUGGING = 1
 
 def display_colored_text(color, text):
     colored_text = f"\033[{color}{text}\033[00m"
@@ -14,14 +15,14 @@ def read_input(debugging):
         timer = sys.argv[2]
     except IndexError:
         if debugging == 1:
-            timer = 7
             file = './Data/rh.txt'
+            timer = 7
         else:
             red = '31m'
             print(display_colored_text(red, "Err: Did you initiate the program correctly?"))
             print(display_colored_text(red, "Usage: python [main file name] [input games] [timeout]"))
             print(display_colored_text(red, "Example: python game.py ./Data/rh.txt 7"))
-        exit(1)
+            exit(1)
 
     with open(file, 'r') as f:
         contents = f.readlines()
@@ -46,7 +47,7 @@ def print_game_comfortably(game):
 
 
 def main():
-    input_games, timer = read_input(1)
+    input_games, timer = read_input(IS_DEBUGGING)
     converted_games = convert_games(input_games)
     print_game_comfortably(converted_games[0])
     print(converted_games[0].carsInformation)
