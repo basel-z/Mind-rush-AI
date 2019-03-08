@@ -6,6 +6,13 @@ class Direction(Enum):
     COL = 2
 
 
+class MoveDirection(Enum):
+    UP = 1
+    DOWN = 2
+    LEFT = 3
+    RIGHT = 4
+
+
 class Board:
     # 2 dimensional array
     game_board = []
@@ -88,3 +95,94 @@ class Board:
             if col - 2 >= 0 and current_character == self.game_board[row][col - 2]:
                 length += 1
         return length
+
+    def move_car(self, car_name, move_side, steps):
+        if move_side in [MoveDirection.DOWN, MoveDirection.LEFT]:
+            steps = -steps
+        if self.is_legal_move(car_name, steps) == False:
+            return False
+        self.do_the_move(car_name, steps)
+
+    def is_legal_move(self, car_name, steps):
+        _steps = abs(steps)
+        car_info = self.carsInformation.get(car_name)
+        if car_info[0] == Direction.ROW:
+            end_col = car_info[4]
+            for i in range(_steps):
+                i += 1
+                if _steps + i > 6:
+                    return False
+                if steps < 0:
+                    i = -i
+                    end_col = car_info[2]
+                if self.game_board[car_info[1]][end_col + i] != '.':
+                    return False
+            return True
+        if car_info[0] == Direction.COL:
+            end_row = car_info[1]
+            for i in range(_steps):
+                i += 1
+                if _steps + i > 6:
+                    return False
+                if steps < 0:
+                    i = -i
+                    end_row = car_info[3]
+                if self.game_board[end_row + i][car_info[2]] != '.':
+                    return False
+            return True
+
+    def do_the_move(self, car_name, steps):
+        _steps = abs(steps)
+        car_info = self.carsInformation.get(car_name)
+        if car_info[0] == Direction.ROW:
+            end_col = car_info[4]
+            for i in range(_steps):
+                i += 1
+                if steps < 0:
+                    i = -i
+                    end_col = car_info[2]
+                tmp = list(self.game_board[car_info[1]])
+                tmp[end_col + i] = car_name
+                self.game_board[car_info[1]] = ''.join(tmp)
+            car_len = car_info[4] - car_info[2] + 1
+            if steps < car_len:
+                cells_to_empty = car_len-_steps
+            else:
+                cells_to_empty = car_len
+            for i in range(cells_to_empty):
+                # i += 1
+                tmp = list(self.game_board[car_info[1]])
+                if steps > 0:
+                    tmp[car_info[2] + i] = '.'
+                else:
+                    tmp[car_info[4] - i] = '.'
+                self.game_board[car_info[1]] = ''.join(tmp)
+            self.carsInformation[car_name] = [Direction.ROW, car_info[1], car_info[2] + steps, car_info[1], car_info[4] + steps]
+
+
+
+
+        if car_info[0] == Direction.COL:
+            end_row = car_info[4]
+            for i in range(_steps):
+                i += 1
+                if steps < 0:
+                    i = -i
+                    end_row = car_info[2]
+                tmp = list(self.game_board[car_info[2]])
+                tmp[end_col + i] = car_name
+                self.game_board[car_info[1]] = ''.join(tmp)
+            car_len = car_info[4] - car_info[2] + 1
+            if steps < car_len:
+                cells_to_empty = car_len - _steps
+            else:
+                cells_to_empty = car_len
+            for i in range(cells_to_empty):
+                # i += 1
+                tmp = list(self.game_board[car_info[1]])
+                if steps > 0:
+                    tmp[car_info[2] + i] = '.'
+                else:
+                    tmp[car_info[4] - i] = '.'
+                self.game_board[car_info[1]] = ''.join(tmp)
+            self.carsInformation[car_name] = [Direction.ROW, car_info[1], car_info[2] + steps , car_info[1], car_info[4] + steps]

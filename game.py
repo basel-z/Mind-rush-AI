@@ -1,8 +1,9 @@
 import sys
 
-from board import Board
+from board import *
 
 IS_DEBUGGING = 1
+
 
 def display_colored_text(color, text):
     colored_text = f"\033[{color}{text}\033[00m"
@@ -52,6 +53,10 @@ def main():
     print_game_comfortably(converted_games[0])
     print(converted_games[0].carsInformation)
     print(len(converted_games[0].carsInformation))
+    converted_games[0].move_car('A', MoveDirection.RIGHT, 2)
+    converted_games[0].move_car('A', MoveDirection.LEFT, 1)
+    print_game_comfortably(converted_games[0])
+    print(converted_games[0].carsInformation)
 
 
 if __name__ == '__main__':
