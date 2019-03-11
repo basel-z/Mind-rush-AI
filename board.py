@@ -110,19 +110,20 @@ class Board:
             end_col = car_info[4]
             for i in range(_steps):
                 i += 1
-                if _steps + i > 6:
+                if _steps + i >= 6:
                     return False
                 if steps < 0:
                     i = -i
                     end_col = car_info[2]
-                if self.game_board[car_info[1]][end_col + i] != '.':
+                if end_col + i >= 6 or self.game_board[car_info[1]][end_col + i] != '.':
                     return False
             return True
+        # TODO: TODO.
         if car_info[0] == Direction.COL:
             end_row = car_info[1]
             for i in range(_steps):
                 i += 1
-                if _steps + i > 6:
+                if _steps + i >= 6:
                     return False
                 if steps < 0:
                     i = -i

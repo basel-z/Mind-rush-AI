@@ -53,8 +53,8 @@ def main():
     print_game_comfortably(converted_games[0])
     print(converted_games[0].carsInformation)
     print(len(converted_games[0].carsInformation))
-    converted_games[0].move_car('A', MoveDirection.RIGHT, 2)
-    converted_games[0].move_car('A', MoveDirection.LEFT, 1)
+    converted_games[0].move_car('C', MoveDirection.RIGHT, 2)
+    converted_games[0].move_car('C', MoveDirection.LEFT, 1)
     print_game_comfortably(converted_games[0])
     print(converted_games[0].carsInformation)
 
