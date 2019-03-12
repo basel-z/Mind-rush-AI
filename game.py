@@ -64,9 +64,11 @@ def main():
     res = actual_games[0].move_car('A', MoveDirection.RIGHT, 3)
     assert res == True
     print_game_comfortably(actual_games[0])
-    # actual_games[0].move_car('O', MoveDirection.DOWN, 2)
     res = actual_games[0].move_car('O', MoveDirection.DOWN, 6)
     assert res == False
+    print_game_comfortably(actual_games[0])
+    res = actual_games[0].move_car('O', MoveDirection.DOWN, 2)
+    assert res == True
     print_game_comfortably(actual_games[0])
     # print_game_comfortably(actual_games[0])
     # print(actual_games[0].carsInformation)
