@@ -28,7 +28,6 @@ class Car:
         self.length = length
 
     def expected_location_after_move(self, move_direction, steps):
-        # if self.direction == Direction.ROW and move_direction in [MoveDirection.UP, MoveDirection.DOWN]:
         if not self.is_move_logical(move_direction):
             raise Exception("Car.expected_location illogical move: attempted to move {} but car is {}".format(move_direction, self.direction))
         new_start_row = self.start_row
