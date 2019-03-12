@@ -1,5 +1,4 @@
 import sys
-
 from board import *
 
 IS_DEBUGGING = 1
@@ -13,11 +12,12 @@ def display_colored_text(color, text):
 def read_input(debugging):
     try:
         file = sys.argv[1]
-        timer = sys.argv[2]
+        allocated_time = sys.argv[2]
     except IndexError:
         if debugging == 1:
+            # default values for debugging
             file = './Data/rh.txt'
-            timer = 7
+            allocated_time = 7
         else:
             red = '31m'
             print(display_colored_text(red, "Err: Did you initiate the program correctly?"))
@@ -32,7 +32,7 @@ def read_input(debugging):
     i = contents.index('--- RH-input ---\n')
     for j in range(i + 1, contents.index('--- end RH-input ---\n')):
         input_games.append(contents[j].split('\n')[0])
-    return input_games, timer
+    return input_games, allocated_time
 
 
 def convert_games(games_string_format):
@@ -45,20 +45,31 @@ def convert_games(games_string_format):
 def print_game_comfortably(game):
     for line in game.game_board:
         print(" ".join(line))
-
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 def main():
     input_games, timer = read_input(IS_DEBUGGING)
-    converted_games = convert_games(input_games)
-    print_game_comfortably(converted_games[0])
-    print(converted_games[0].carsInformation)
-    print(len(converted_games[0].carsInformation))
-    converted_games[0].move_car('C', MoveDirection.LEFT, 3)
-    converted_games[0].move_car('A', MoveDirection.RIGHT, 3)
-    converted_games[0].move_car('O', MoveDirection.DOWN, 2)
-    converted_games[0].move_car('O', MoveDirection.DOWN, 6)
-    print_game_comfortably(converted_games[0])
-    print(converted_games[0].carsInformation)
+    actual_games = convert_games(input_games)
+    print_game_comfortably(actual_games[0])
+    print(actual_games[0].cars_information)
+    print("--------------------------------------")
+    print("Printing Cars:")
+    for car in actual_games[0].cars_information.values():
+        print(car)
+    print("--------------------------------------")
+    print(len(actual_games[0].cars_information))
+    res = actual_games[0].move_car('C', MoveDirection.LEFT, 3)
+    assert (res == True)
+    print_game_comfortably(actual_games[0])
+    res = actual_games[0].move_car('A', MoveDirection.RIGHT, 3)
+    assert res == True
+    print_game_comfortably(actual_games[0])
+    # actual_games[0].move_car('O', MoveDirection.DOWN, 2)
+    res = actual_games[0].move_car('O', MoveDirection.DOWN, 6)
+    assert res == False
+    print_game_comfortably(actual_games[0])
+    # print_game_comfortably(actual_games[0])
+    # print(actual_games[0].carsInformation)
 
 
 if __name__ == '__main__':

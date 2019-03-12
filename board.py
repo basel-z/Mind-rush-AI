@@ -1,6 +1,5 @@
 from enum import Enum
 
-
 class Direction(Enum):
     ROW = 1
     COL = 2
@@ -13,10 +12,57 @@ class MoveDirection(Enum):
     RIGHT = 4
 
 
+def is_car_out_of_bounds(new_start_row, new_end_row, new_start_col, new_end_col):
+    return new_end_col not in range(6) or new_start_col not in range(6) or new_end_row not in range(6) or new_start_row not in range(6)
+
+
+class Car:
+
+    def __init__(self, name, direction, start_row, start_col, end_row, end_col, length):
+        self.name = name
+        self.direction = direction
+        self.start_row = start_row
+        self.start_col = start_col
+        self.end_row = end_row
+        self.end_col = end_col
+        self.length = length
+
+    def expected_location_after_move(self, move_direction, steps):
+        # if self.direction == Direction.ROW and move_direction in [MoveDirection.UP, MoveDirection.DOWN]:
+        if not self.is_move_logical(move_direction):
+            raise Exception("Car.expected_location illogical move: attempted to move {} but car is {}".format(move_direction, self.direction))
+        new_start_row = self.start_row
+        new_end_row = self.end_row
+        new_start_col = self.start_col
+        new_end_col = self.end_col
+        if move_direction in [MoveDirection.LEFT, MoveDirection.UP]:
+            steps = -steps
+        if self.direction == Direction.ROW:
+            new_start_col += steps
+            new_end_col += steps
+        elif self.direction == Direction.COL:
+            new_start_row += steps
+            new_end_row += steps
+
+        if is_car_out_of_bounds(new_start_row, new_end_row, new_start_col, new_end_col):
+            raise Exception("expected_location_after_move: Car moved too much!")
+        return new_start_row, new_end_row, new_start_col, new_end_col
+
+    def is_move_logical(self, move_direction):
+        if self.direction == Direction.ROW and move_direction in [MoveDirection.LEFT, MoveDirection.RIGHT]:
+            return True
+        if self.direction == Direction.COL and move_direction in [MoveDirection.UP, MoveDirection.DOWN]:
+            return True
+        return False
+
+    def __str__(self):
+        return "Car<({}){}: {}, ({}, {}), ({}, {})>".format(self.length, self.name, self.direction, self.start_row, self.start_col, self.end_row, self.end_col)
+
+
 class Board:
     # 2 dimensional array
     game_board = []
-    carsInformation = {}
+    cars_information = {}
 
     @staticmethod
     def convert_data(game_data):
@@ -42,24 +88,24 @@ class Board:
             for col in range(5):
                 current_char = self.game_board[row][col]
                 next_char = self.game_board[row][col + 1]
-                if current_char == '.' or current_char in self.carsInformation.keys():
+                if current_char == '.' or current_char in self.cars_information.keys():
                     continue
                 if current_char == next_char:
                     current_car_length = self.infer_car_length(Direction.ROW, row, col)
                     addition = current_car_length - 1
-                    self.carsInformation[current_char] = [Direction.ROW, row, col, row, col + addition]
+                    self.cars_information[current_char] = Car(current_char, Direction.ROW, row, col, row, col + addition, current_car_length)
 
     def save_cars_in_cols(self):
         for row in range(5):
             for col in range(6):
                 current_char = self.game_board[row][col]
                 next_char = self.game_board[row + 1][col]
-                if current_char == '.' or current_char in self.carsInformation.keys():
+                if current_char == '.' or current_char in self.cars_information.keys():
                     continue
                 if current_char == next_char:
                     current_car_length = self.infer_car_length(Direction.COL, row, col)
                     addition = current_car_length - 1
-                    self.carsInformation[current_char] = [Direction.COL, row, col, row + addition, col]
+                    self.cars_information[current_char] = Car(current_char, Direction.COL, row, col, row + addition, col, current_car_length)
 
     def get_cars_info(self):
         self.save_cars_in_rows()
@@ -67,7 +113,7 @@ class Board:
 
     def __init__(self, game_data):
         self.game_board = Board.convert_data(game_data)
-        self.carsInformation = {}
+        self.cars_information = {}
         self.get_cars_info()
 
     def get_car_length_in_column(self, row, col):
@@ -102,30 +148,31 @@ class Board:
         if self.is_legal_move(car_name, steps) == False:
             return False
         self.do_the_move(car_name, steps)
+        return True
 
     def is_legal_move(self, car_name, steps):
         _steps = abs(steps)
-        car_info = self.carsInformation.get(car_name)
-        if car_info[0] == Direction.ROW:
-            end_col = car_info[4]
+        car_info: Car = self.cars_information.get(car_name)
+        if car_info.direction == Direction.ROW:
+            end_col = car_info.end_col
             for i in range(_steps):
                 i += 1
                 if steps < 0:
                     i = -i
-                    end_col = car_info[2]
-                if end_col + i >= 6 or end_col + i < 0 or self.game_board[car_info[1]][end_col + i] != '.':
+                    end_col = car_info.start_col
+                if end_col + i >= 6 or end_col + i < 0 or self.game_board[car_info.start_row][end_col + i] != '.':
                     return False
             return True
-        if car_info[0] == Direction.COL:
-            end_row = car_info[1]
+        if car_info.direction == Direction.COL:
+            end_row = car_info.start_row
             for i in range(_steps):
                 i += 1
                 # in order to move in the correct direction we move in -i:
                 i = -i
                 if steps < 0:
                     i = -i
-                    end_row = car_info[3]
-                if end_row + i >= 6 or end_row + i < 0 or self.game_board[end_row + i][car_info[2]] != '.':
+                    end_row = car_info.end_row
+                if end_row + i >= 6 or end_row + i < 0 or self.game_board[end_row + i][car_info.start_col] != '.':
                     return False
             return True
         raise Exception("Incorrect value for car_info[0] was: {}".format(car_info[0]))
@@ -133,29 +180,29 @@ class Board:
     # no indexExceptions should occur in this function
     def do_the_move(self, car_name, steps):
         _steps = abs(steps)
-        car_info = self.carsInformation.get(car_name)
-        if car_info[0] == Direction.ROW:
+        car_info: Car = self.cars_information.get(car_name)
+        if car_info.direction == Direction.ROW:
             # when going left, this is the car_len:
-            car_len = abs(car_info[4] - car_info[2]) + 1
+            car_len = car_info.length
             car_len = -car_len
-            end_col = car_info[4]
+            end_col = car_info.end_col
             if steps < 0:
                 car_len = -car_len
-                end_col = car_info[2]
-            tmp = list(self.game_board[car_info[1]])
+                end_col = car_info.start_col
+            tmp = list(self.game_board[car_info.start_row])
             for i in range(_steps):
                 i += 1
                 if steps < 0:
                     i = -i
                 tmp[end_col + i] = car_name
                 tmp[end_col + i + car_len] = '.'
-            self.game_board[car_info[1]] = ''.join(tmp)
-            self.carsInformation[car_name] = [Direction.ROW, car_info[1], car_info[2] + steps, car_info[3], car_info[4] + steps]
-        elif car_info[0] == Direction.COL:
-            end_row = car_info[1]
+            self.game_board[car_info.start_row] = ''.join(tmp)
+            self.cars_information[car_name] = Car(car_name, Direction.ROW, car_info.start_row, car_info.start_col + steps, car_info.end_row, car_info.end_col + steps, car_len)
+        elif car_info.direction == Direction.COL:
+            end_row = car_info.start_row
             if steps < 0:
-                end_row = car_info[3]
-            car_len = abs(car_info[3] - car_info[1]) + 1
+                end_row = car_info.end_row
+            car_len = car_info.length
             for i in range(_steps):
                 i += 1
                 # next line ensures that we go upwards
@@ -163,10 +210,10 @@ class Board:
                 if steps < 0:
                     i = -i
                 tmp = list(self.game_board[end_row + i])
-                tmp[car_info[2]] = car_name
+                tmp[car_info.start_col] = car_name
                 self.game_board[end_row + i] = ''.join(tmp)
                 # empty the cell at board[i][j] to be .
                 tmp = list(self.game_board[end_row + i - car_len])
-                tmp[car_info[2]] = '.'
+                tmp[car_info.start_col] = '.'
                 self.game_board[end_row + i - car_len] = ''.join(tmp)
-            self.carsInformation[car_name] = [Direction.COL, car_info[1] - steps, car_info[2] , car_info[3] - steps, car_info[4]]
+            self.cars_information[car_name] = Car(car_name, Direction.COL, car_info.start_row - steps, car_info.end_col , car_info.end_row - steps, car_info.end_col, car_len)
