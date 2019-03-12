@@ -70,11 +70,13 @@ class Board:
     def infer_car_length(self, direction, row, col):
         if row >= 6 or row < 0:
             raise IndexError("infer_car_length received out of Bounds parameters")
+        if self.game_board[row][col] == '.':
+            raise Exception("infer_car_length received non-car object on ({}, {}) was: {}".format(row, col, '\'.\''))
         length = 0
         if direction == Direction.COL:
             length = self.get_car_length_in_column(row, col)
         elif direction == Direction.ROW:
-            length = self.get_car_length_in_row(row,col)
+            length = self.get_car_length_in_row(row, col)
         else:
             raise Exception("infer_car_length received incorrect direction parameter. Was: {}".format(direction))
 
@@ -122,7 +124,7 @@ class Board:
             length += 1
             if row + 2 < 6 and current_character == self.game_board[row + 2][col]:
                 length += 1
-        elif row - 1 >= 0 and current_character == self.game_board[row - 1][col]:
+        if row - 1 >= 0 and current_character == self.game_board[row - 1][col]:
             length += 1
             if row - 2 >= 0 and current_character == self.game_board[row - 2][col]:
                 length+=1
@@ -135,7 +137,7 @@ class Board:
             length += 1
             if col + 2 < 6 and current_character == self.game_board[row][col + 2]:
                 length += 1
-        elif col - 1 >= 0 and current_character == self.game_board[row][col - 1]:
+        if col - 1 >= 0 and current_character == self.game_board[row][col - 1]:
             length += 1
             if col - 2 >= 0 and current_character == self.game_board[row][col - 2]:
                 length += 1
@@ -174,7 +176,7 @@ class Board:
                 if end_row + i >= 6 or end_row + i < 0 or self.game_board[end_row + i][car_info.start_col] != '.':
                     return False
             return True
-        raise Exception("Incorrect value for car_info[0] was: {}".format(car_info[0]))
+        raise Exception("Incorrect value for car_info.direction was: {}".format(car_info.direction))
 
     # no indexExceptions should occur in this function
     def do_the_move(self, car_name, steps):

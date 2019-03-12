@@ -1,5 +1,6 @@
 import sys
 from board import *
+from board_tests import *
 
 IS_DEBUGGING = 1
 
@@ -50,28 +51,27 @@ def print_game_comfortably(game):
 def main():
     input_games, timer = read_input(IS_DEBUGGING)
     actual_games = convert_games(input_games)
-    print_game_comfortably(actual_games[0])
-    print(actual_games[0].cars_information)
-    print("--------------------------------------")
-    print("Printing Cars:")
-    for car in actual_games[0].cars_information.values():
-        print(car)
-    print("--------------------------------------")
-    print(len(actual_games[0].cars_information))
-    res = actual_games[0].move_car('C', MoveDirection.LEFT, 3)
-    assert (res == True)
-    print_game_comfortably(actual_games[0])
-    res = actual_games[0].move_car('A', MoveDirection.RIGHT, 3)
-    assert res == True
-    print_game_comfortably(actual_games[0])
-    res = actual_games[0].move_car('O', MoveDirection.DOWN, 6)
-    assert res == False
-    print_game_comfortably(actual_games[0])
-    res = actual_games[0].move_car('O', MoveDirection.DOWN, 2)
-    assert res == True
-    print_game_comfortably(actual_games[0])
+    BoardTest(actual_games)
     # print_game_comfortably(actual_games[0])
-    # print(actual_games[0].carsInformation)
+    # print(actual_games[0].cars_information)
+    # print("--------------------------------------")
+    # print("Printing Cars:")
+    # for car in actual_games[0].cars_information.values():
+    #     print(car)
+    # print("--------------------------------------")
+    # print(len(actual_games[0].cars_information))
+    # res = actual_games[0].move_car('C', MoveDirection.LEFT, 3)
+    # assert (res == True)
+    # print_game_comfortably(actual_games[0])
+    # res = actual_games[0].move_car('A', MoveDirection.RIGHT, 3)
+    # assert res == True
+    # print_game_comfortably(actual_games[0])
+    # res = actual_games[0].move_car('O', MoveDirection.DOWN, 6)
+    # assert res == False
+    # print_game_comfortably(actual_games[0])
+    # res = actual_games[0].move_car('O', MoveDirection.DOWN, 2)
+    # assert res == True
+    # print_game_comfortably(actual_games[0])
 
 
 if __name__ == '__main__':
