@@ -5,11 +5,12 @@ from board import *
 
 class GameState:
 
-    def __init__(self, priority, car_name, steps ,direction):
+    def __init__(self, priority, car_name, steps, direction):
         self.priority = priority
         self.car_name = car_name
         self.steps = steps
         self.direction = direction
+
 
 class AStarAlgorithm:
     # unexpanded nodes:
@@ -53,7 +54,7 @@ class AStarAlgorithm:
     def expand(self, steps_so_far):
         red_car_end_col = self.actual_game.cars_information.get("X").end_col
         state_list = self.generate_all_states_from_current_state(red_car_end_col)
-        return self.evaluate_fn_for_all_states(state_list)
+        return self.evaluate_fn_for_all_states(state_list, steps_so_far)
 
     def generate_all_states_from_current_state(self, red_car_end_col):
         state_list = []
@@ -84,21 +85,21 @@ class AStarAlgorithm:
         list_states = []
         for i in range(4):
             if self.actual_game.is_legal_move(car_name, i):
-                priority = AStarAlgorithm.get_priority(car_information, red_car_end_col, i)
+                priority = self.get_priority(car_information, red_car_end_col, i)
                 list_states.append(GameState(priority, car_name, i, Direction.COL))
         for i in range(-4, -1):
             if self.actual_game.is_legal_move(car_name, i):
-                priority = AStarAlgorithm.get_priority(car_information, red_car_end_col, i)
+                priority = self.get_priority(car_information, red_car_end_col, i)
                 list_states.append(GameState(priority, car_name, i, Direction.COL))
         return list_states
 
     @staticmethod
-    def get_priority(car_information, red_car_end_col, i):
-        if red_car_end_col > car_information[2]:
+    def get_priority(car_information: Car, red_car_end_col, i):
+        if red_car_end_col > car_information.start_col:
             return 0
-        final_start_row = car_information[1] + i
-        final_end_row = car_information[3] + i
-        car_was_near_line_3 = 2 in range(car_information[1], car_information[3])
+        final_start_row = car_information.start_row + i
+        final_end_row = car_information.end_row + i
+        car_was_near_line_3 = 2 in range(car_information.start_row, car_information.end_row)
         car_will_be_near_line_3 = 2 in range(final_start_row, final_end_row)
         if car_was_near_line_3 and not car_will_be_near_line_3:
             return -1
@@ -106,6 +107,9 @@ class AStarAlgorithm:
             return 1
         return 0
 
-    def evaluate_fn_for_all_states(self, state_list):
+    def evaluate_fn_for_all_states(self, state_list, steps_so_far):
         for state in state_list:
-            self
+            new_expected_value = state.priority + steps_so_far
+            if state.priority >= new_expected_value:
+                state.priority = new_expected_value
+        return state_list
