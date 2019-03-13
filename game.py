@@ -48,10 +48,13 @@ def print_game_comfortably(game):
         print(" ".join(line))
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
+def run_tests(actual_games):
+    BoardTest(actual_games)
+
 def main():
     input_games, timer = read_input(IS_DEBUGGING)
     actual_games = convert_games(input_games)
-    BoardTest(actual_games)
+    run_tests(actual_games)
     # print_game_comfortably(actual_games[0])
     # print(actual_games[0].cars_information)
     # print("--------------------------------------")
@@ -63,7 +66,7 @@ def main():
     # res = actual_games[0].move_car('C', MoveDirection.LEFT, 3)
     # assert (res == True)
     # print_game_comfortably(actual_games[0])
-    # res = actual_games[0].move_car('A', MoveDirection.RIGHT, 3)
+    # res = actual_games[0].move_car('A', MoveDirection.RIGHT, 1)
     # assert res == True
     # print_game_comfortably(actual_games[0])
     # res = actual_games[0].move_car('O', MoveDirection.DOWN, 6)

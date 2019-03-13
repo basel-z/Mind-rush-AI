@@ -144,7 +144,7 @@ class Board:
         return length
 
     def move_car(self, car_name, move_side, steps):
-        if move_side in [MoveDirection.DOWN, MoveDirection.LEFT]:
+        if move_side in [MoveDirection.LEFT, MoveDirection.UP]:
             steps = -steps
         if self.is_legal_move(car_name, steps) == False:
             return False
@@ -198,7 +198,7 @@ class Board:
                 tmp[end_col + i] = car_name
                 tmp[end_col + i + car_len] = '.'
             self.game_board[car_info.start_row] = ''.join(tmp)
-            self.cars_information[car_name] = Car(car_name, Direction.ROW, car_info.start_row, car_info.start_col + steps, car_info.end_row, car_info.end_col + steps, car_len)
+            self.cars_information[car_name] = Car(car_name, Direction.ROW, car_info.start_row, car_info.start_col + steps, car_info.end_row, car_info.end_col + steps, abs(car_len))
         elif car_info.direction == Direction.COL:
             end_row = car_info.start_row
             if steps < 0:
@@ -217,4 +217,4 @@ class Board:
                 tmp = list(self.game_board[end_row + i - car_len])
                 tmp[car_info.start_col] = '.'
                 self.game_board[end_row + i - car_len] = ''.join(tmp)
-            self.cars_information[car_name] = Car(car_name, Direction.COL, car_info.start_row - steps, car_info.end_col , car_info.end_row - steps, car_info.end_col, car_len)
+            self.cars_information[car_name] = Car(car_name, Direction.COL, car_info.start_row - steps, car_info.end_col , car_info.end_row - steps, car_info.end_col, abs(car_len))
