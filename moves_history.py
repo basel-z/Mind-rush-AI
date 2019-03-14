@@ -95,13 +95,13 @@ class AStarAlgorithm:
                 priority = self.get_priority(car_information, red_car_end_col, i)
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, i, MoveDirection.UP, self.current_state, board_copy.game_board_as_string))
+                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, i, MoveDirection.DOWN, self.current_state, board_copy.game_board_as_string))
         for i in range(-4, 0):
             if self.actual_game.is_legal_move(car_name, i):
                 priority = self.get_priority(car_information, red_car_end_col, i)
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, abs(i), MoveDirection.DOWN, self.current_state, board_copy.game_board_as_string))
+                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, abs(i), MoveDirection.UP, self.current_state, board_copy.game_board_as_string))
         return list_states
 
     @staticmethod
@@ -128,6 +128,7 @@ class AStarAlgorithm:
             copy_of_game_board = deepcopy(self.actual_game)
             copy_of_game_board.move_car(curr_min_state.car_name, curr_min_state.direction, curr_min_state.steps)
             if self.check_winning(copy_of_game_board.game_board):
+                self.print_steps(curr_min_state)
                 return True
 
             curr_min_priority = curr_min_state.priority
@@ -139,6 +140,7 @@ class AStarAlgorithm:
                 copy_of_game_board = deepcopy(self.actual_game)
                 copy_of_game_board.move_car(another_min_state.car_name, another_min_state.direction, another_min_state.steps)
                 if self.check_winning(copy_of_game_board.game_board):
+                    self.print_steps(another_min_state)
                     return True
                 list_for_min_states.append(another_min_state)
 
@@ -189,3 +191,22 @@ class AStarAlgorithm:
                         return False
                 return True
         return True
+
+    def print_steps(self, another_min_state: GameState):
+        list_of_steps = []
+        while another_min_state.prev_state is not None:
+            list_of_steps.append(self.get_step_in_str(another_min_state.prev_state))
+            another_min_state = another_min_state.prev_state
+        list_of_steps.reverse()
+        print(list_of_steps)
+
+    @staticmethod
+    def get_step_in_str(prev_state: GameState):
+        if prev_state.direction == MoveDirection.UP:
+            return "{}U{}".format(prev_state.car_name, prev_state.steps)
+        if prev_state.direction == MoveDirection.DOWN:
+            return "{}D{}".format(prev_state.car_name, prev_state.steps)
+        if prev_state.direction == MoveDirection.LEFT:
+            return "{}L{}".format(prev_state.car_name, prev_state.steps)
+        if prev_state.direction == MoveDirection.RIGHT:
+            return "{}R{}".format(prev_state.car_name, prev_state.steps)
