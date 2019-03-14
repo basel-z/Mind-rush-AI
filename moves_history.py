@@ -21,11 +21,11 @@ class GameState:
 
 
 class AStarAlgorithm:
-    def __init__(self, actual_game, red_car_info):
+    def __init__(self, actual_game: Board, red_car_info):
         self.closed = {}
         self.open = []
         # also initial state:
-        self.current_state = self.translate_board_to_state(actual_game.game_board, 0, red_car_info)
+        self.current_state = self.translate_board_to_state(actual_game.game_board, 0, red_car_info, actual_game.game_board_as_string)
         self.actual_game: Board = actual_game
         self.closed[self.actual_game.game_board_as_string] = self.current_state
         list = self.expand(0)
@@ -33,9 +33,9 @@ class AStarAlgorithm:
             heappush(self.open, (state.priority, state))
         assert self.algorthim()
 
-    def translate_board_to_state(self, game_board, steps, red_car_info: Car):
+    def translate_board_to_state(self, game_board, steps, red_car_info: Car, game_board_as_string):
         # TODO: Notice! Missing Parameter....
-        return GameState(self.evaluate_fn(game_board, steps, red_car_info.end_col), None, None, None, None, game_board)
+        return GameState(self.evaluate_fn(game_board, steps, red_car_info.end_col), None, None, None, None, game_board_as_string)
 
     # wrapper function, do not call unless in evaluate_fn
     @staticmethod
@@ -111,7 +111,7 @@ class AStarAlgorithm:
             return 0
         final_start_row = car_information.start_row + i
         final_end_row = car_information.end_row + i
-        car_was_near_line_3 = 2 in range(car_information.start_row, car_information.end_row)
+        car_was_near_line_3 = 2 in range(car_information.start_row, car_information.end_row + 1)
         car_will_be_near_line_3 = 2 in range(final_start_row, final_end_row + 1)
         if car_was_near_line_3 and not car_will_be_near_line_3:
             return -1
@@ -141,7 +141,17 @@ class AStarAlgorithm:
                 another_min_state = heappop(self.open)[1]
                 copy_of_game_board = deepcopy(self.actual_game)
                 copy_of_game_board.move_car(another_min_state.car_name, another_min_state.direction, another_min_state.steps)
+
                 if self.check_winning(copy_of_game_board.game_board):
+                    # print(another_min_state.car_name)
+                    # print(another_min_state.direction)
+                    # print(another_min_state.steps)
+                    # if copy_of_game_board.game_board_as_string == 'AADE..O.DEB.O.XXB.OCQQQP.CFGGPHHFIIP':
+                    #     print('ahlan')
+                    # print("hi: {}".format(copy_of_game_board.game_board_as_string))
+                    # print("hi: {}".format(another_min_state.prev_state.game_board))
+                    # print("hi: {}".format('AADE..O.DEB.O.XXB.OCQQQP.CFGGPHHFIIP'))
+                    # print("bi: {}".format(copy_of_game_board.game_board))
                     self.print_steps(another_min_state)
                     return True
                 list_for_min_states.append(another_min_state)
@@ -150,10 +160,15 @@ class AStarAlgorithm:
             for i in range(1, len(list_for_min_states)):
                 heappush(self.open, (list_for_min_states[i].priority, list_for_min_states[i]))
 
+
+            # switch game board
+            self.actual_game = Board(curr_min_state.prev_state.game_board)
+
             # add the min state to closed hash
             self.actual_game.move_car(curr_min_state.car_name, curr_min_state.direction, curr_min_state.steps)
             self.closed[self.actual_game.game_board_as_string] = curr_min_state
             self.current_state = curr_min_state
+
 
             # expand the min gameState
             steps_so_far += 1
