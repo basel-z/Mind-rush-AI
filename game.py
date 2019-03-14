@@ -82,7 +82,7 @@ def main():
     # assert res == True
     # print_game_comfortably(actual_games[0])
     AStarAlgorithm(actual_games[0], Car('X',Direction.ROW, 2, 1, 2, 2, 2))
-
+    # AStarAlgorithm(actual_games[39], Car('X',Direction.ROW, 2, 3, 2, 4, 2))
 
 if __name__ == '__main__':
     main()

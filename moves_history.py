@@ -131,10 +131,12 @@ class AStarAlgorithm:
                 self.print_steps(curr_min_state)
                 return True
 
-            curr_min_priority = curr_min_state.priority
-            while curr_min_priority == curr_min_state.priority:
+            while 1:
                 # if heap becomes empty, stop looping:
                 if not self.open:
+                    break
+                curr_min_priority_in_heap = self.open[0][1].priority
+                if curr_min_priority_in_heap != curr_min_state.priority:
                     break
                 another_min_state = heappop(self.open)[1]
                 copy_of_game_board = deepcopy(self.actual_game)
@@ -195,7 +197,7 @@ class AStarAlgorithm:
     def print_steps(self, another_min_state: GameState):
         list_of_steps = []
         while another_min_state.prev_state is not None:
-            list_of_steps.append(self.get_step_in_str(another_min_state.prev_state))
+            list_of_steps.append(self.get_step_in_str(another_min_state))
             another_min_state = another_min_state.prev_state
         list_of_steps.reverse()
         print(list_of_steps)
