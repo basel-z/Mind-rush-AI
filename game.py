@@ -1,7 +1,7 @@
 import sys
 from board import *
 from board_tests import *
-
+from moves_history import *
 IS_DEBUGGING = 1
 
 
@@ -54,7 +54,7 @@ def run_tests(actual_games):
 def main():
     input_games, timer = read_input(IS_DEBUGGING)
     actual_games = convert_games(input_games)
-    run_tests(actual_games)
+    # run_tests(actual_games)
     # print_game_comfortably(actual_games[0])
     # print(actual_games[0].cars_information)
     # print("--------------------------------------")
@@ -75,6 +75,7 @@ def main():
     # res = actual_games[0].move_car('O', MoveDirection.DOWN, 2)
     # assert res == True
     # print_game_comfortably(actual_games[0])
+    AStarAlgorithm(actual_games[0],Car('X',Direction.ROW, 2, 1, 2, 2, 2))
 
 
 if __name__ == '__main__':

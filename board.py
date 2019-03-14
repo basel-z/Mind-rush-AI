@@ -61,6 +61,7 @@ class Car:
 class Board:
     # 2 dimensional array
     game_board = []
+    game_board_as_string = ''
     cars_information = {}
 
     @staticmethod
@@ -116,6 +117,7 @@ class Board:
         self.game_board = Board.convert_data(game_data)
         self.cars_information = {}
         self.get_cars_info()
+        self.game_board_as_string = ''.join(self.game_board)
 
     def get_car_length_in_column(self, row, col):
         length = 1
@@ -149,10 +151,13 @@ class Board:
         if self.is_legal_move(car_name, steps) == False:
             return False
         self.do_the_move(car_name, steps)
+        self.game_board_as_string = ''.join(self.game_board)
         return True
 
     def is_legal_move(self, car_name, steps):
         _steps = abs(steps)
+        if steps == 0:
+            return False
         car_info: Car = self.cars_information.get(car_name)
         if car_info.direction == Direction.ROW:
             end_col = car_info.end_col
