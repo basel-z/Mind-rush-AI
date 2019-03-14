@@ -250,13 +250,13 @@ class BoardTest:
         assert board.is_legal_move("C", -5) == False
         assert board.is_legal_move("C", -6) == False
 
-        assert board.is_legal_move("O", 1) == False
+        assert board.is_legal_move("O", 1) == True
         assert board.is_legal_move("O", 2) == False
         assert board.is_legal_move("O", 3) == False
         assert board.is_legal_move("O", 4) == False
         assert board.is_legal_move("O", 5) == False
         assert board.is_legal_move("O", 6) == False
-        assert board.is_legal_move("O", -1) == True
+        assert board.is_legal_move("O", -1) == False
         assert board.is_legal_move("O", -2) == False
         assert board.is_legal_move("O", -3) == False
         assert board.is_legal_move("O", -4) == False
