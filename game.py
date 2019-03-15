@@ -90,7 +90,7 @@ def main():
     # AStarAlgorithm(actual_games[31], Car('X',Direction.ROW, 2, 0, 2, 1, 2))
     # AStarAlgorithm(actual_games[31], Car('X',Direction.ROW, 2, 0, 2, 1, 2))
     # AStarAlgorithm(actual_games[31], Car('X',Direction.ROW, 2, 0, 2, 1, 2))
-    for i in range(40):
+    for i in range(0, 40):
         print("game {}".format(i+1))
         AStarAlgorithm(actual_games[i], actual_games[i].red_car_info)
         print('total time till now:{}', format(time.time()-start_time))

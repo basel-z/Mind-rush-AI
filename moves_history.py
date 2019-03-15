@@ -4,6 +4,7 @@ from board import *
 from game import print_game_comfortably
 import time
 
+
 class GameState:
 
     def __init__(self, priority, car_name, steps, direction, prev_state, actual_game):
@@ -128,12 +129,9 @@ class AStarAlgorithm:
         while self.open:
             curr_min_state: GameState = heappop(self.open)
             list_for_min_states = [curr_min_state]
-            copy_of_game_board = deepcopy(self.actual_game)
-            copy_of_game_board.move_car(curr_min_state.car_name, curr_min_state.direction, curr_min_state.steps)
-            if self.check_winning(copy_of_game_board):
+            if self.check_winning(curr_min_state.actual_game):
                 self.print_steps(curr_min_state)
                 return True
-
             while 1:
                 # if heap becomes empty, stop looping:
                 if not self.open:
@@ -142,19 +140,7 @@ class AStarAlgorithm:
                 if curr_min_priority_in_heap != curr_min_state.priority:
                     break
                 another_min_state = heappop(self.open)
-                copy_of_game_board = deepcopy(self.actual_game)
-                copy_of_game_board.move_car(another_min_state.car_name, another_min_state.direction, another_min_state.steps)
-
-                if self.check_winning(copy_of_game_board):
-                    # print(another_min_state.car_name)
-                    # print(another_min_state.direction)
-                    # print(another_min_state.steps)
-                    # if copy_of_game_board.game_board_as_string == 'AADE..O.DEB.O.XXB.OCQQQP.CFGGPHHFIIP':
-                    #     print('ahlan')
-                    # print("hi: {}".format(copy_of_game_board.game_board_as_string))
-                    # print("hi: {}".format(another_min_state.prev_state.game_board))
-                    # print("hi: {}".format('AADE..O.DEB.O.XXB.OCQQQP.CFGGPHHFIIP'))
-                    # print("bi: {}".format(copy_of_game_board.game_board))
+                if self.check_winning(another_min_state.actual_game):
                     self.print_steps(another_min_state)
                     return True
                 list_for_min_states.append(another_min_state)
@@ -166,7 +152,7 @@ class AStarAlgorithm:
 
             # switch game board
             # TODO: Optimize initializing of Board every loop
-            self.actual_game = deepcopy(curr_min_state.prev_state.actual_game) # TODO: Do we need deep copy?
+            self.actual_game = deepcopy(curr_min_state.prev_state.actual_game)  # TODO: Do we need deep copy?
 
             # add the min state to closed hash
             self.actual_game.move_car(curr_min_state.car_name, curr_min_state.direction, curr_min_state.steps)
@@ -184,6 +170,7 @@ class AStarAlgorithm:
                 copy_of_board.move_car(state.car_name, state.direction, state.steps)
                 state_in_closed: GameState = self.closed.get(copy_of_board.game_board_as_string)
                 exists_in_closed: bool = state_in_closed is not None
+                # state.prev_state = curr_min_state
                 if not exists_in_closed and index_for_state_in_open == -1:
                     state.prev_state = curr_min_state
                     heappush(self.open, state)
