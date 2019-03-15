@@ -130,7 +130,7 @@ class AStarAlgorithm:
             list_for_min_states = [curr_min_state]
             copy_of_game_board = deepcopy(self.actual_game)
             copy_of_game_board.move_car(curr_min_state.car_name, curr_min_state.direction, curr_min_state.steps)
-            if self.check_winning(copy_of_game_board.game_board):
+            if self.check_winning():
                 self.print_steps(curr_min_state)
                 return True
 
@@ -145,7 +145,7 @@ class AStarAlgorithm:
                 copy_of_game_board = deepcopy(self.actual_game)
                 copy_of_game_board.move_car(another_min_state.car_name, another_min_state.direction, another_min_state.steps)
 
-                if self.check_winning(copy_of_game_board.game_board):
+                if self.check_winning():
                     # print(another_min_state.car_name)
                     # print(another_min_state.direction)
                     # print(another_min_state.steps)
@@ -204,14 +204,12 @@ class AStarAlgorithm:
                 return i
         return -1
 
-    @staticmethod
-    def check_winning(game_board):
-        for i in range(6):
-            if game_board[2][i] == 'X':
-                for j in range(i+2, 6):
-                    if game_board[2][j] != '.':
-                        return False
-                return True
+    def check_winning(self):
+        red_car_end_col = self.actual_game.cars_information.get('X').end_col
+        range_index = 6 - red_car_end_col
+        for i in range(1, range_index):
+            if self.actual_game.game_board[2][red_car_end_col + i] != '.':
+                return False
         return True
 
     def print_steps(self, another_min_state: GameState):
