@@ -93,7 +93,7 @@ def main():
     for i in range(40):
         print("game {}".format(i+1))
         AStarAlgorithm(actual_games[i], actual_games[i].red_car_info)
-        print(time.time()-start_time)
+        print('total time till now:{}', format(time.time()-start_time))
     print("it's done, total time:")
     print(time.time()-start_time)
 
