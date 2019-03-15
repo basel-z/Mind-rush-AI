@@ -220,6 +220,7 @@ class AStarAlgorithm:
             list_of_steps.append(self.get_step_in_str(another_min_state))
             another_min_state = another_min_state.prev_state
         list_of_steps.reverse()
+        print(list_of_steps)
         self.print_board_after_doing_all_steps(list_of_steps, another_min_state)
 
     @staticmethod

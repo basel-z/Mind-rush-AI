@@ -2,6 +2,7 @@ import sys
 from board import *
 from board_tests import *
 from moves_history import *
+import time
 IS_DEBUGGING = 1
 
 
@@ -54,6 +55,7 @@ def run_tests(actual_games):
 def main():
     input_games, timer = read_input(IS_DEBUGGING)
     actual_games = convert_games(input_games)
+    start_time = time.time()
     # print_game_comfortably(actual_games[0])
     # actual_games[0].move_car('A', MoveDirection.RIGHT, 1)
     # actual_games[0].move_car('A', MoveDirection.LEFT, 1)
@@ -83,6 +85,7 @@ def main():
     # print_game_comfortably(actual_games[0])
     # AStarAlgorithm(actual_games[0], Car('X',Direction.ROW, 2, 1, 2, 2, 2))
     # AStarAlgorithm(actual_games[39], Car('X',Direction.ROW, 2, 3, 2, 4, 2))
+    # AStarAlgorithm(actual_games[32], Car('X',Direction.ROW, 2, 3, 2, 4, 2))
     # AStarAlgorithm(actual_games[20], Car('X',Direction.ROW, 2, 1, 2, 2, 2))
     # AStarAlgorithm(actual_games[31], Car('X',Direction.ROW, 2, 0, 2, 1, 2))
     # AStarAlgorithm(actual_games[31], Car('X',Direction.ROW, 2, 0, 2, 1, 2))
@@ -90,7 +93,10 @@ def main():
     for i in range(40):
         print("game {}".format(i+1))
         AStarAlgorithm(actual_games[i], actual_games[i].red_car_info)
-    print("waaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        print(time.time()-start_time)
+    print("it's done, total time:")
+    print(time.time()-start_time)
+
 
 if __name__ == '__main__':
     main()
