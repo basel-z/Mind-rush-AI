@@ -32,7 +32,7 @@ class AStarAlgorithm:
         self.closed[self.actual_game.game_board_as_string] = self.current_state
         list = self.expand(0)
         for state in list:
-            heappush(self.open, (state.priority, state))
+            heappush(self.open, state)
         assert self.algorthim()
 
     def translate_board_to_state(self, game_board, steps, red_car_info: Car, game_board_as_string):
@@ -122,10 +122,10 @@ class AStarAlgorithm:
         return 0
 
     def algorthim(self):
-        # heappush(self.open, (self.current_state.priority, self.current_state))
+        # heappush(self.open, self.current_state)
         steps_so_far = 0
         while self.open:
-            curr_min_state: GameState = heappop(self.open)[1]
+            curr_min_state: GameState = heappop(self.open)
             list_for_min_states = [curr_min_state]
             copy_of_game_board = deepcopy(self.actual_game)
             copy_of_game_board.move_car(curr_min_state.car_name, curr_min_state.direction, curr_min_state.steps)
@@ -137,10 +137,10 @@ class AStarAlgorithm:
                 # if heap becomes empty, stop looping:
                 if not self.open:
                     break
-                curr_min_priority_in_heap = self.open[0][1].priority
+                curr_min_priority_in_heap = self.open[0].priority
                 if curr_min_priority_in_heap != curr_min_state.priority:
                     break
-                another_min_state = heappop(self.open)[1]
+                another_min_state = heappop(self.open)
                 copy_of_game_board = deepcopy(self.actual_game)
                 copy_of_game_board.move_car(another_min_state.car_name, another_min_state.direction, another_min_state.steps)
 
@@ -160,10 +160,11 @@ class AStarAlgorithm:
 
             # here we didn't got our goal yet so we deal only with a one state so we push the rest
             for i in range(1, len(list_for_min_states)):
-                heappush(self.open, (list_for_min_states[i].priority, list_for_min_states[i]))
+                heappush(self.open, list_for_min_states[i])
 
 
             # switch game board
+            # TODO: Optimize initializing of Board every loop
             self.actual_game = Board(curr_min_state.prev_state.game_board)
 
             # add the min state to closed hash
@@ -184,20 +185,20 @@ class AStarAlgorithm:
                 exists_in_closed: bool = state_in_closed is not None
                 if not exists_in_closed and index_for_state_in_open == -1:
                     state.prev_state = curr_min_state
-                    heappush(self.open, (state.priority, state))
+                    heappush(self.open, state)
                 elif exists_in_closed:
                     if state_in_closed.priority > state.priority:
                         self.closed.pop(copy_of_board.game_board_as_string)
-                        heappush(self.open, (state.priority, state))
+                        heappush(self.open, state)
                 else:
-                    if self.open[index_for_state_in_open][1].priority > state.priority:
+                    if self.open[index_for_state_in_open].priority > state.priority:
                         self.open.remove(self.open[index_for_state_in_open])
-                        heappush(self.open, (state.priority, state))
+                        heappush(self.open, state)
         return False
 
     def does_it_exist_in_open(self, state: GameState):
         for i in range(len(self.open)):
-            if state == self.open[i][1]:
+            if state == self.open[i]:
                 return i
         return -1
 
@@ -231,6 +232,7 @@ class AStarAlgorithm:
             return "{}R{}".format(prev_state.car_name, prev_state.steps)
 
     def print_board_after_doing_all_steps(self, list_of_steps, another_min_state: GameState):
+        # TODO: Optimize Printing
         tmp_board: Board = Board(another_min_state.game_board)
         for move in list_of_steps:
             move_side = MoveDirection.UP
