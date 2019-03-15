@@ -1,3 +1,6 @@
+# import cProfile, pstats, io
+# from pstats import SortKey
+
 import sys
 from board import *
 from board_tests import *
@@ -47,8 +50,7 @@ def convert_games(games_string_format):
 def print_game_comfortably(game):
     for line in game.game_board:
         print(" ".join(line))
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-
+    print()
 def run_tests(actual_games):
     BoardTest(actual_games)
 
@@ -94,9 +96,16 @@ def main():
         print("game {}".format(i+1))
         AStarAlgorithm(actual_games[i], actual_games[i].red_car_info)
         print('total time till now:{}', format(time.time()-start_time))
+        print("~~~~~~~~~~~~~~~~~~~~~~~")
     print("it's done, total time:")
     print(time.time()-start_time)
 
 
 if __name__ == '__main__':
+    # pr = cProfile.Profile()
+    # pr.enable()
     main()
+    # pr.disable()
+    # sortBy = SortKey.CUMULATIVE
+    # ps = pstats.Stats(pr).sort_stats(sortBy)
+    # ps.print_stats()
