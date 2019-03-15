@@ -60,9 +60,9 @@ class Car:
 
 class Board:
     # 2 dimensional array
-    game_board = []
-    game_board_as_string = ''
-    cars_information = {}
+    # game_board = []
+    # game_board_as_string = ''
+    # cars_information = {}
 
     @staticmethod
     def convert_data(game_data):

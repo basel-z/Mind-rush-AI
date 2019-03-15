@@ -6,16 +6,16 @@ import time
 
 class GameState:
 
-    def __init__(self, priority, car_name, steps, direction, prev_state, game_board):
+    def __init__(self, priority, car_name, steps, direction, prev_state, actual_game):
         self.priority = priority
         self.car_name = car_name
         self.steps = steps
         self.direction = direction
-        self.game_board = game_board
+        self.actual_game: Board = actual_game
         self.prev_state = prev_state
 
     def __eq__(self, other):
-        return other.game_board == self.game_board
+        return other.actual_game.game_board == self.actual_game.game_board
 
     def __lt__(self, other):
         return self.priority < other.priority
@@ -27,7 +27,7 @@ class AStarAlgorithm:
         self.closed = {}
         self.open = []
         # also initial state:
-        self.current_state = self.translate_board_to_state(actual_game.game_board, 0, red_car_info, actual_game.game_board_as_string)
+        self.current_state = self.translate_board_to_state(actual_game, 0, red_car_info)
         self.actual_game: Board = actual_game
         self.closed[self.actual_game.game_board_as_string] = self.current_state
         list = self.expand(0)
@@ -35,9 +35,9 @@ class AStarAlgorithm:
             heappush(self.open, state)
         assert self.algorthim()
 
-    def translate_board_to_state(self, game_board, steps, red_car_info: Car, game_board_as_string):
+    def translate_board_to_state(self, actual_game: Board, steps, red_car_info: Car):
         # TODO: Notice! Missing Parameter....
-        return GameState(self.evaluate_fn(game_board, steps, red_car_info.end_col), None, None, None, None, game_board_as_string)
+        return GameState(self.evaluate_fn(actual_game.game_board, steps, red_car_info.end_col), None, None, None, None, actual_game)
 
     # wrapper function, do not call unless in evaluate_fn
     @staticmethod
@@ -62,7 +62,8 @@ class AStarAlgorithm:
     def generate_all_states_from_current_state(self, red_car_end_col, steps_so_far):
         state_list = []
         for car_name in self.actual_game.cars_information.keys():
-            state_list_per_car = self.generate_state_for_all_possible_moves(car_name, self.actual_game.cars_information.get(car_name), red_car_end_col, steps_so_far)
+            current_car_info: Car = self.actual_game.cars_information.get(car_name)
+            state_list_per_car = self.generate_state_for_all_possible_moves(car_name, current_car_info, red_car_end_col, steps_so_far)
             state_list += state_list_per_car
 
         return state_list
@@ -78,16 +79,16 @@ class AStarAlgorithm:
         list_states = []
         for i in range(4):
             if self.actual_game.is_legal_move(car_name, i):
-                priority = 0  # self.get_priority(car_information, red_car_end_col, i)
+                priority = 0  # TODO: (other hn) self.get_priority(car_information, red_car_end_col, i)
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, i, MoveDirection.RIGHT, self.current_state, board_copy.game_board_as_string))
+                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, i, MoveDirection.RIGHT, self.current_state, board_copy))
         for i in range(-4, 0):
             if self.actual_game.is_legal_move(car_name, i):
-                priority = 0  # self.get_priority(car_information, red_car_end_col, i)
+                priority = 0  # TODO: (other hn) self.get_priority(car_information, red_car_end_col, i)
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, abs(i), MoveDirection.LEFT, self.current_state, board_copy.game_board_as_string))
+                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, abs(i), MoveDirection.LEFT, self.current_state, board_copy))
         return list_states
 
     def get_game_states_in_col(self, car_name, car_information, red_car_end_col, steps_so_far):
@@ -97,22 +98,22 @@ class AStarAlgorithm:
                 priority = self.get_priority(car_information, red_car_end_col, i)
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, i, MoveDirection.DOWN, self.current_state, board_copy.game_board_as_string))
+                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, i, MoveDirection.DOWN, self.current_state, board_copy))
         for i in range(-4, 0):
             if self.actual_game.is_legal_move(car_name, i):
                 priority = self.get_priority(car_information, red_car_end_col, i)
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, abs(i), MoveDirection.UP, self.current_state, board_copy.game_board_as_string))
+                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, abs(i), MoveDirection.UP, self.current_state, board_copy))
         return list_states
 
     @staticmethod
-    def get_priority(car_information: Car, red_car_end_col, i):
+    def get_priority(car_information: Car, red_car_end_col, steps):
         # TODO: deal with row
         if red_car_end_col > car_information.start_col:
             return 0
-        final_start_row = car_information.start_row + i
-        final_end_row = car_information.end_row + i
+        final_start_row = car_information.start_row + steps
+        final_end_row = car_information.end_row + steps
         car_was_near_line_3 = 2 in range(car_information.start_row, car_information.end_row + 1)
         car_will_be_near_line_3 = 2 in range(final_start_row, final_end_row + 1)
         if car_was_near_line_3 and not car_will_be_near_line_3:
@@ -165,7 +166,7 @@ class AStarAlgorithm:
 
             # switch game board
             # TODO: Optimize initializing of Board every loop
-            self.actual_game = Board(curr_min_state.prev_state.game_board)
+            self.actual_game = deepcopy(curr_min_state.prev_state.actual_game) # TODO: Do we need deep copy?
 
             # add the min state to closed hash
             self.actual_game.move_car(curr_min_state.car_name, curr_min_state.direction, curr_min_state.steps)
@@ -179,7 +180,7 @@ class AStarAlgorithm:
 
             for state in list_for_expand:
                 index_for_state_in_open = self.does_it_exist_in_open(state)
-                copy_of_board = deepcopy(self.actual_game)
+                copy_of_board: Board = deepcopy(self.actual_game)
                 copy_of_board.move_car(state.car_name, state.direction, state.steps)
                 state_in_closed: GameState = self.closed.get(copy_of_board.game_board_as_string)
                 exists_in_closed: bool = state_in_closed is not None
@@ -197,7 +198,8 @@ class AStarAlgorithm:
         return False
 
     def does_it_exist_in_open(self, state: GameState):
-        for i in range(len(self.open)):
+        open_length: int = len(self.open)
+        for i in range(open_length):
             if state == self.open[i]:
                 return i
         return -1
@@ -233,7 +235,7 @@ class AStarAlgorithm:
 
     def print_board_after_doing_all_steps(self, list_of_steps, another_min_state: GameState):
         # TODO: Optimize Printing
-        tmp_board: Board = Board(another_min_state.game_board)
+        tmp_board: Board = another_min_state.actual_game
         for move in list_of_steps:
             move_side = MoveDirection.UP
             _move = move[1]
