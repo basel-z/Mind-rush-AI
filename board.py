@@ -113,10 +113,12 @@ class Board:
         self.save_cars_in_rows()
         self.save_cars_in_cols()
 
+
     def __init__(self, game_data):
         self.game_board = Board.convert_data(game_data)
         self.cars_information = {}
         self.get_cars_info()
+        self.red_car_info = self.cars_information.get('X')
         self.game_board_as_string = ''.join(self.game_board)
 
     def get_car_length_in_column(self, row, col):

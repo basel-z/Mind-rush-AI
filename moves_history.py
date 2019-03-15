@@ -1,7 +1,8 @@
 from heapq import *
 from copy import deepcopy
 from board import *
-
+from game import print_game_comfortably
+import time
 
 class GameState:
 
@@ -22,6 +23,7 @@ class GameState:
 
 class AStarAlgorithm:
     def __init__(self, actual_game: Board, red_car_info):
+        self.start_time = time.time()
         self.closed = {}
         self.open = []
         # also initial state:
@@ -215,7 +217,7 @@ class AStarAlgorithm:
             list_of_steps.append(self.get_step_in_str(another_min_state))
             another_min_state = another_min_state.prev_state
         list_of_steps.reverse()
-        print(list_of_steps)
+        self.print_board_after_doing_all_steps(list_of_steps, another_min_state)
 
     @staticmethod
     def get_step_in_str(prev_state: GameState):
@@ -227,3 +229,18 @@ class AStarAlgorithm:
             return "{}L{}".format(prev_state.car_name, prev_state.steps)
         if prev_state.direction == MoveDirection.RIGHT:
             return "{}R{}".format(prev_state.car_name, prev_state.steps)
+
+    def print_board_after_doing_all_steps(self, list_of_steps, another_min_state: GameState):
+        tmp_board: Board = Board(another_min_state.game_board)
+        for move in list_of_steps:
+            move_side = MoveDirection.UP
+            _move = move[1]
+            if _move == 'D':
+                move_side = MoveDirection.DOWN
+            elif _move == 'L':
+                move_side = MoveDirection.LEFT
+            elif _move == 'R':
+                move_side = MoveDirection.RIGHT
+            tmp_board.move_car(move[0], move_side,ord(move[2])-ord('0'))
+        print(time.time()-self.start_time)
+        print_game_comfortably(tmp_board)
