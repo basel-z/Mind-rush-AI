@@ -7,13 +7,14 @@ import time
 
 class GameState:
 
-    def __init__(self, priority, car_name, steps, direction, prev_state, actual_game):
+    def __init__(self, priority, car_name, steps, direction, prev_state, actual_game, num_of_moves_to_get_to_state):
         self.priority = priority
         self.car_name = car_name
         self.steps = steps
         self.direction = direction
         self.actual_game: Board = actual_game
         self.prev_state = prev_state
+        self.num_of_moves_to_get_to_state = num_of_moves_to_get_to_state
 
     def __eq__(self, other):
         return other.actual_game.game_board == self.actual_game.game_board
@@ -23,12 +24,13 @@ class GameState:
 
 
 class AStarAlgorithm:
-    def __init__(self, actual_game: Board, red_car_info):
+    def __init__(self, actual_game: Board, red_car_info, heuristic_function):
+        self.heuristic_function = heuristic_function
         self.start_time = time.time()
         self.closed = {}
         self.open = []
         # also initial state:
-        self.current_state = self.translate_board_to_state(actual_game, 0, red_car_info)
+        self.current_state = self.translate_board_to_state(actual_game, red_car_info)
         self.actual_game: Board = actual_game
         self.closed[self.actual_game.game_board_as_string] = self.current_state
         list = self.expand(0)
@@ -36,77 +38,115 @@ class AStarAlgorithm:
             heappush(self.open, state)
         assert self.algorthim()
 
-    def translate_board_to_state(self, actual_game: Board, steps, red_car_info: Car):
-        # TODO: Notice! Missing Parameter....
-        return GameState(self.evaluate_fn(actual_game.game_board, steps, red_car_info.end_col), None, None, None, None, actual_game)
+    def translate_board_to_state(self, actual_game: Board, red_car_info: Car):
+        return GameState(self.evaluate_initial_fn(actual_game.game_board, red_car_info.end_col), None, None, None, None, actual_game, 0)
 
     # wrapper function, do not call unless in evaluate_fn
     @staticmethod
-    def evaluate_hn(game_board, red_car_end_col):
-        # TODO: Should add other hn
+    def evaluate_initial_fn(game_board, red_car_end_col):
         counter = 0
         for i in range(red_car_end_col + 1, 6):
             if game_board[2][i] != '.':
                 counter += 1
         return counter
 
-    def evaluate_fn(self, game_board, steps_so_far, red_car_end_col):
-        hn = self.evaluate_hn(game_board, red_car_end_col)
-        gn = steps_so_far
-        return hn + gn
-
     # expands the current state
-    def expand(self, steps_so_far):
+    def expand(self, steps_to_state):
         red_car_end_col = self.actual_game.cars_information.get("X").end_col
-        return self.generate_all_states_from_current_state(red_car_end_col, steps_so_far)
+        return self.generate_all_states_from_current_state(red_car_end_col, steps_to_state)
 
-    def generate_all_states_from_current_state(self, red_car_end_col, steps_so_far):
+    def generate_all_states_from_current_state(self, red_car_end_col, steps_to_state):
         state_list = []
         for car_name in self.actual_game.cars_information.keys():
             current_car_info: Car = self.actual_game.cars_information.get(car_name)
-            state_list_per_car = self.generate_state_for_all_possible_moves(car_name, current_car_info, red_car_end_col, steps_so_far)
+            state_list_per_car = self.generate_state_for_all_possible_moves(car_name, current_car_info, red_car_end_col, steps_to_state)
             state_list += state_list_per_car
 
         return state_list
 
-    def generate_state_for_all_possible_moves(self, car_name, car_information: Car, red_car_end_col, steps_so_far):
+    def generate_state_for_all_possible_moves(self, car_name, car_information: Car, red_car_end_col, steps_to_state):
         if car_information.direction == Direction.ROW:
-            return self.get_game_states_in_row(car_name, car_information, red_car_end_col, steps_so_far)
+            return self.get_game_states_in_row(car_name, red_car_end_col, steps_to_state)
         elif car_information.direction == Direction.COL:
-            return self.get_game_states_in_col(car_name, car_information, red_car_end_col, steps_so_far)
+            return self.get_game_states_in_col(car_name, car_information, red_car_end_col, steps_to_state)
         raise Exception("Incorrect Direction in generate_state_for_all_possible_moves")
 
-    def get_game_states_in_row(self, car_name, car_information: Car, red_car_end_col, steps_so_far):
+    def get_game_states_in_row(self, car_name, red_car_end_col, steps_to_state):
         list_states = []
         for i in range(4):
             if self.actual_game.is_legal_move(car_name, i):
-                priority = 0  # TODO: (other hn) self.get_priority(car_information, red_car_end_col, i)
+                priority = self.infer_priority_by_heuristic_function(0)
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, i, MoveDirection.RIGHT, self.current_state, board_copy))
+                list_states.append(GameState(priority, car_name, i, MoveDirection.RIGHT, self.current_state, board_copy, self.current_state.num_of_moves_to_get_to_state + 1))
         for i in range(-4, 0):
             if self.actual_game.is_legal_move(car_name, i):
-                priority = 0  # TODO: (other hn) self.get_priority(car_information, red_car_end_col, i)
+                priority = self.infer_priority_by_heuristic_function(0)
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, abs(i), MoveDirection.LEFT, self.current_state, board_copy))
+                list_states.append(GameState(priority, car_name, abs(i), MoveDirection.LEFT, self.current_state, board_copy, self.current_state.num_of_moves_to_get_to_state + 1))
         return list_states
 
-    def get_game_states_in_col(self, car_name, car_information, red_car_end_col, steps_so_far):
+    def get_game_states_in_col(self, car_name, car_information, red_car_end_col, steps_to_state):
         list_states = []
         for i in range(4):
             if self.actual_game.is_legal_move(car_name, i):
-                priority = self.get_priority(car_information, red_car_end_col, i)
+                priority = self.infer_priority_by_heuristic_function(self.get_priority(car_information, red_car_end_col, i))
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, i, MoveDirection.DOWN, self.current_state, board_copy))
+                list_states.append(GameState(priority, car_name, i, MoveDirection.DOWN, self.current_state, board_copy, self.current_state.num_of_moves_to_get_to_state + 1))
         for i in range(-4, 0):
             if self.actual_game.is_legal_move(car_name, i):
-                priority = self.get_priority(car_information, red_car_end_col, i)
+                priority = self.infer_priority_by_heuristic_function(self.get_priority(car_information, red_car_end_col, i))
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(priority + 1 + self.current_state.priority, car_name, abs(i), MoveDirection.UP, self.current_state, board_copy))
+                list_states.append(GameState(priority, car_name, abs(i), MoveDirection.UP, self.current_state, board_copy, self.current_state.num_of_moves_to_get_to_state + 1))
         return list_states
+
+    def infer_priority_by_heuristic_function(self, value):
+        if self.heuristic_function == 1:
+            return value + 1 + self.current_state.priority
+        return self.current_state.num_of_moves_to_get_to_state + self.get_num_of_blocked_cars_on_red_row()
+
+    def get_num_of_blocked_cars_on_red_row(self):
+        counter = 0
+        for i in range(6):
+            curr_car_name = self.actual_game.game_board[2][i]
+            if curr_car_name == '.' or curr_car_name == 'X':
+                continue
+            if self.is_column_car_blocked(curr_car_name, i):
+                counter += 1
+        return counter
+
+    def is_column_car_blocked(self, car_name, col):
+        car_info: Car = self.actual_game.cars_information[car_name]
+        # moving up
+        if self.actual_game.is_legal_move(car_name, -1):
+            start_row, end_row, _, _ = car_info.expected_location_after_move(MoveDirection.UP, 1)
+            if end_row < 2:
+                return False
+        if self.actual_game.is_legal_move(car_name, -2):
+            start_row, end_row, _, _ = car_info.expected_location_after_move(MoveDirection.UP, 2)
+            if end_row < 2:
+                return False
+        if self.actual_game.is_legal_move(car_name, -3):
+            start_row, end_row, _, _ = car_info.expected_location_after_move(MoveDirection.UP, 3)
+            if end_row < 2:
+                return False
+        # moving down
+        if self.actual_game.is_legal_move(car_name, 1):
+            start_row, end_row, _, _ = car_info.expected_location_after_move(MoveDirection.DOWN, 1)
+            if start_row > 2:
+                return False
+        if self.actual_game.is_legal_move(car_name, 2):
+            start_row, end_row, _, _ = car_info.expected_location_after_move(MoveDirection.DOWN, 2)
+            if start_row > 2:
+                return False
+        if self.actual_game.is_legal_move(car_name, 3):
+            start_row, end_row, _, _ = car_info.expected_location_after_move(MoveDirection.DOWN, 3)
+            if start_row > 2:
+                return False
+        return True
 
     @staticmethod
     def get_priority(car_information: Car, red_car_end_col, steps):

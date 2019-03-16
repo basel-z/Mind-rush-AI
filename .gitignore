@@ -2,3 +2,5 @@
 .idea/
 venv/
 __pycache__/board.cpython-37.pyc
+*.pyc
+*.pyc

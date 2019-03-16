@@ -212,8 +212,6 @@ class Board:
                 i = i*sign
                 self.replace_str(car_info.start_row, end_col + i, car_name)
                 self.replace_str(car_info.start_row, end_col + i - car_len, '.')
-                # self.game_board[car_info.start_row][end_col + i] = car_name
-                # self.game_board[car_info.start_row][end_col + i - car_len] = '.'
             self.game_board_as_string = ''.join(self.game_board)
             self.cars_information[car_name] = Car(car_name, Direction.ROW, car_info.start_row, car_info.start_col + steps, car_info.end_row, car_info.end_col + steps, abs(car_len))
         elif car_info.direction == Direction.COL:
@@ -230,8 +228,6 @@ class Board:
                 i = i*sign
                 self.replace_str(end_row + i, car_info.start_col, car_name)
                 self.replace_str(end_row + i - car_len, car_info.start_col, '.')
-                # self.game_board[end_row + i][car_info.start_col] = car_name
-                # self.game_board[end_row + i - car_len][car_info.start_col] = '.'
             self.game_board_as_string = ''.join(self.game_board)
             self.cars_information[car_name] = Car(car_name, Direction.COL, car_info.start_row + steps, car_info.end_col , car_info.end_row + steps, car_info.end_col, abs(car_len))
 
