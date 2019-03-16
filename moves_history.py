@@ -33,7 +33,7 @@ class AStarAlgorithm:
         self.current_state = self.translate_board_to_state(actual_game, red_car_info)
         self.actual_game: Board = actual_game
         self.closed[self.actual_game.game_board_as_string] = self.current_state
-        list = self.expand(0)
+        list = self.expand()
         for state in list:
             heappush(self.open, state)
         assert self.algorthim()
@@ -51,60 +51,64 @@ class AStarAlgorithm:
         return counter
 
     # expands the current state
-    def expand(self, steps_to_state):
-        red_car_end_col = self.actual_game.cars_information.get("X").end_col
-        return self.generate_all_states_from_current_state(red_car_end_col, steps_to_state)
+    def expand(self):
+        return self.generate_all_states_from_current_state()
 
-    def generate_all_states_from_current_state(self, red_car_end_col, steps_to_state):
+    def generate_all_states_from_current_state(self):
         state_list = []
         for car_name in self.actual_game.cars_information.keys():
             current_car_info: Car = self.actual_game.cars_information.get(car_name)
-            state_list_per_car = self.generate_state_for_all_possible_moves(car_name, current_car_info, red_car_end_col, steps_to_state)
+            state_list_per_car = self.generate_state_for_all_possible_moves(car_name, current_car_info)
             state_list += state_list_per_car
 
         return state_list
 
-    def generate_state_for_all_possible_moves(self, car_name, car_information: Car, red_car_end_col, steps_to_state):
+    def generate_state_for_all_possible_moves(self, car_name, car_information: Car):
+        red_car_end_col = self.actual_game.cars_information.get("X").end_col
         if car_information.direction == Direction.ROW:
-            return self.get_game_states_in_row(car_name, red_car_end_col, steps_to_state)
+            return self.get_game_states_in_row(car_name, red_car_end_col)
         elif car_information.direction == Direction.COL:
-            return self.get_game_states_in_col(car_name, car_information, red_car_end_col, steps_to_state)
+            return self.get_game_states_in_col(car_name, car_information, red_car_end_col)
         raise Exception("Incorrect Direction in generate_state_for_all_possible_moves")
 
-    def get_game_states_in_row(self, car_name, red_car_end_col, steps_to_state):
+    def get_game_states_in_row(self, car_name, red_car_end_col):
         list_states = []
         for i in range(4):
             if self.actual_game.is_legal_move(car_name, i):
-                priority = self.infer_priority_by_heuristic_function(0)
+                priority = self.infer_priority_by_heuristic_function(Direction.ROW, -1, -1, -1)
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
                 list_states.append(GameState(priority, car_name, i, MoveDirection.RIGHT, self.current_state, board_copy, self.current_state.num_of_moves_to_get_to_state + 1))
         for i in range(-4, 0):
             if self.actual_game.is_legal_move(car_name, i):
-                priority = self.infer_priority_by_heuristic_function(0)
+                priority = self.infer_priority_by_heuristic_function(Direction.ROW, -1, -1, -1)
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
                 list_states.append(GameState(priority, car_name, abs(i), MoveDirection.LEFT, self.current_state, board_copy, self.current_state.num_of_moves_to_get_to_state + 1))
         return list_states
 
-    def get_game_states_in_col(self, car_name, car_information, red_car_end_col, steps_to_state):
+    def get_game_states_in_col(self, car_name, car_information, red_car_end_col):
         list_states = []
         for i in range(4):
             if self.actual_game.is_legal_move(car_name, i):
-                priority = self.infer_priority_by_heuristic_function(self.get_priority(car_information, red_car_end_col, i))
+                priority = self.infer_priority_by_heuristic_function(Direction.COL, car_information, red_car_end_col, i)
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
                 list_states.append(GameState(priority, car_name, i, MoveDirection.DOWN, self.current_state, board_copy, self.current_state.num_of_moves_to_get_to_state + 1))
         for i in range(-4, 0):
             if self.actual_game.is_legal_move(car_name, i):
-                priority = self.infer_priority_by_heuristic_function(self.get_priority(car_information, red_car_end_col, i))
+                priority = self.infer_priority_by_heuristic_function(Direction.COL, car_information, red_car_end_col, i)
                 board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
                 list_states.append(GameState(priority, car_name, abs(i), MoveDirection.UP, self.current_state, board_copy, self.current_state.num_of_moves_to_get_to_state + 1))
         return list_states
 
-    def infer_priority_by_heuristic_function(self, value):
+    def infer_priority_by_heuristic_function(self, direction, car_information, red_car_end_col, steps):
         if self.heuristic_function == 1:
+            if direction == Direction.ROW:
+                value = 0
+            else:
+                value = self.get_priority(car_information, red_car_end_col, steps)
             return value + 1 + self.current_state.priority
         return self.current_state.num_of_moves_to_get_to_state + self.get_num_of_blocked_cars_on_red_row()
 
@@ -202,7 +206,7 @@ class AStarAlgorithm:
 
             # expand the min gameState
             steps_so_far += 1
-            list_for_expand = self.expand(steps_so_far)
+            list_for_expand = self.expand()
 
             for state in list_for_expand:
                 index_for_state_in_open = self.does_it_exist_in_open(state)

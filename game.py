@@ -13,6 +13,7 @@ HEURISTIC_FUNCTION = 2
 class HeuristicFunctionException(Exception):
     pass
 
+
 def display_colored_text(color, text):
     colored_text = f"\033[{color}{text}\033[00m"
     return colored_text
