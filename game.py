@@ -83,7 +83,7 @@ def main():
     start_time = time.time()
     for i in range(0, 40):
         print("game {} heuristic_function={}".format(i+1, heuristic_function))
-        AStarAlgorithm(actual_games[i], actual_games[i].red_car_info, heuristic_function)
+        AStarAlgorithm(actual_games[i], heuristic_function)
         print('total time till now:{}', format(time.time()-start_time))
         print("~~~~~~~~~~~~~~~~~~~~~~~")
     print("it's done, total time:")

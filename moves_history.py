@@ -24,12 +24,13 @@ class GameState:
 
 
 class AStarAlgorithm:
-    def __init__(self, actual_game: Board, red_car_info, heuristic_function):
+    def __init__(self, actual_game: Board, heuristic_function):
         self.heuristic_function = heuristic_function
         self.start_time = time.time()
         self.closed = {}
         self.open = []
         # also initial state:
+        red_car_info = actual_game.cars_information.get("X")
         self.current_state = self.translate_board_to_state(actual_game, red_car_info)
         self.actual_game: Board = actual_game
         self.closed[self.actual_game.game_board_as_string] = self.current_state
@@ -52,9 +53,6 @@ class AStarAlgorithm:
 
     # expands the current state
     def expand(self):
-        return self.generate_all_states_from_current_state()
-
-    def generate_all_states_from_current_state(self):
         state_list = []
         for car_name in self.actual_game.cars_information.keys():
             current_car_info: Car = self.actual_game.cars_information.get(car_name)
