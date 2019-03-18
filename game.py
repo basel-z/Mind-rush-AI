@@ -30,7 +30,7 @@ def read_input(debugging):
         if debugging == 1:
             # default values for debugging
             file = './Data/rh.txt'
-            allocated_time = 7
+            allocated_time = 150
             heuristic_function = HEURISTIC_FUNCTION
             if heuristic_function not in [1, 2]:
                 raise HeuristicFunctionException("Incorrect Heurstic function entered, was: {}".format(heuristic_function))
@@ -81,12 +81,14 @@ def main():
     input_games, timer, heuristic_function = read_input(IS_DEBUGGING)
     actual_games = convert_games(input_games)
     start_time = time.time()
+    f = open("output.txt", "w")
+    f.write("")
     for i in range(0, 40):
-        print("game {} heuristic_function={}".format(i+1, heuristic_function))
-        AStarAlgorithm(actual_games[i], heuristic_function)
-        print('total time till now:{}', format(time.time()-start_time))
-        print("~~~~~~~~~~~~~~~~~~~~~~~")
-    print("it's done, total time:")
+        # print("game {} heuristic_function={}".format(i+1, heuristic_function))
+        AStarAlgorithm(actual_games[i], heuristic_function, timer, i+1)
+        # print('total time till now:{}', format(time.time()-start_time))
+        # print("~~~~~~~~~~~~~~~~~~~~~~~")
+    # print("it's done, total time:")
     print(time.time()-start_time)
     # print_game_comfortably(actual_games[0])
     # actual_games[0].move_car('A', MoveDirection.RIGHT, 1)

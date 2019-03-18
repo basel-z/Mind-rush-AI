@@ -25,7 +25,9 @@ class GameState:
 
 
 class AStarAlgorithm:
-    def __init__(self, actual_game: Board, heuristic_function):
+    def __init__(self, actual_game: Board, heuristic_function, timer, game_number):
+        self.game_number = game_number
+        self.timer = timer
         self.heuristic_function = heuristic_function
         self.start_time = time.time()
         self.closed = {}
@@ -38,7 +40,7 @@ class AStarAlgorithm:
         list = self.expand()
         for state in list:
             heappush(self.open, state)
-        assert self.algorthim()
+        self.algorthim()
 
     def translate_board_to_state(self, actual_game: Board, red_car_info: Car):
         return GameState(self.evaluate_initial_fn(actual_game.game_board, red_car_info.end_col), None, None, None, None, actual_game, 0)
@@ -170,11 +172,16 @@ class AStarAlgorithm:
         # heappush(self.open, self.current_state)
         steps_so_far = 0
         while self.open:
+            if time.time() - self.start_time >= self.timer:
+                f = open("output.txt", "a")
+                f.write("\nGame number{}, FAILED \n".format(self.game_number))
+                break
             curr_min_state: GameState = heappop(self.open)
             list_for_min_states = [curr_min_state]
             if self.check_winning(curr_min_state.actual_game):
                 self.print_steps(curr_min_state)
-                return True
+                break
+            flag = False
             while 1:
                 # if heap becomes empty, stop looping:
                 if not self.open:
@@ -185,8 +192,11 @@ class AStarAlgorithm:
                 another_min_state = heappop(self.open)
                 if self.check_winning(another_min_state.actual_game):
                     self.print_steps(another_min_state)
-                    return True
+                    flag = True
+                    break
                 list_for_min_states.append(another_min_state)
+            if flag:
+                break
 
             # here we didn't got our goal yet so we deal only with a one state so we push the rest
             for i in range(1, len(list_for_min_states)):
@@ -225,7 +235,6 @@ class AStarAlgorithm:
                     if self.open[index_for_state_in_open].priority > state.priority:
                         self.open.remove(self.open[index_for_state_in_open])
                         heappush(self.open, state)
-        return False
 
     def does_it_exist_in_open(self, state: GameState):
         open_length: int = len(self.open)
@@ -245,12 +254,26 @@ class AStarAlgorithm:
 
     def print_steps(self, another_min_state: GameState):
         list_of_steps = []
+        steps_to_get_red_out = 6 - another_min_state.actual_game.red_car_info.end_col + 1
+        list_of_steps.append("XR{}".format(steps_to_get_red_out))
         while another_min_state.prev_state is not None:
             list_of_steps.append(self.get_step_in_str(another_min_state))
             another_min_state = another_min_state.prev_state
         list_of_steps.reverse()
-        print(list_of_steps)
-        self.print_board_after_doing_all_steps(list_of_steps, another_min_state)
+        # print(list_of_steps)
+        f = open("output.txt", "a")
+        f.write("\nGame number{}, Steps: ".format(self.game_number))
+        j = 0
+        for i in range(len(list_of_steps)):
+            if j == 10:
+                j = 0
+                f.write('\n')
+                f.write('                     ')
+            j += 1
+            f.write("{} ".format(list_of_steps[i]))
+        f.write('.\n              ')
+        f.write("total time{}\n".format(time.time()-self.start_time))
+        # self.print_board_after_doing_all_steps(list_of_steps, another_min_state, self.game_number)
 
     @staticmethod
     def get_step_in_str(prev_state: GameState):
@@ -263,8 +286,9 @@ class AStarAlgorithm:
         if prev_state.direction == MoveDirection.RIGHT:
             return "{}R{}".format(prev_state.car_name, prev_state.steps)
 
-    def print_board_after_doing_all_steps(self, list_of_steps, another_min_state: GameState):
+    def print_board_after_doing_all_steps(self, list_of_steps, another_min_state: GameState, game_number):
         # TODO: Optimize Printing
+        print("\nGame number{}: ".format(self.game_number))
         tmp_board: Board = another_min_state.actual_game
         for move in list_of_steps:
             move_side = MoveDirection.UP
