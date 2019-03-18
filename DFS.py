@@ -20,6 +20,7 @@ class DFSGameState:
     def generate_children(self):
         x = 1
 
+
 # TODO: Continue
 class DepthLimitedSearch:
 

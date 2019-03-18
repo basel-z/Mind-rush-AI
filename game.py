@@ -2,12 +2,12 @@
 # from pstats import SortKey
 
 import sys
-from board import *
+
 from board_tests import *
 from moves_history import *
-import time
+
 IS_DEBUGGING = 1
-HEURISTIC_FUNCTION = 2
+HEURISTIC_FUNCTION = 1
 
 
 class HeuristicFunctionException(Exception):

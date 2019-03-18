@@ -1,8 +1,9 @@
-from heapq import *
+import time
 from copy import deepcopy
+from heapq import *
+
 from board import *
 from game import print_game_comfortably
-import time
 
 
 class GameState:

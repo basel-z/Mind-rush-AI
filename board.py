@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Direction(Enum):
     ROW = 1
     COL = 2
