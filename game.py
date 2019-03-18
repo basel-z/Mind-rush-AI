@@ -5,6 +5,7 @@ import sys
 
 from board_tests import *
 from moves_history import *
+from DepthLimitedSearch import *
 
 IS_DEBUGGING = 1
 HEURISTIC_FUNCTION = 1
@@ -74,56 +75,46 @@ def print_game_comfortably(game):
     for line in game.game_board:
         print(" ".join(line))
     print()
+
+
 def run_tests(actual_games):
     BoardTest(actual_games)
 
-def main():
-    input_games, timer, heuristic_function = read_input(IS_DEBUGGING)
-    actual_games = convert_games(input_games)
+
+def run_a_star_algorithm(actual_games, heuristic_function):
     start_time = time.time()
     f = open("output.txt", "w")
     f.write("")
     for i in range(0, 40):
-        # print("game {} heuristic_function={}".format(i+1, heuristic_function))
-        AStarAlgorithm(actual_games[i], heuristic_function, timer, i+1)
-        # print('total time till now:{}', format(time.time()-start_time))
-        # print("~~~~~~~~~~~~~~~~~~~~~~~")
-    # print("it's done, total time:")
+        print("game {} heuristic_function = {}".format(i+1, heuristic_function))
+        AStarAlgorithm(actual_games[i], heuristic_function)
+        print('total time till now:{}'.format(time.time()-start_time))
+        print("~~~~~~~~~~~~~~~~~~~~~~~")
+    print("it's done, total time:")
     print(time.time()-start_time)
-    # print_game_comfortably(actual_games[0])
-    # actual_games[0].move_car('A', MoveDirection.RIGHT, 1)
-    # actual_games[0].move_car('A', MoveDirection.LEFT, 1)
-    # actual_games[0].move_car('O', MoveDirection.DOWN, 1)
-    # actual_games[0].move_car('O', MoveDirection.UP, 1)
-    # print_game_comfortably(actual_games[0])
-    # run_tests(actual_games)
-    # print_game_comfortably(actual_games[0])
-    # print(actual_games[0].cars_information)
-    # print("--------------------------------------")
-    # print("Printing Cars:")
-    # for car in actual_games[0].cars_information.values():
-    #     print(car)
-    # print("--------------------------------------")
-    # print(len(actual_games[0].cars_information))
-    # res = actual_games[0].move_car('C', MoveDirection.LEFT, 3)
-    # assert (res == True)
-    # print_game_comfortably(actual_games[0])
-    # res = actual_games[0].move_car('A', MoveDirection.RIGHT, 1)
-    # assert res == True
-    # print_game_comfortably(actual_games[0])
-    # res = actual_games[0].move_car('O', MoveDirection.DOWN, 6)
-    # assert res == False
-    # print_game_comfortably(actual_games[0])
-    # res = actual_games[0].move_car('O', MoveDirection.DOWN, 2)
-    # assert res == True
-    # print_game_comfortably(actual_games[0])
-    # AStarAlgorithm(actual_games[0], Car('X',Direction.ROW, 2, 1, 2, 2, 2))
-    # AStarAlgorithm(actual_games[39], Car('X',Direction.ROW, 2, 3, 2, 4, 2))
-    # AStarAlgorithm(actual_games[32], Car('X',Direction.ROW, 2, 3, 2, 4, 2))
-    # AStarAlgorithm(actual_games[20], Car('X',Direction.ROW, 2, 1, 2, 2, 2))
-    # AStarAlgorithm(actual_games[31], Car('X',Direction.ROW, 2, 0, 2, 1, 2))
-    # AStarAlgorithm(actual_games[31], Car('X',Direction.ROW, 2, 0, 2, 1, 2))
-    # AStarAlgorithm(actual_games[31], Car('X',Direction.ROW, 2, 0, 2, 1, 2))
+
+
+def run_dls(actual_games):
+    start_time = time.time()
+    for i in range(0, 40):
+        print("game {} (DLS)".format(i + 1))
+        start_time_per_game = time.time()
+        DepthLimitedSearch(actual_games[i])
+        end_time = time.time()-start_time_per_game
+        print(end_time)
+        print('total time till now:{}'.format(time.time() - start_time))
+        print("~~~~~~~~~~~~~~~~~~~~~~~")
+    print("it's done, total time:")
+    print(time.time() - start_time)
+
+
+def main():
+    input_games, timer, heuristic_function = read_input(IS_DEBUGGING)
+    actual_games = convert_games(input_games)
+    # run_a_star_algorithm(actual_games, heuristic_function)
+    first_game = actual_games[0]
+    actual_games[0] = first_game
+    run_dls(actual_games)
 
 
 if __name__ == '__main__':
