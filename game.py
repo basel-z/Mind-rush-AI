@@ -28,7 +28,6 @@ def read_input(debugging):
         for char in allocated_time:
             x = x * 10 + (ord(char) - ord('0'))
         allocated_time = x
-        print(allocated_time)
         heuristic_function = ord(sys.argv[3]) - ord('0')
         if heuristic_function not in [1, 2, 3]:
             raise HeuristicFunctionException("Incorrect Heurstic function entered, was: {}".format(heuristic_function))
