@@ -26,7 +26,6 @@ def read_input(debugging):
         allocated_time = sys.argv[2]
         x = 0
         for char in allocated_time:
-            print(char)
             x = x * 10 + (ord(char) - ord('0'))
         allocated_time = x
         print(allocated_time)
