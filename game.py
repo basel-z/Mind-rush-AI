@@ -7,7 +7,7 @@ from board_tests import *
 from moves_history import *
 from DepthLimitedSearch import *
 
-IS_DEBUGGING = 1
+IS_DEBUGGING = 0
 HEURISTIC_FUNCTION = 2
 
 
@@ -24,7 +24,11 @@ def read_input(debugging):
     try:
         file = sys.argv[1]
         allocated_time = sys.argv[2]
-        heuristic_function = sys.argv[3]
+        x = 1
+        for char in allocated_time:
+            x = x * (ord(char) - ord('0'))
+        allocated_time = x
+        heuristic_function = ord(sys.argv[3]) - ord('0')
         if heuristic_function not in [1, 2, 3]:
             raise HeuristicFunctionException("Incorrect Heurstic function entered, was: {}".format(heuristic_function))
     except IndexError:
@@ -50,9 +54,10 @@ def read_input(debugging):
         print(display_colored_text(red, "Usage: python [main file name] [input games] [timeout] [heuristic function 1/2]"))
         print(display_colored_text(red, "Example: python game.py ./Data/rh.txt 7 1"))
         yellow = '34m'
-        print(display_colored_text(yellow,"Notice: heuristic = 1 checks number of cars blocking the red one from exiting"))
+        print(display_colored_text(yellow, "Notice: heuristic = 1 checks number of cars blocking the red one from exiting"))
         print(display_colored_text(yellow, "Notice: heuristic = 2 checks number of cars blocked on the red car row"))
         print(display_colored_text(red, e))
+        exit(1)
 
     with open(file, 'r') as f:
         contents = f.readlines()
