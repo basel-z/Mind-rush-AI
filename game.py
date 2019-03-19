@@ -24,10 +24,12 @@ def read_input(debugging):
     try:
         file = sys.argv[1]
         allocated_time = sys.argv[2]
-        x = 1
+        x = 0
         for char in allocated_time:
-            x = x * (ord(char) - ord('0'))
+            print(char)
+            x = x * 10 + (ord(char) - ord('0'))
         allocated_time = x
+        print(allocated_time)
         heuristic_function = ord(sys.argv[3]) - ord('0')
         if heuristic_function not in [1, 2, 3]:
             raise HeuristicFunctionException("Incorrect Heurstic function entered, was: {}".format(heuristic_function))
