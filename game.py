@@ -37,12 +37,12 @@ def read_input(debugging):
             file = './Data/rh.txt'
             allocated_time = 150
             heuristic_function = HEURISTIC_FUNCTION
-            if heuristic_function not in [1, 2]:
+            if heuristic_function not in [1, 2, 3]:
                 raise HeuristicFunctionException("Incorrect Heurstic function entered, was: {}".format(heuristic_function))
         else:
             red = '31m'
             print(display_colored_text(red, "Err: Did you initiate the program correctly?"))
-            print(display_colored_text(red, "Usage: python [main file name] [input games] [timeout] [heuristic function 1/2]"))
+            print(display_colored_text(red, "Usage: python [main file name] [input games] [timeout] [heuristic function 1/2, or 3(DLS)]"))
             print(display_colored_text(red, "Example: python game.py ./Data/rh.txt 7 1"))
             yellow = '34m'
             print(display_colored_text(yellow, "Notice: heuristic = 1 checks number of cars blocking the red one from exiting"))
@@ -51,7 +51,7 @@ def read_input(debugging):
     except HeuristicFunctionException as e:
         red = '31m'
         print(display_colored_text(red, "Err: Did you initiate the program correctly?"))
-        print(display_colored_text(red, "Usage: python [main file name] [input games] [timeout] [heuristic function 1/2]"))
+        print(display_colored_text(red, "Usage: python [main file name] [input games] [timeout] [heuristic function 1/2, or 3(DLS)]"))
         print(display_colored_text(red, "Example: python game.py ./Data/rh.txt 7 1"))
         yellow = '34m'
         print(display_colored_text(yellow, "Notice: heuristic = 1 checks number of cars blocking the red one from exiting"))
