@@ -8,7 +8,7 @@ from moves_history import *
 from DepthLimitedSearch import *
 
 IS_DEBUGGING = 1
-HEURISTIC_FUNCTION = 1
+HEURISTIC_FUNCTION = 2
 
 
 class HeuristicFunctionException(Exception):
@@ -25,7 +25,7 @@ def read_input(debugging):
         file = sys.argv[1]
         allocated_time = sys.argv[2]
         heuristic_function = sys.argv[3]
-        if heuristic_function not in [1, 2]:
+        if heuristic_function not in [1, 2, 3]:
             raise HeuristicFunctionException("Incorrect Heurstic function entered, was: {}".format(heuristic_function))
     except IndexError:
         if debugging == 1:
@@ -81,40 +81,31 @@ def run_tests(actual_games):
     BoardTest(actual_games)
 
 
-def run_a_star_algorithm(actual_games, heuristic_function):
+def run_a_star_algorithm(actual_games, heuristic_function, timer):
     start_time = time.time()
     f = open("output.txt", "w")
     f.write("")
     for i in range(0, 40):
-        print("game {} heuristic_function = {}".format(i+1, heuristic_function))
-        AStarAlgorithm(actual_games[i], heuristic_function)
-        print('total time till now:{}'.format(time.time()-start_time))
-        print("~~~~~~~~~~~~~~~~~~~~~~~")
-    print("it's done, total time:")
-    print(time.time()-start_time)
+        AStarAlgorithm(actual_games[i], heuristic_function, timer, i+1)
+    # print("it's done, total time:")
+    f.write('total time :{}'.format(time.time()-start_time))
 
 
-def run_dls(actual_games):
+def run_dls(actual_games, timer):
     start_time = time.time()
+    f = open("output.txt", "w")
     for i in range(0, 40):
-        print("game {} (DLS)".format(i + 1))
-        start_time_per_game = time.time()
-        DepthLimitedSearch(actual_games[i])
-        end_time = time.time()-start_time_per_game
-        print(end_time)
-        print('total time till now:{}'.format(time.time() - start_time))
-        print("~~~~~~~~~~~~~~~~~~~~~~~")
-    print("it's done, total time:")
-    print(time.time() - start_time)
-
+        DepthLimitedSearch(actual_games[i], i+1, timer)
+    f.write('\ntotal time '.format(time.time() - start_time))
 
 def main():
     input_games, timer, heuristic_function = read_input(IS_DEBUGGING)
     actual_games = convert_games(input_games)
-    # run_a_star_algorithm(actual_games, heuristic_function)
-    first_game = actual_games[0]
-    actual_games[0] = first_game
-    run_dls(actual_games)
+    timer = float(timer)
+    if heuristic_function == 1 or heuristic_function == 2:
+        run_a_star_algorithm(actual_games, heuristic_function, timer)
+    else:
+         run_dls(actual_games, timer)
 
 
 if __name__ == '__main__':

@@ -26,6 +26,9 @@ class GameState:
 
 class AStarAlgorithm:
     def __init__(self, actual_game: Board, heuristic_function, timer, game_number):
+        self.searched_nodes = 0
+        self.total_heuristic = 0
+        self.expand_number = 0
         self.game_number = game_number
         self.timer = timer
         self.heuristic_function = heuristic_function
@@ -56,12 +59,13 @@ class AStarAlgorithm:
 
     # expands the current state
     def expand(self):
+        self.expand_number += 1
         state_list = []
         for car_name in self.actual_game.cars_information.keys():
             current_car_info: Car = self.actual_game.cars_information.get(car_name)
             state_list_per_car = self.generate_state_for_all_possible_moves(car_name, current_car_info)
             state_list += state_list_per_car
-
+        # self.searched_nodes += len(state_list)
         return state_list
 
     def generate_state_for_all_possible_moves(self, car_name, car_information: Car):
@@ -179,6 +183,7 @@ class AStarAlgorithm:
             curr_min_state: GameState = heappop(self.open)
             list_for_min_states = [curr_min_state]
             if self.check_winning(curr_min_state.actual_game):
+                self.searched_nodes += len(self.open) + len(self.closed)
                 self.print_steps(curr_min_state)
                 break
             flag = False
@@ -191,6 +196,7 @@ class AStarAlgorithm:
                     break
                 another_min_state = heappop(self.open)
                 if self.check_winning(another_min_state.actual_game):
+                    self.searched_nodes += len(self.open) + len(self.closed)
                     self.print_steps(another_min_state)
                     flag = True
                     break
@@ -218,6 +224,7 @@ class AStarAlgorithm:
             list_for_expand = self.expand()
 
             for state in list_for_expand:
+                self.total_heuristic += state.priority
                 index_for_state_in_open = self.does_it_exist_in_open(state)
                 copy_of_board: Board = deepcopy(self.actual_game)
                 copy_of_board.move_car(state.car_name, state.direction, state.steps)
@@ -272,8 +279,6 @@ class AStarAlgorithm:
             j += 1
             f.write("{} ".format(list_of_steps[i]))
         f.write('.\n              ')
-        f.write("total time{}\n".format(time.time()-self.start_time))
-        # self.print_board_after_doing_all_steps(list_of_steps, another_min_state, self.game_number)
 
     @staticmethod
     def get_step_in_str(prev_state: GameState):

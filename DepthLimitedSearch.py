@@ -1,5 +1,7 @@
 from board import Board, Car, Direction, MoveDirection
 from copy import deepcopy
+import time
+
 
 class GameState:
 
@@ -15,15 +17,27 @@ class DFSNode:
     def is_head(self):
         return self.parent is None
 
-    def print_steps(self):
+    def print_steps(self, game_index, start_time):
         list_of_steps = []
         node = self
         while not node.is_head():
             list_of_steps.append(self.get_step_in_str(node.state))
             node = node.parent
         list_of_steps.reverse()
-        print(list_of_steps)
-        self.print_board_after_doing_all_steps(list_of_steps)
+        # print(list_of_steps)
+        # self.print_board_after_doing_all_steps(list_of_steps)
+        f = open("output.txt", "a")
+        f.write("\nGame number{}, Steps: ".format(game_index))
+        j = 0
+        for i in range(len(list_of_steps)):
+            if j == 10:
+                j = 0
+                f.write('\n')
+                f.write('                     ')
+            j += 1
+            f.write("{} ".format(list_of_steps[i]))
+        f.write('.\n              ')
+        f.write("total time{}\n".format(time.time()-start_time))
 
     @staticmethod
     def get_step_in_str(prev_state: GameState):
@@ -124,17 +138,21 @@ class DFSNode:
 
 class DepthLimitedSearch:
 
-    def __init__(self, board: Board):
+    def __init__(self, board: Board, game_index, timer):
+        self.start_time = time.time()
         self.initial_board = board
         self.stack = list()
         self.closed = {}
-        win_node: DFSNode = self.dls()
+        win_node: DFSNode = self.dls(timer)
         if win_node is not None:
-            win_node.print_steps()
+            win_node.print_steps(game_index, self.start_time)
 
-    def dls(self):
+    def dls(self, timer):
         depth_allowed = 0
+        start_time = time.time()
         while True:
+            if time.time()-start_time > timer:
+                return None
             self.closed.clear()
             winning_state = self.dfs(depth_allowed)
             if winning_state is not None:
