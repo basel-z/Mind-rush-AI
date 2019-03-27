@@ -12,6 +12,16 @@ class MoveDirection(Enum):
     LEFT = 3
     RIGHT = 4
 
+    def __str__(self):
+        if self == self.RIGHT:
+            return "RIGHT"
+        if self == self.LEFT:
+            return "LEFT"
+        if self == self.UP:
+            return "UP"
+        if self == self.DOWN:
+            return "DOWN"
+
 
 def is_car_out_of_bounds(new_start_row, new_end_row, new_start_col, new_end_col):
     return new_end_col not in range(6) or new_start_col not in range(6) or new_end_row not in range(6) or new_start_row not in range(6)
@@ -60,10 +70,13 @@ class Car:
 
 
 class Board:
-    # 2 dimensional array
-    # game_board = []
-    # game_board_as_string = ''
-    # cars_information = {}
+
+    def __init__(self, game_data):
+        self.game_board = Board.convert_data(game_data)
+        self.cars_information = {}
+        self.get_cars_info()
+        self.red_car_info = self.cars_information.get('X')
+        self.game_board_as_string = ''.join(self.game_board)
 
     @staticmethod
     def convert_data(game_data):
@@ -113,14 +126,6 @@ class Board:
     def get_cars_info(self):
         self.save_cars_in_rows()
         self.save_cars_in_cols()
-
-
-    def __init__(self, game_data):
-        self.game_board = Board.convert_data(game_data)
-        self.cars_information = {}
-        self.get_cars_info()
-        self.red_car_info = self.cars_information.get('X')
-        self.game_board_as_string = ''.join(self.game_board)
 
     def get_car_length_in_column(self, row, col):
         length = 1

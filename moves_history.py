@@ -18,7 +18,8 @@ class GameState:
         self.num_of_moves_to_get_to_state = num_of_moves_to_get_to_state
 
     def __eq__(self, other):
-        return other.actual_game.game_board == self.actual_game.game_board
+        return other.actual_game.game_board_as_string == self.actual_game.game_board_as_string
+    # TODO: Careful here, maybe it messed things up (the equation with game_board_as_string, previously: gameboard
 
     def __lt__(self, other):
         return self.priority < other.priority
@@ -43,7 +44,7 @@ class AStarAlgorithm:
         list = self.expand()
         for state in list:
             heappush(self.open, state)
-        self.algorthim()
+        self.algorithm()
 
     def translate_board_to_state(self, actual_game: Board, red_car_info: Car):
         return GameState(self.evaluate_initial_fn(actual_game.game_board, red_car_info.end_col), None, None, None, None, actual_game, 0)
@@ -110,16 +111,31 @@ class AStarAlgorithm:
 
     def infer_priority_by_heuristic_function(self, direction, car_information, red_car_end_col, steps):
         if self.heuristic_function == 1:
-            if direction == Direction.ROW:
-                value = 0
-            else:
-                value = self.get_priority(car_information, red_car_end_col, steps)
-            return value + 1 + self.current_state.priority
-        return self.current_state.num_of_moves_to_get_to_state + self.get_num_of_blocked_cars_on_red_row()
+            return self.heuristic_function1(direction, car_information, red_car_end_col, steps)
+        elif self.heuristic_function == 2:
+            return self.heuristic_function2()
+        elif self.heuristic_function == 4:
+            return self.heuristic_function4()
+        else:
+            raise Exception('got a wrong HEURISTIC function number!!{}'.format(self.heuristic_function))
 
-    def get_num_of_blocked_cars_on_red_row(self):
+    def heuristic_function1(self, direction, car_information, red_car_end_col, steps):
+        if direction == Direction.ROW:
+            value = 0
+        else:
+            value = self.get_priority(car_information, red_car_end_col, steps)
+        return value + 1 + self.current_state.priority
+
+    def heuristic_function2(self):
+        self.current_state.num_of_moves_to_get_to_state + self.get_num_of_blocked_cars_on_red_row(0)
+
+    def heuristic_function4(self):
+        return self.get_num_of_blocked_cars_on_red_row(self.actual_game.red_car_info.end_col+1)
+
+
+    def get_num_of_blocked_cars_on_red_row(self, start_col):
         counter = 0
-        for i in range(6):
+        for i in range(start_col, 6):
             curr_car_name = self.actual_game.game_board[2][i]
             if curr_car_name == '.' or curr_car_name == 'X':
                 continue
@@ -159,7 +175,6 @@ class AStarAlgorithm:
 
     @staticmethod
     def get_priority(car_information: Car, red_car_end_col, steps):
-        # TODO: deal with row
         if red_car_end_col > car_information.start_col:
             return 0
         final_start_row = car_information.start_row + steps
@@ -172,7 +187,7 @@ class AStarAlgorithm:
             return 1
         return 0
 
-    def algorthim(self):
+    def algorithm(self):
         # heappush(self.open, self.current_state)
         steps_so_far = 0
         while self.open:
@@ -260,25 +275,26 @@ class AStarAlgorithm:
         return True
 
     def print_steps(self, another_min_state: GameState):
-        list_of_steps = []
-        steps_to_get_red_out = 6 - another_min_state.actual_game.red_car_info.end_col + 1
-        list_of_steps.append("XR{}".format(steps_to_get_red_out))
-        while another_min_state.prev_state is not None:
-            list_of_steps.append(self.get_step_in_str(another_min_state))
-            another_min_state = another_min_state.prev_state
-        list_of_steps.reverse()
+        # list_of_steps = []
+        # steps_to_get_red_out = 6 - another_min_state.actual_game.red_car_info.end_col + 1
+        # list_of_steps.append("XR{}".format(steps_to_get_red_out))
+        # while another_min_state.prev_state is not None:
+        #     list_of_steps.append(self.get_step_in_str(another_min_state))
+        #     another_min_state = another_min_state.prev_state
+        # list_of_steps.reverse()
         # print(list_of_steps)
         f = open("output.txt", "a")
-        f.write("\nGame number{}, Steps: ".format(self.game_number))
-        j = 0
-        for i in range(len(list_of_steps)):
-            if j == 10:
-                j = 0
-                f.write('\n')
-                f.write('                     ')
-            j += 1
-            f.write("{} ".format(list_of_steps[i]))
-        f.write('.\n              ')
+        f.write(another_min_state.actual_game.game_board_as_string + '\n')
+        # f.write("\nGame number{}, Steps: ".format(self.game_number))
+        # j = 0
+        # for i in range(len(list_of_steps)):
+        #     if j == 10:
+        #         j = 0
+        #         f.write('\n')
+        #         f.write('                     ')
+        #     j += 1
+        #     f.write("{} ".format(list_of_steps[i]))
+        # f.write('.\n              ')
 
     @staticmethod
     def get_step_in_str(prev_state: GameState):

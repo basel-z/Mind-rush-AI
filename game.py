@@ -6,39 +6,32 @@ import sys
 from board_tests import *
 from moves_history import *
 from DepthLimitedSearch import *
+from IDAStar import *
+from utils import HeuristicFunctionExplanations, str_to_int, display_colored_text
 
-IS_DEBUGGING = 0
-HEURISTIC_FUNCTION = 2
+IS_DEBUGGING = 1
+HEURISTIC_FUNCTION = 1
 
 
 class HeuristicFunctionException(Exception):
     pass
 
 
-def display_colored_text(color, text):
-    colored_text = f"\033[{color}{text}\033[00m"
-    return colored_text
-
-
 def read_input(debugging):
     try:
         file = sys.argv[1]
-        allocated_time = sys.argv[2]
-        x = 0
-        for char in allocated_time:
-            x = x * 10 + (ord(char) - ord('0'))
-        allocated_time = x
-        heuristic_function = ord(sys.argv[3]) - ord('0')
-        if heuristic_function not in [1, 2, 3]:
-            raise HeuristicFunctionException("Incorrect Heurstic function entered, was: {}".format(heuristic_function))
+        allocated_time = str_to_int(sys.argv[2])
+        heuristic_function = str_to_int(sys.argv[3])
+        if heuristic_function not in [1, 2, 3, 4]:
+            raise HeuristicFunctionException("Incorrect Heuristic function entered, was: {}".format(heuristic_function))
     except IndexError:
         if debugging == 1:
             # default values for debugging
             file = './Data/rh.txt'
             allocated_time = 150
             heuristic_function = HEURISTIC_FUNCTION
-            if heuristic_function not in [1, 2, 3]:
-                raise HeuristicFunctionException("Incorrect Heurstic function entered, was: {}".format(heuristic_function))
+            if heuristic_function not in [1, 2, 3, 4]:
+                raise HeuristicFunctionException("Incorrect Heuristic function entered, was: {}".format(heuristic_function))
         else:
             red = '31m'
             print(display_colored_text(red, "Err: Did you initiate the program correctly?"))
@@ -103,19 +96,28 @@ def run_dls(actual_games, timer):
         DepthLimitedSearch(actual_games[i], i+1, timer)
     f.write('\ntotal time '.format(time.time() - start_time))
 
+
 def main():
     input_games, timer, heuristic_function = read_input(IS_DEBUGGING)
     actual_games = convert_games(input_games)
-    timer = float(timer)
-    if heuristic_function == 1 or heuristic_function == 2:
-        run_a_star_algorithm(actual_games, heuristic_function, timer)
-    else:
-         run_dls(actual_games, timer)
+    # actual_games = [Board("AAABBBEEEQ..CXXQ..C..Q..C........FFF")]
+    # timer = float(timer)
+    # if heuristic_function == 1 or heuristic_function == 2:
+    #     run_a_star_algorithm(actual_games, heuristic_function, timer)
+    # else:
+    #      run_dls(actual_games, timer)
+    for i in range(0, 40):
+        f = open("output.txt", "w")
+        f.write("")
+        a = time.time()
+        IDAStar(actual_games[i], i+1, a, heuristic_function)
+        print(time.time() - a)
 
 
 if __name__ == '__main__':
     # pr = cProfile.Profile()
     # pr.enable()
+    HeuristicFunctionExplanations()
     main()
     # pr.disable()
     # sortBy = SortKey.CUMULATIVE
