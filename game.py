@@ -124,7 +124,6 @@ def run_double_a_star(actual_games, sol_games):
         doubleAstar(actual_games[i], sol_games[i], 30, i+1)
 
 
-
 def run_ida_star(actual_games, heuristic_function, allocated_time):
     f = open("output.txt", "w")
     f.write("")
