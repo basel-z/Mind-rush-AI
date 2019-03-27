@@ -242,3 +242,4 @@ class Board:
         tmp[col] = new_char
         self.game_board[row] = ''.join(tmp)
         pass
+

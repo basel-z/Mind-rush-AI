@@ -3,10 +3,11 @@
 
 import sys
 
-from board_tests import *
-from moves_history import *
 from DepthLimitedSearch import *
 from IDAStar import *
+from board_tests import *
+from doubleAStar import *
+from moves_history import *
 from utils import HeuristicFunctionExplanations, str_to_int, display_colored_text, AlgorithmType
 
 IS_DEBUGGING = 1
@@ -42,7 +43,8 @@ def read_input(debugging):
         if debugging == 1:
             # default values for debugging
             file = './Data/rh.txt'
-            allocated_time = 3
+            sol_file = './Data/sol.txt'
+            allocated_time = 150
             heuristic_function = HEURISTIC_FUNCTION
             algorithm: AlgorithmType = DEBUGGING_ALGORITHM
             if heuristic_function not in [1, 2, 3, 4]:
@@ -69,12 +71,16 @@ def read_input(debugging):
 
     with open(file, 'r') as f:
         contents = f.readlines()
+    with open(sol_file, 'r') as f:
+        sol_contents = f.readlines()
+    for i in range(40):
+        sol_contents[i] = sol_contents[i].split('\n')[0]
 
     input_games = []
     i = contents.index('--- RH-input ---\n')
     for j in range(i + 1, contents.index('--- end RH-input ---\n')):
         input_games.append(contents[j].split('\n')[0])
-    return input_games, allocated_time, heuristic_function, algorithm
+    return input_games, allocated_time, heuristic_function, algorithm, sol_contents
 
 
 def convert_games(games_string_format):
@@ -108,7 +114,15 @@ def run_dls(actual_games, timer):
     f = open("output.txt", "w")
     for i in range(0, 40):
         DepthLimitedSearch(actual_games[i], i+1, timer)
-    f.write('\ntotal time '.format(time.time() - start_time))
+    # f.write('\ntotal time '.format(time.time() - start_time))
+
+
+def run_double_a_star(actual_games, sol_games):
+    # f = open("output.txt", "w")
+    # f.write("")
+    for i in range(0, 40):
+        doubleAstar(actual_games[i], sol_games[i], 30, i+1)
+
 
 
 def run_ida_star(actual_games, heuristic_function, allocated_time):
@@ -119,7 +133,7 @@ def run_ida_star(actual_games, heuristic_function, allocated_time):
 
 
 def main():
-    input_games, allocated_time, heuristic_function, algorithm = read_input(IS_DEBUGGING)
+    input_games, allocated_time, heuristic_function, algorithm, sol = read_input(IS_DEBUGGING)
     actual_games = convert_games(input_games)
     if algorithm == AlgorithmType.DLS:
         run_dls(actual_games, allocated_time)
@@ -128,7 +142,7 @@ def main():
     elif algorithm == AlgorithmType.IDA_STAR:
         run_ida_star(actual_games, heuristic_function, allocated_time)
     elif algorithm.value == AlgorithmType.BIDIRECTIONAL_A_STAR:
-        TODO("Basel, implement this, thx love ya")
+        run_double_a_star(actual_games, sol)
 
 
 if __name__ == '__main__':

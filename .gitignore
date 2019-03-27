@@ -5,3 +5,8 @@ __pycache__/board.cpython-37.pyc
 *.pyc
 *.pyc
 output.txt
+__pycache__/board_tests.cpython-37.pyc
+outputDLS.txt
+output2.txt
+output1.txt
+__pycache__/board_tests.cpython-37.pyc
