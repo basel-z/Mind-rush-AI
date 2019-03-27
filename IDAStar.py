@@ -99,6 +99,7 @@ class IDAStarGameState:
             f.write("{} ".format(list_of_steps[i]))
         f.write('.\n              ')
         f.write("total time{}\n".format(time.time() - start_time))
+        f.close()
 
     @staticmethod
     def get_step_in_str(prev_state):
@@ -222,21 +223,20 @@ class IDAStarGameState:
 
 class IDAStar:
 
-    def __init__(self, game_board: Board, game_index, start_time, heuristic_function):
-        self.heuristic_function = heuristic_function
+    def __init__(self, game_board: Board, game_index, heuristic_function, allocated_time):
+        # time and output calculations
+        start_time = time.time()
+
+        # actual algorithms
         self.root = None
         self.visited_nodes = {}
-        # self.root = IDAStarGameState(None, 0, None, None, game_board, 0, heuristic_function)
-        # self.algorithm(game_index, start_time)
-        path, bound = self.algorithm(game_board, game_index, start_time)
+        self.heuristic_function = heuristic_function
+        path, bound = self.algorithm(game_board)
         if path is not None:
-            for _node in path:
-                node: IDAStarGameState = _node
-                print(node)
+            v: IDAStarGameState = path.pop()
+            v.print_steps(game_index, start_time)
 
-    
-    def algorithm(self, game_board: Board, game_index, start_time):
-        print("game {}".format(game_index))
+    def algorithm(self, game_board: Board):
         path = []
         hashed_path = {}
         self.visited_nodes = {}
@@ -269,8 +269,7 @@ class IDAStar:
             if hashed_path.get(child.get_hash()) is None and self.visited_nodes.get(child.get_hash()) is None:
                 path.append(child)
                 hashed_path[child.get_hash()] = child
-                path, suspected_bound, is_found = self.search(path, current_bound,
-                                                              hashed_path)  # think about the g + child.f_value
+                path, suspected_bound, is_found = self.search(path, current_bound, hashed_path)
                 if is_found:
                     return path, f, True
                 minimum = min(minimum, suspected_bound)

@@ -275,26 +275,26 @@ class AStarAlgorithm:
         return True
 
     def print_steps(self, another_min_state: GameState):
-        # list_of_steps = []
-        # steps_to_get_red_out = 6 - another_min_state.actual_game.red_car_info.end_col + 1
-        # list_of_steps.append("XR{}".format(steps_to_get_red_out))
-        # while another_min_state.prev_state is not None:
-        #     list_of_steps.append(self.get_step_in_str(another_min_state))
-        #     another_min_state = another_min_state.prev_state
-        # list_of_steps.reverse()
-        # print(list_of_steps)
+        list_of_steps = []
+        steps_to_get_red_out = 6 - another_min_state.actual_game.red_car_info.end_col + 1
+        list_of_steps.append("XR{}".format(steps_to_get_red_out))
+        while another_min_state.prev_state is not None:
+            list_of_steps.append(self.get_step_in_str(another_min_state))
+            another_min_state = another_min_state.prev_state
+        list_of_steps.reverse()
+        print(list_of_steps)
         f = open("output.txt", "a")
         f.write(another_min_state.actual_game.game_board_as_string + '\n')
-        # f.write("\nGame number{}, Steps: ".format(self.game_number))
-        # j = 0
-        # for i in range(len(list_of_steps)):
-        #     if j == 10:
-        #         j = 0
-        #         f.write('\n')
-        #         f.write('                     ')
-        #     j += 1
-        #     f.write("{} ".format(list_of_steps[i]))
-        # f.write('.\n              ')
+        f.write("\nGame number{}, Steps: ".format(self.game_number))
+        j = 0
+        for i in range(len(list_of_steps)):
+            if j == 10:
+                j = 0
+                f.write('\n')
+                f.write('                     ')
+            j += 1
+            f.write("{} ".format(list_of_steps[i]))
+        f.write('.\n              ')
 
     @staticmethod
     def get_step_in_str(prev_state: GameState):
