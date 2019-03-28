@@ -1,12 +1,8 @@
 import time
 from copy import deepcopy
 
-from board import Board
-from board import Car
-from board import Direction
-from board import MoveDirection
-from utils import TODO, UNDEFINED_F_VALUE, INFINITY
-
+from board import Board, Car, Direction, MoveDirection
+from utils import TODO, UNDEFINED_F_VALUE, INFINITY, F_OUTPUT_IDA_STAR_FILE
 
 class IDAStarGameState:
 
@@ -87,7 +83,7 @@ class IDAStarGameState:
         list_of_steps.reverse()
         # print(list_of_steps)
         # self.print_board_after_doing_all_steps(list_of_steps)
-        f = open("output.txt", "a")
+        f = open(F_OUTPUT_IDA_STAR_FILE, "a")
         f.write("\nGame number{}, Steps: ".format(game_index))
         j = 0
         for i in range(len(list_of_steps)):

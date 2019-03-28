@@ -2,6 +2,7 @@ import random
 from board import Board, MoveDirection, Car, Direction
 from copy import deepcopy
 import time
+from utils import F_OUTPUT_REINFORCEMENT_FILE
 
 
 class GameAction:
@@ -50,7 +51,7 @@ class ReinforcementGameNode:
         list_of_steps.reverse()
         # print(list_of_steps)
         self.print_board_after_doing_all_steps(list_of_steps, node, game_index)
-        f = open("output.txt", "a")
+        f = open(F_OUTPUT_REINFORCEMENT_FILE, "a")
         f.write("\nGame number{}, Steps: ".format(game_index))
         j = 0
         for i in range(len(list_of_steps)):
@@ -61,7 +62,9 @@ class ReinforcementGameNode:
             j += 1
             f.write("{} ".format(list_of_steps[i]))
         f.write('.\n              ')
-        f.write("total time{}\n".format(time.time()-start_time))
+        game_time = time.time() - start_time
+        f.write("total time{}\n".format(game_time))
+        return game_time
 
     def print_board_after_doing_all_steps(self, list_of_steps, another_min_state, game_number):
         # TODO: Optimize Printing
@@ -155,17 +158,19 @@ class ReinforcementGameNode:
 
 class ReinforcementLearning:
 
-    def __init__(self, board: Board, optimal_solution, game_index: int, allocated_time: int):
+    def __init__(self, board: Board, optimal_solution, game_index: int, allocated_time: int, start_time):
         self.score = 0
         self.optimal_solution_actions = optimal_solution
         self.seen_game_actions = {}
         self.stack = list()
-        start_time = time.time()
+        self.current_time = 0
         # TODO: Add time element
         win_node = self.learning_algorithm(board)
         if win_node is not None:
-            win_node.print_steps(game_index, start_time)
+            self.current_time = win_node.print_steps(game_index, start_time)
         else:
+            f = open(F_OUTPUT_REINFORCEMENT_FILE, "a")
+            f.write("\nGame number{}: FAILED".format(game_index))
             print("Could not find solution!")
 
     def learning_algorithm(self, board):

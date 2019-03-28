@@ -4,6 +4,14 @@ from enum import Enum
 UNDEFINED_F_VALUE = -100
 INFINITY = sys.maxsize - 100
 
+F_INPUT_GAME_INPUT_FILE = "./Data/rh.txt"
+F_INPUT_DOUBLE_A_STAR_BOARDS = "./Data/sol.txt"
+F_INPUT_OPTIMAL_SOLUTIONS = "./Data/steps.txt"
+F_OUTPUT_REINFORCEMENT_FILE = "./Output/output_reinforcement.txt"
+F_OUTPUT_DOUBLE_A_STAR_FILE = "./Output/output_double_a_star.txt"
+F_OUTPUT_IDA_STAR_FILE = "./Output/output_ida_star.txt"
+F_OUTPUT_DLS_FILE = "./Output/output_dls.txt"
+F_OUTPUT_A_STAR_FILE = "./Output/a_star.txt"
 
 class TODO:
     def __init__(self, msg=""):

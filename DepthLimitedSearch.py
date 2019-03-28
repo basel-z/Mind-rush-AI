@@ -1,7 +1,7 @@
 from board import Board, Car, Direction, MoveDirection
 from copy import deepcopy
 import time
-
+from utils import F_OUTPUT_DLS_FILE
 
 class GameState:
 
@@ -26,7 +26,7 @@ class DFSNode:
         list_of_steps.reverse()
         # print(list_of_steps)
         # self.print_board_after_doing_all_steps(list_of_steps)
-        f = open("output.txt", "a")
+        f = open(F_OUTPUT_DLS_FILE, "a")
         f.write("\nGame number{}, Steps: ".format(game_index))
         j = 0
         for i in range(len(list_of_steps)):

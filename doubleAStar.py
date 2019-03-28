@@ -1,6 +1,7 @@
 from board import *
 from copy import deepcopy
 from heapq import *
+from utils import F_OUTPUT_DOUBLE_A_STAR_FILE
 import time
 
 class GameState:
@@ -131,7 +132,7 @@ class doubleAstar:
         steps_so_far = 0
         while self.init_open or self.sol_open:
             if time.time() - self.start_time >= self.timer:
-                f = open("output.txt", "a")
+                f = open(F_OUTPUT_DOUBLE_A_STAR_FILE, "a")
                 f.write("\nGame number{}, FAILED \n".format(self.game_number))
                 break
             # HERE WE CHECK THE INIT BOARD AND STATES IF IT HAS BEEN REACHED AND AFTER THAT WE WILL CHECK THE OTHER CASE :

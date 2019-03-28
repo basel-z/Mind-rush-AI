@@ -9,7 +9,7 @@ from board_tests import *
 from doubleAStar import *
 from moves_history import *
 from ReinforcementLearning import *
-from utils import HeuristicFunctionExplanations, str_to_int, display_colored_text, AlgorithmType
+from utils import HeuristicFunctionExplanations, str_to_int, display_colored_text, AlgorithmType, F_INPUT_GAME_INPUT_FILE ,F_INPUT_DOUBLE_A_STAR_BOARDS ,F_INPUT_OPTIMAL_SOLUTIONS ,F_OUTPUT_REINFORCEMENT_FILE ,F_OUTPUT_DOUBLE_A_STAR_FILE ,F_OUTPUT_IDA_STAR_FILE ,F_OUTPUT_DLS_FILE ,F_OUTPUT_A_STAR_FILE
 
 IS_DEBUGGING = 1
 HEURISTIC_FUNCTION = 1
@@ -43,8 +43,9 @@ def read_input(debugging):
     except IndexError:
         if debugging == 1:
             # default values for debugging
-            file = './Data/rh.txt'
-            sol_file = './Data/sol.txt'
+            file = F_INPUT_GAME_INPUT_FILE
+            sol_file = F_INPUT_DOUBLE_A_STAR_BOARDS
+            steps_file = F_INPUT_OPTIMAL_SOLUTIONS
             allocated_time = 150
             heuristic_function = HEURISTIC_FUNCTION
             algorithm: AlgorithmType = DEBUGGING_ALGORITHM
@@ -76,12 +77,36 @@ def read_input(debugging):
         sol_contents = f.readlines()
     for i in range(40):
         sol_contents[i] = sol_contents[i].split('\n')[0]
+    with open(steps_file, 'r') as f:
+        steps_contents = f.readlines()
+    list_of_dic = []
+    for i in range(40):
+        steps_contents[i] = steps_contents[i].split('\n')[0]
+        steps_list_per_game = steps_contents[i].split(' ')
+        game_hash_map = {}
+        for step in steps_list_per_game:
+            if step == '':
+                continue
+            game_hash_map[GameAction(step[0], get_direction_by_str(step[1]), int(step[2]), 0)] = 0
+        list_of_dic.append(game_hash_map)
 
     input_games = []
     i = contents.index('--- RH-input ---\n')
     for j in range(i + 1, contents.index('--- end RH-input ---\n')):
         input_games.append(contents[j].split('\n')[0])
-    return input_games, allocated_time, heuristic_function, algorithm, sol_contents
+    return input_games, allocated_time, heuristic_function, algorithm, sol_contents, list_of_dic
+
+
+def get_direction_by_str(step_in_char):
+    move_side = MoveDirection.UP
+    _move = step_in_char
+    if _move == 'D':
+        move_side = MoveDirection.DOWN
+    elif _move == 'L':
+        move_side = MoveDirection.LEFT
+    elif _move == 'R':
+        move_side = MoveDirection.RIGHT
+    return move_side
 
 
 def convert_games(games_string_format):
@@ -103,54 +128,48 @@ def run_tests(actual_games):
 
 def run_a_star_algorithm(actual_games, heuristic_function, timer):
     start_time = time.time()
-    f = open("output.txt", "w")
+    f = open(F_OUTPUT_A_STAR_FILE, "w")
     f.write("")
     for i in range(0, 40):
         AStarAlgorithm(actual_games[i], heuristic_function, timer, i+1)
+    f = open(F_OUTPUT_A_STAR_FILE, "a")
     f.write('total time :{}'.format(time.time()-start_time))
 
 
 def run_dls(actual_games, timer):
     start_time = time.time()
-    f = open("output.txt", "w")
+    f = open(F_OUTPUT_DLS_FILE, "w")
     for i in range(0, 40):
         DepthLimitedSearch(actual_games[i], i+1, timer)
     # f.write('\ntotal time '.format(time.time() - start_time))
 
 
 def run_double_a_star(actual_games, sol_games):
-    # f = open("output.txt", "w")
-    # f.write("")
+    f = open(F_OUTPUT_DOUBLE_A_STAR_FILE, "w")
+    f.write("")
     for i in range(0, 40):
         doubleAstar(actual_games[i], sol_games[i], 30, i+1)
 
 
 def run_ida_star(actual_games, heuristic_function, allocated_time):
-    f = open("output.txt", "w")
+    f = open(F_OUTPUT_IDA_STAR_FILE, "w")
     f.write("")
     for i in range(0, 40):
         IDAStar(actual_games[i], i+1, heuristic_function, allocated_time)
 
 
-def run_reinforcement_learning(actual_games, heuristic_function, allocated_time):
-    f = open("output.txt", "w")
+def run_reinforcement_learning(actual_games, list_of_dics_for_steps_per_game, allocated_time):
+    f = open(F_OUTPUT_REINFORCEMENT_FILE, "w")
     f.write("")
-    first_game_solution = {
-        GameAction('C', MoveDirection.LEFT, 3, 0): 0,
-        GameAction('O', MoveDirection.DOWN, 3, 0): 0,
-        GameAction('A', MoveDirection.RIGHT, 1, 0): 0,
-        GameAction('P', MoveDirection.UP, 1, 0): 0,
-        GameAction('B', MoveDirection.UP, 1, 0): 0,
-        GameAction('R', MoveDirection.LEFT, 2, 0): 0,
-        GameAction('Q', MoveDirection.DOWN, 2, 0): 0
-    }
-    all_solutions = [first_game_solution]
-    for i in range(0, 1):
-        ReinforcementLearning(actual_games[i], all_solutions[i], i + 1, allocated_time)
-
+    total_time = 0
+    for i in range(0, 40):
+        game_run = ReinforcementLearning(actual_games[i], list_of_dics_for_steps_per_game[i], i + 1, allocated_time, time.time())
+        total_time += game_run.current_time
+    f = open(F_OUTPUT_REINFORCEMENT_FILE, "a")
+    f.write("total run time = {}".format(total_time))
 
 def main():
-    input_games, allocated_time, heuristic_function, algorithm, sol = read_input(IS_DEBUGGING)
+    input_games, allocated_time, heuristic_function, algorithm, sol, list_of_dics_for_steps_per_game = read_input(IS_DEBUGGING)
     actual_games = convert_games(input_games)
     if algorithm == AlgorithmType.DLS:
         run_dls(actual_games, allocated_time)
@@ -161,7 +180,7 @@ def main():
     elif algorithm == AlgorithmType.BIDIRECTIONAL_A_STAR:
         run_double_a_star(actual_games, sol)
     elif algorithm == AlgorithmType.REINFORCEMENT_LEARNING:
-        run_reinforcement_learning(actual_games, heuristic_function, allocated_time)
+        run_reinforcement_learning(actual_games, list_of_dics_for_steps_per_game, allocated_time)
     else:
         raise Exception("Incorrect Algorithm Value, was: {}".format(algorithm))
 
