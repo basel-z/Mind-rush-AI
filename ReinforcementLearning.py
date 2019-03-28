@@ -2,7 +2,9 @@ import random
 from board import Board, MoveDirection, Car, Direction
 from copy import deepcopy
 import time
-from utils import F_OUTPUT_REINFORCEMENT_FILE
+from utils import F_OUTPUT_REINFORCEMENT_FILE, INFINITY
+
+ATTEMPTS_AMOUNT = 10
 
 
 class GameAction:
@@ -42,7 +44,7 @@ class ReinforcementGameNode:
                 return False
         return True
 
-    def print_steps(self, game_index, start_time):
+    def print_steps_reinforcement(self, game_index, start_time):
         list_of_steps = []
         node = self
         while not node.is_head():
@@ -50,7 +52,7 @@ class ReinforcementGameNode:
             node = node.parent
         list_of_steps.reverse()
         # print(list_of_steps)
-        self.print_board_after_doing_all_steps(list_of_steps, node, game_index)
+        # self.print_board_after_doing_all_steps(list_of_steps, node, game_index)
         f = open(F_OUTPUT_REINFORCEMENT_FILE, "a")
         f.write("\nGame number{}, Steps: ".format(game_index))
         j = 0
@@ -164,10 +166,17 @@ class ReinforcementLearning:
         self.seen_game_actions = {}
         self.stack = list()
         self.current_time = 0
+        self.shortest_path = None
+        self.current_shortest_output_length = INFINITY
         # TODO: Add time element
-        win_node = self.learning_algorithm(board)
-        if win_node is not None:
-            self.current_time = win_node.print_steps(game_index, start_time)
+        for i in range(ATTEMPTS_AMOUNT):
+            self.stack.clear()
+            win_node, is_path_shorter = self.learning_algorithm(board)
+            if is_path_shorter:
+                self.shortest_path = win_node
+
+        if self.shortest_path is not None:
+            self.current_time = self.shortest_path.print_steps_reinforcement(game_index, start_time)
         else:
             f = open(F_OUTPUT_REINFORCEMENT_FILE, "a")
             f.write("\nGame number{}: FAILED".format(game_index))
@@ -186,12 +195,15 @@ class ReinforcementLearning:
             preferred_child: ReinforcementGameNode = current_node.get_a_random_max_child(self.seen_game_actions)
 
             if preferred_child.is_win_node():
-                return preferred_child
+                path_length = len(self.stack)
+                if path_length < self.current_shortest_output_length:
+                    self.current_shortest_output_length = path_length
+                return preferred_child, True
 
             self.update_weights_of_child(preferred_child)
             self.stack.append(preferred_child)
 
-        return None
+        return None, False
 
     def update_weights_of_child(self, child: ReinforcementGameNode):
         delta = 0
