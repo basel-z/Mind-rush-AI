@@ -14,7 +14,7 @@ from utils import HeuristicFunctionExplanations, str_to_int, display_colored_tex
 IS_DEBUGGING = 1
 HEURISTIC_FUNCTION = 1
 DEBUGGING_ALGORITHM: AlgorithmType = AlgorithmType.REINFORCEMENT_LEARNING
-
+ALLOCATED_TIME = 300
 
 class HeuristicFunctionException(Exception):
     pass
@@ -46,7 +46,7 @@ def read_input(debugging):
             file = F_INPUT_GAME_INPUT_FILE
             sol_file = F_INPUT_DOUBLE_A_STAR_BOARDS
             steps_file = F_INPUT_OPTIMAL_SOLUTIONS
-            allocated_time = 150
+            allocated_time = ALLOCATED_TIME
             heuristic_function = HEURISTIC_FUNCTION
             algorithm: AlgorithmType = DEBUGGING_ALGORITHM
             if heuristic_function not in [1, 2, 3, 4]:
@@ -133,7 +133,7 @@ def run_a_star_algorithm(actual_games, heuristic_function, timer):
     for i in range(0, 40):
         AStarAlgorithm(actual_games[i], heuristic_function, timer, i+1)
     f = open(F_OUTPUT_A_STAR_FILE, "a")
-    f.write('total time :{}'.format(time.time()-start_time))
+    f.write('\ntotal time :{}'.format(time.time()-start_time))
 
 
 def run_dls(actual_games, timer):
@@ -166,7 +166,7 @@ def run_reinforcement_learning(actual_games, list_of_dics_for_steps_per_game, al
         game_run = ReinforcementLearning(actual_games[i], list_of_dics_for_steps_per_game[i], i + 1, allocated_time, time.time())
         total_time += game_run.current_time
     f = open(F_OUTPUT_REINFORCEMENT_FILE, "a")
-    f.write("total run time = {}".format(total_time))
+    f.write("\ntotal run time = {}".format(total_time))
 
 def main():
     input_games, allocated_time, heuristic_function, algorithm, sol, list_of_dics_for_steps_per_game = read_input(IS_DEBUGGING)
@@ -187,7 +187,10 @@ def main():
 if __name__ == '__main__':
     # pr = cProfile.Profile()
     # pr.enable()
-    HeuristicFunctionExplanations()
+    debugging_algorithm = None
+    if IS_DEBUGGING == 1:
+        debugging_algorithm = DEBUGGING_ALGORITHM
+    HeuristicFunctionExplanations(debugging_algorithm)
     main()
     # pr.disable()
     # sortBy = SortKey.CUMULATIVE

@@ -92,18 +92,31 @@ class ReinforcementGameNode:
         print()
 
     # expands the current state
-    def get_a_random_max_child(self, seen_game_actions):
+    def get_a_random_max_child(self, seen_game_actions, path):
         state_list = []
         for car_name in self.board_after_action.cars_information.keys():
             current_car_info: Car = self.board_after_action.cars_information.get(car_name)
             state_list_per_car = self.generate_state_for_all_possible_moves(car_name, current_car_info, seen_game_actions)
             state_list += state_list_per_car
 
-        max_weight = max(state.action.weight for state in state_list)
         max_list = []
-        for state in state_list:
-            if state.action.weight == max_weight:
-                max_list.append(state)
+        while True:
+            to_remove = []
+            max_weight = max(state.action.weight for state in state_list)
+            for state in state_list:
+                if state.action.weight == max_weight:
+                    if state.board_after_action.game_board_as_string not in path:
+                        max_list.append(state)
+                    else:
+                        to_remove.append(state)
+            if max_list or not state_list:
+                break
+
+            for remove_state in to_remove:
+                state_list.remove(remove_state)
+
+        if not max_list:
+            return None
 
         return max_list[random.randint(0, len(max_list) - 1)]
 
@@ -168,10 +181,11 @@ class ReinforcementLearning:
         self.current_time = 0
         self.shortest_path = None
         self.current_shortest_output_length = INFINITY
+        allocated_time_per_attempt = float(allocated_time)/float(ATTEMPTS_AMOUNT)
         # TODO: Add time element
         for i in range(ATTEMPTS_AMOUNT):
             self.stack.clear()
-            win_node, is_path_shorter = self.learning_algorithm(board)
+            win_node, is_path_shorter = self.learning_algorithm(board, time.time(), allocated_time_per_attempt)
             if is_path_shorter:
                 self.shortest_path = win_node
 
@@ -179,26 +193,33 @@ class ReinforcementLearning:
             self.current_time = self.shortest_path.print_steps_reinforcement(game_index, start_time)
         else:
             f = open(F_OUTPUT_REINFORCEMENT_FILE, "a")
-            f.write("\nGame number{}: FAILED".format(game_index))
-            print("Could not find solution!")
+            f.write("\nGame number{}: FAILED IN ALLOCATED TIME {} per attempt (total attempts = {})".format(game_index, allocated_time_per_attempt, ATTEMPTS_AMOUNT))
 
-    def learning_algorithm(self, board):
+    def learning_algorithm(self, board, run_start_time, allowed_time):
         head: ReinforcementGameNode = ReinforcementGameNode(board, None, None, None, 0, None)
         if head.is_win_node():
             return head
 
         self.stack.append(head)
-
+        diff = run_start_time + allowed_time
         while self.stack:
+            if time.time() > diff:
+                break
+
             current_node: ReinforcementGameNode = self.stack.pop()
 
-            preferred_child: ReinforcementGameNode = current_node.get_a_random_max_child(self.seen_game_actions)
+            preferred_child: ReinforcementGameNode = current_node.get_a_random_max_child(self.seen_game_actions, self.stack)
 
-            if preferred_child.is_win_node():
+            if preferred_child is None:
+                self.stack.pop()
+                continue
+            elif preferred_child.is_win_node():
+                is_shorter = False
                 path_length = len(self.stack)
                 if path_length < self.current_shortest_output_length:
                     self.current_shortest_output_length = path_length
-                return preferred_child, True
+                    is_shorter = True
+                return preferred_child, is_shorter
 
             self.update_weights_of_child(preferred_child)
             self.stack.append(preferred_child)

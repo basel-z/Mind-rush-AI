@@ -13,6 +13,11 @@ F_OUTPUT_IDA_STAR_FILE = "./Output/output_ida_star.txt"
 F_OUTPUT_DLS_FILE = "./Output/output_dls.txt"
 F_OUTPUT_A_STAR_FILE = "./Output/a_star.txt"
 
+RED_TEXT = '31m'
+GREEN_TEXT = '34m'
+YELLOW_TEXT = '34m'
+GREEN_HIGHLIGHT = '42m'
+
 class TODO:
     def __init__(self, msg=""):
         raise Exception("{\n\tTODO: " + msg + "\n}")
@@ -32,7 +37,7 @@ class AlgorithmType(Enum):
 
 class HeuristicFunctionExplanations:
     # instantiate this class if you want an explanation for heuristics:
-    def __init__(self):
+    def __init__(self, debugging_algorithm):
         print("-----------------------------------------------------------------------------")
         print("Heuristic Functions:\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
         print("1: The amount of cars infront of the red car.\t\t\t\t\t\t\t\t|")
@@ -52,7 +57,10 @@ class HeuristicFunctionExplanations:
             to_print = to_print + tabs_to_append + "|"
             print(to_print)
         print("-----------------------------------------------------------------------------")
-        print("Running...")
+        algorithm_info = ""
+        if debugging_algorithm is not None:
+            algorithm_info = debugging_algorithm
+        print(display_colored_text(RED_TEXT, "Running {}...".format(algorithm_info)))
 
 
 def str_to_int(msg: str):
