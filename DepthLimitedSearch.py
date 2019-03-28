@@ -65,7 +65,8 @@ class DFSNode:
             tmp_board.move_car(move[0], move_side, ord(move[2])-ord('0'))
         self.print_game_comfortably(tmp_board)
 
-    def print_game_comfortably(self, board: Board):
+    @staticmethod
+    def print_game_comfortably(board: Board):
         for line in board.game_board:
             print(" ".join(line))
         print()
@@ -102,7 +103,7 @@ class DFSNode:
         if car_information.direction == Direction.ROW:
             return self.get_game_states_in_row(car_name, red_car_end_col)
         elif car_information.direction == Direction.COL:
-            return self.get_game_states_in_col(car_name, car_information, red_car_end_col)
+            return self.get_game_states_in_col(car_name)
         raise Exception("Incorrect Direction in generate_state_for_all_possible_moves")
 
     def get_game_states_in_row(self, car_name, red_car_end_col):
@@ -120,7 +121,7 @@ class DFSNode:
 
         return list_states
 
-    def get_game_states_in_col(self, car_name, car_information, red_car_end_col):
+    def get_game_states_in_col(self, car_name):
         list_states = []
         for i in range(4):
             if self.state.board.is_legal_move(car_name, i):
@@ -180,5 +181,5 @@ class DepthLimitedSearch:
                     self.closed[child.get_hash()] = child
                     self.stack.append(child)
 
-                if child.is_win():
+                if child.is_win_state():
                     return child

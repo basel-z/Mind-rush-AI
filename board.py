@@ -14,13 +14,13 @@ class MoveDirection(Enum):
 
     def __str__(self):
         if self == self.RIGHT:
-            return "RIGHT"
+            return "R"
         if self == self.LEFT:
-            return "LEFT"
+            return "L"
         if self == self.UP:
-            return "UP"
+            return "U"
         if self == self.DOWN:
-            return "DOWN"
+            return "D"
 
 
 def is_car_out_of_bounds(new_start_row, new_end_row, new_start_col, new_end_col):

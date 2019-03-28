@@ -135,7 +135,7 @@ class IDAStarGameState:
     def get_hash(self):
         return self.actual_game.game_board_as_string
 
-    def is_win(self):
+    def is_win_state(self):
         red_car_end_col = self.actual_game.cars_information.get('X').end_col
         range_index = 6 - red_car_end_col
         for i in range(1, range_index):
@@ -261,7 +261,7 @@ class IDAStar:
         f = node.f_value
         if f > current_bound:
             return path, f, False
-        if node.is_win():
+        if node.is_win_state():
             return path, f, True
         minimum = INFINITY
         children = node.expand(self.heuristic_function)

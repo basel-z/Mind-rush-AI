@@ -15,7 +15,8 @@ class AlgorithmType(Enum):
     A_STAR = 2
     IDA_STAR = 3
     BIDIRECTIONAL_A_STAR = 4
-    MAX_ENUM_VALUE = 4  # TODO: please keep this updated to the maximum available
+    REINFORCEMENT_LEARNING = 5
+    MAX_ENUM_VALUE = 5  # TODO: please keep this updated to the maximum available
 
     def __init__(self, a):
         self._value_ = a

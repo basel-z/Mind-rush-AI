@@ -8,11 +8,12 @@ from IDAStar import *
 from board_tests import *
 from doubleAStar import *
 from moves_history import *
+from ReinforcementLearning import *
 from utils import HeuristicFunctionExplanations, str_to_int, display_colored_text, AlgorithmType
 
 IS_DEBUGGING = 1
 HEURISTIC_FUNCTION = 1
-DEBUGGING_ALGORITHM: AlgorithmType = AlgorithmType.IDA_STAR
+DEBUGGING_ALGORITHM: AlgorithmType = AlgorithmType.REINFORCEMENT_LEARNING
 
 
 class HeuristicFunctionException(Exception):
@@ -131,6 +132,23 @@ def run_ida_star(actual_games, heuristic_function, allocated_time):
         IDAStar(actual_games[i], i+1, heuristic_function, allocated_time)
 
 
+def run_reinforcement_learning(actual_games, heuristic_function, allocated_time):
+    f = open("output.txt", "w")
+    f.write("")
+    first_game_solution = {
+        GameAction('C', MoveDirection.LEFT, 3, 0): 0,
+        GameAction('O', MoveDirection.DOWN, 3, 0): 0,
+        GameAction('A', MoveDirection.RIGHT, 1, 0): 0,
+        GameAction('P', MoveDirection.UP, 1, 0): 0,
+        GameAction('B', MoveDirection.UP, 1, 0): 0,
+        GameAction('R', MoveDirection.LEFT, 2, 0): 0,
+        GameAction('Q', MoveDirection.DOWN, 2, 0): 0
+    }
+    all_solutions = [first_game_solution]
+    for i in range(0, 1):
+        ReinforcementLearning(actual_games[i], all_solutions[i], i + 1, allocated_time)
+
+
 def main():
     input_games, allocated_time, heuristic_function, algorithm, sol = read_input(IS_DEBUGGING)
     actual_games = convert_games(input_games)
@@ -140,9 +158,12 @@ def main():
         run_a_star_algorithm(actual_games, heuristic_function, allocated_time)
     elif algorithm == AlgorithmType.IDA_STAR:
         run_ida_star(actual_games, heuristic_function, allocated_time)
-    elif algorithm.value == AlgorithmType.BIDIRECTIONAL_A_STAR:
+    elif algorithm == AlgorithmType.BIDIRECTIONAL_A_STAR:
         run_double_a_star(actual_games, sol)
-
+    elif algorithm == AlgorithmType.REINFORCEMENT_LEARNING:
+        run_reinforcement_learning(actual_games, heuristic_function, allocated_time)
+    else:
+        raise Exception("Incorrect Algorithm Value, was: {}".format(algorithm))
 
 if __name__ == '__main__':
     # pr = cProfile.Profile()
