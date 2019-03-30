@@ -84,10 +84,12 @@ def read_input(debugging):
         steps_contents[i] = steps_contents[i].split('\n')[0]
         steps_list_per_game = steps_contents[i].split(' ')
         game_hash_map = {}
+        step_number = 0
         for step in steps_list_per_game:
             if step == '':
                 continue
-            game_hash_map[GameAction(step[0], get_direction_by_str(step[1]), int(step[2]), 0)] = 0
+            game_hash_map[GameAction(step[0], get_direction_by_str(step[1]), int(step[2]), step_number, 0)] = step_number
+            step_number += 1
         list_of_dic.append(game_hash_map)
 
     input_games = []
@@ -163,10 +165,11 @@ def run_reinforcement_learning(actual_games, list_of_dics_for_steps_per_game, al
     f.write("")
     total_time = 0
     for i in range(0, 40):
-        game_run = ReinforcementLearning(actual_games[i], list_of_dics_for_steps_per_game[i], i + 1, allocated_time, time.time())
+        game_run = ReinforcementLearning(actual_games[i], list_of_dics_for_steps_per_game[i], i + 1, allocated_time)
         total_time += game_run.current_time
     f = open(F_OUTPUT_REINFORCEMENT_FILE, "a")
     f.write("\ntotal run time = {}".format(total_time))
+
 
 def main():
     input_games, allocated_time, heuristic_function, algorithm, sol, list_of_dics_for_steps_per_game = read_input(IS_DEBUGGING)
@@ -183,6 +186,7 @@ def main():
         run_reinforcement_learning(actual_games, list_of_dics_for_steps_per_game, allocated_time)
     else:
         raise Exception("Incorrect Algorithm Value, was: {}".format(algorithm))
+
 
 if __name__ == '__main__':
     # pr = cProfile.Profile()
