@@ -1,12 +1,8 @@
 import time
 from copy import deepcopy
 
-from board import Board
-from board import Car
-from board import Direction
-from board import MoveDirection
-from utils import TODO, UNDEFINED_F_VALUE, INFINITY
-
+from board import Board, Car, Direction, MoveDirection
+from utils import TODO, UNDEFINED_F_VALUE, INFINITY, F_OUTPUT_IDA_STAR_FILE
 
 class IDAStarGameState:
 
@@ -87,7 +83,7 @@ class IDAStarGameState:
         list_of_steps.reverse()
         # print(list_of_steps)
         # self.print_board_after_doing_all_steps(list_of_steps)
-        f = open("output.txt", "a")
+        f = open(F_OUTPUT_IDA_STAR_FILE, "a")
         f.write("\nGame number{}, Steps: ".format(game_index))
         j = 0
         for i in range(len(list_of_steps)):
@@ -164,12 +160,13 @@ class IDAStarGameState:
     def get_game_states_in_row(self, car_name, heuristic_function):
         list_states = []
         for i in range(4):
-            if self.actual_game.is_legal_move(car_name, i):
+            move = 4 - i
+            if self.actual_game.is_legal_move(car_name, move):
                 board_copy = deepcopy(self.actual_game)
-                board_copy.do_the_move(car_name, i)
+                board_copy.do_the_move(car_name, move)
                 list_states.append(
                     # DFSNode(self.depth + 1, GameState(board_copy, car_name, MoveDirection.RIGHT, i), self) TODO: Be extra careful
-                    IDAStarGameState(car_name, i, MoveDirection.RIGHT, self, board_copy,
+                    IDAStarGameState(car_name, move, MoveDirection.RIGHT, self, board_copy,
                                      self.num_of_moves_to_get_to_state + 1, heuristic_function)
                 )
         for i in range(-4, 0):
