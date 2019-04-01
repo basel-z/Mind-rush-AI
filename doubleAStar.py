@@ -1,3 +1,5 @@
+import random
+
 from board import *
 from copy import deepcopy
 from heapq import *
@@ -21,6 +23,8 @@ class GameState:
     def __lt__(self, other):
         return self.priority < other.priority
 
+    def __hash__(self):
+        return hash(self.actual_game.game_board_as_string)
 
 class FromTo(Enum):
     INIT_TO_SOL = 1
@@ -39,21 +43,25 @@ class doubleAstar:
         self.init_open = []
         self.init_closed = {}
         self.init_red_car_info = initial_board.cars_information.get('X')
+        self.copy_init_red_car_info = initial_board.cars_information.get('X')
         self.init_curr_state = self.translate_board_to_state(initial_board, self.init_red_car_info)
         self.init_closed[self.initial_board.game_board_as_string] = self.init_curr_state
         list = self.expand(initial_board, self.init_curr_state)
         for state in list:
             heappush(self.init_open, state)
         self.sol_red_car_info = sol_board.cars_information.get('X')
-        self.sol_curr_state = self.translate_board_to_state(sol_board, self.sol_red_car_info)
+        self.sol_curr_state = self.translate_board_to_state(sol_board, self.sol_red_car_info, True, self.copy_init_red_car_info)
+        self.sol_curr_state.priority *= -1
         self.sol_closed[self.sol_board.game_board_as_string] = self.sol_curr_state
-        list = self.expand(sol_board, self.sol_curr_state)
+        list = self.expand(sol_board, self.sol_curr_state, True,  self.copy_init_red_car_info)
         for state in list:
             heappush(self.sol_open, state)
         self.algorithm()
 
-    def translate_board_to_state(self, actual_game: Board, red_car_info: Car):
-        return GameState(self.evaluate_initial_fn(actual_game.game_board, red_car_info.end_col), None, None, None, None, actual_game, 0)
+    def translate_board_to_state(self, actual_game: Board, red_car_info: Car, is_sol=False, red_init_info=None):
+        if is_sol:
+                return GameState(self.get_sol_priority(red_car_info.end_col, red_init_info), None, None, None, None, actual_game, 0)
+        return GameState(self.get_priority(self.copy_init_red_car_info, red_car_info.end_col, 1), None, None, None, None, actual_game, 0)
 
     # wrapper function, do not call unless in evaluate_fn
     @staticmethod
@@ -64,68 +72,85 @@ class doubleAstar:
                 counter += 1
         return counter
 
-    def expand(self, which_board: Board, which_state: GameState):
+    def expand(self, which_board: Board, which_state: GameState, is_sol=False, init_red_car_info=None):
         state_list = []
         for car_name in which_board.cars_information.keys():
             current_car_info: Car = which_board.cars_information.get(car_name)
-            state_list_per_car = self.generate_state_for_all_possible_moves(car_name, current_car_info, which_board, which_state)
+            state_list_per_car = self.generate_state_for_all_possible_moves(car_name, current_car_info, which_board, which_state, is_sol, init_red_car_info)
             state_list += state_list_per_car
         return state_list
 
-    def generate_state_for_all_possible_moves(self, car_name, car_information: Car, which_board: Board, which_state: GameState):
+    def generate_state_for_all_possible_moves(self, car_name, car_information: Car, which_board: Board, which_state: GameState, is_sol, init_red_car_info):
         red_car_end_col = which_board.cars_information.get("X").end_col
         if car_information.direction == Direction.ROW:
-            return self.get_game_states_in_row(car_name, red_car_end_col, which_board, which_state)
+            return self.get_game_states_in_row(car_name, red_car_end_col, which_board, which_state, is_sol, init_red_car_info)
         elif car_information.direction == Direction.COL:
-            return self.get_game_states_in_col(car_name, car_information, red_car_end_col, which_board, which_state)
+            return self.get_game_states_in_col(car_name, car_information, red_car_end_col, which_board, which_state, is_sol, init_red_car_info)
         raise Exception("Incorrect Direction in generate_state_for_all_possible_moves")
 
-    @staticmethod
-    def get_game_states_in_row(car_name, red_car_end_col, which_board: Board, which_state: GameState):
+    def get_game_states_in_row(self, car_name, red_car_end_col, which_board: Board, which_state: GameState, is_sol, init_red_car_info):
         list_states = []
         for i in range(4):
-            if which_board.is_legal_move(car_name, i):
+            move = 4 - i
+            if which_board.is_legal_move(car_name, move):
                 board_copy = deepcopy(which_board)
-                board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(1 + which_state.priority, car_name, i, MoveDirection.RIGHT, which_state, board_copy, which_state.num_of_moves_to_get_to_state + 1))
+                board_copy.do_the_move(car_name, move)
+                game_state = GameState(1 + which_state.priority, car_name, move, MoveDirection.RIGHT, which_state, board_copy, which_state.num_of_moves_to_get_to_state + 1)
+                if is_sol:
+                    game_state.priority = self.get_sol_priority(red_car_end_col, init_red_car_info)
+                list_states.append(game_state)
         for i in range(-4, 0):
             if which_board.is_legal_move(car_name, i):
                 board_copy = deepcopy(which_board)
                 board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(1 + which_state.priority, car_name, abs(i), MoveDirection.LEFT, which_state, board_copy, which_state.num_of_moves_to_get_to_state + 1))
+                game_state = GameState(1 + which_state.priority, car_name, abs(i), MoveDirection.LEFT, which_state, board_copy, which_state.num_of_moves_to_get_to_state + 1)
+                if is_sol:
+                    game_state.priority = self.get_sol_priority(red_car_end_col, init_red_car_info)
+                list_states.append(game_state)
         return list_states
 
-    def get_game_states_in_col(self, car_name, car_information, red_car_end_col, which_board: Board, which_state: GameState):
+    def get_game_states_in_col(self, car_name, car_information, red_car_end_col, which_board: Board, which_state: GameState, is_sol, init_red_car_info):
         list_states = []
         for i in range(4):
             if which_board.is_legal_move(car_name, i):
                 priority = self.get_priority(car_information, red_car_end_col, i)
                 board_copy = deepcopy(which_board)
                 board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(1 + priority + which_state.priority, car_name, i, MoveDirection.DOWN, which_state, board_copy, which_state.num_of_moves_to_get_to_state + 1))
+                game_state = GameState(1 + priority + which_state.priority, car_name, i, MoveDirection.DOWN, which_state, board_copy, which_state.num_of_moves_to_get_to_state + 1)
+                if is_sol:
+                    game_state.priority = self.get_sol_priority(red_car_end_col, init_red_car_info)
+                list_states.append(game_state)
         for i in range(-4, 0):
             if which_board.is_legal_move(car_name, i):
                 priority = self.get_priority(car_information, red_car_end_col, i)
                 board_copy = deepcopy(which_board)
                 board_copy.do_the_move(car_name, i)
-                list_states.append(GameState(1 + priority + which_state.priority, car_name, abs(i), MoveDirection.UP, which_state, board_copy, which_state.num_of_moves_to_get_to_state + 1))
+                game_state = GameState(1 + priority + which_state.priority, car_name, abs(i), MoveDirection.UP, which_state, board_copy, which_state.num_of_moves_to_get_to_state + 1)
+                if is_sol:
+                    game_state.priority = self.get_sol_priority(red_car_end_col, init_red_car_info)
+                list_states.append(game_state)
         return list_states
+
+    @staticmethod
+    def get_sol_priority(red_car_end_col, init_red_car_info):
+        return abs(red_car_end_col - init_red_car_info.end_col) / 6
 
     @staticmethod
     def get_priority(car_information: Car, red_car_end_col, steps):
-        if car_information.direction == Direction.ROW:
-            return 0
-        if red_car_end_col > car_information.start_col:
-            return 0
-        final_start_row = car_information.start_row + steps
-        final_end_row = car_information.end_row + steps
-        car_was_near_line_3 = 2 in range(car_information.start_row, car_information.end_row + 1)
-        car_will_be_near_line_3 = 2 in range(final_start_row, final_end_row + 1)
-        if car_was_near_line_3 and not car_will_be_near_line_3:
-            return -1
-        elif not car_was_near_line_3 and car_will_be_near_line_3:
-            return 1
-        return 0
+        # if car_information.direction == Direction.ROW:
+        #     return 0
+        # if red_car_end_col > car_information.start_col:
+        #     return 0
+        # final_start_row = car_information.start_row + steps
+        # final_end_row = car_information.end_row + steps
+        # car_was_near_line_3 = 2 in range(car_information.start_row, car_information.end_row + 1)
+        # car_will_be_near_line_3 = 2 in range(final_start_row, final_end_row + 1)
+        # if car_was_near_line_3 and not car_will_be_near_line_3:
+        #     return -1
+        # elif not car_was_near_line_3 and car_will_be_near_line_3:
+        #     return 1
+        # return 0
+        return 6 - red_car_end_col / 6
 
     def algorithm(self):
         flag_to_get_out = False
@@ -157,9 +182,12 @@ class doubleAstar:
                 list_for_min_states.append(another_min_state)
             if flag:
                 break
-
+            index = random.randint(0, len(list_for_min_states) - 1)
+            init_popped_state = list_for_min_states[index]
             # here we didn't got our goal yet so we deal only with a one state so we push the rest
-            for i in range(1, len(list_for_min_states)):
+            for i in range(0, len(list_for_min_states)):
+                if i == index:
+                    continue
                 heappush(self.init_open, list_for_min_states[i])
 
             self.initial_board = deepcopy(init_popped_state.prev_state.actual_game)  # TODO: Do we need deep copy?
@@ -223,9 +251,12 @@ class doubleAstar:
                 list_for_min_states.append(another_min_state)
             if flag:
                 break
-
+            index = random.randint(0, len(list_for_min_states) - 1)
+            sol_popped_state = list_for_min_states[index]
             # here we didn't got our goal yet so we deal only with a one state so we push the rest
-            for i in range(1, len(list_for_min_states)):
+            for i in range(0, len(list_for_min_states)):
+                if i == index:
+                    continue
                 heappush(self.sol_open, list_for_min_states[i])
 
             self.sol_board = deepcopy(sol_popped_state.prev_state.actual_game)  # TODO: Do we need deep copy?
@@ -237,7 +268,7 @@ class doubleAstar:
 
             # expand the min gameState
             steps_so_far += 1
-            list_for_expand = self.expand(self.sol_board, self.sol_curr_state)
+            list_for_expand = self.expand(self.sol_board, self.sol_curr_state, True, self.copy_init_red_car_info)
             for state in list_for_expand:
                 index_for_state_in_open = self.does_it_exist_in_open(state, self.sol_open)
                 copy_of_board: Board = deepcopy(self.sol_board)
@@ -261,6 +292,7 @@ class doubleAstar:
                     break
             if flag_to_get_out:
                 break
+
     @staticmethod
     def does_it_exist_in_open(state: GameState, list):
         open_length: int = len(list)

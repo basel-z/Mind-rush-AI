@@ -13,7 +13,7 @@ from utils import HeuristicFunctionExplanations, str_to_int, display_colored_tex
 
 IS_DEBUGGING = 1
 HEURISTIC_FUNCTION = 1
-DEBUGGING_ALGORITHM: AlgorithmType = AlgorithmType.REINFORCEMENT_LEARNING
+DEBUGGING_ALGORITHM: AlgorithmType = AlgorithmType.A_STAR
 ALLOCATED_TIME = 300
 
 class HeuristicFunctionException(Exception):
@@ -174,6 +174,7 @@ def run_reinforcement_learning(actual_games, list_of_dics_for_steps_per_game, al
 def main():
     input_games, allocated_time, heuristic_function, algorithm, sol, list_of_dics_for_steps_per_game = read_input(IS_DEBUGGING)
     actual_games = convert_games(input_games)
+    sol = convert_games(sol)
     if algorithm == AlgorithmType.DLS:
         run_dls(actual_games, allocated_time)
     elif algorithm == AlgorithmType.A_STAR:

@@ -25,6 +25,8 @@ class GameState:
     def __lt__(self, other):
         return self.priority < other.priority
 
+    def __hash__(self):
+        return hash(self.actual_game)
 
 class AStarAlgorithm:
     def __init__(self, actual_game: Board, heuristic_function, timer, game_number):
@@ -278,24 +280,25 @@ class AStarAlgorithm:
     def print_steps(self, another_min_state: GameState):
         list_of_steps = []
         steps_to_get_red_out = 6 - another_min_state.actual_game.red_car_info.end_col + 1
-        # list_of_steps.append("XR{}".format(steps_to_get_red_out))
+        list_of_steps.append("XR{}".format(steps_to_get_red_out))
         while another_min_state.prev_state is not None:
             list_of_steps.append(self.get_step_in_str(another_min_state))
             another_min_state = another_min_state.prev_state
         list_of_steps.reverse()
         # print(list_of_steps)
         f = open(F_OUTPUT_A_STAR_FILE, "a")
-        # f.write("\nGame number{}, Steps: ".format(self.game_number))
+        f.write("\nGame number{}, Steps: ".format(self.game_number))
         j = 0
         for i in range(len(list_of_steps)):
-        #     if j == 10:
-        #         j = 0
-        #         f.write('\n')
-        #         f.write('                     ')
-        #     j += 1
+            if j == 10:
+                j = 0
+                f.write('\n')
+                f.write('                     ')
+            j += 1
             f.write("{} ".format(list_of_steps[i]))
-        # f.write('.\n              ')
-        f.write('\n')
+        f.write('\ntime: {} .'.format(time.time()-self.start_time))
+        f.write('.\n              ')
+        # f.write('\n')
 
     @staticmethod
     def get_step_in_str(prev_state: GameState):
@@ -324,3 +327,34 @@ class AStarAlgorithm:
             tmp_board.move_car(move[0], move_side,ord(move[2])-ord('0'))
         print(time.time()-self.start_time)
         print_game_comfortably(tmp_board)
+
+    def heuristic_function5(self, car_information, red_car_end_col):
+        sum_of_moves = 0
+        for car in self.actual_game.cars_information.values():
+            if car.direction == Direction.ROW:
+                continue
+            if car.end_col < red_car_end_col:
+                continue
+            if car.length == 2:
+                sum_of_moves += 1
+            else:
+                sum_of_moves += 5 - car.end_row
+        return sum_of_moves
+
+    def heuristic_function6(self, car_information, red_car_end_col):
+        sum_of_moves = 0
+        for car in self.actual_game.cars_information.values():
+            if car.direction == Direction.ROW:
+                continue
+            if car.end_col < red_car_end_col:
+                continue
+            if 2 in range(car.start_row, car.end_row):
+                if car.length == 3:
+                    for j in range(3, 6):
+                        if self.actual_game.game_board[car.end_col][j] != '.':
+                            sum_of_moves += 1
+                else:
+                    for i in range(3):
+                        if self.actual_game.game_board[car.end_col][i] != '.':
+                            sum_of_moves += 1
+        return sum_of_moves
