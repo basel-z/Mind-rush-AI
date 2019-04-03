@@ -1,7 +1,7 @@
 import time
 from copy import deepcopy
 from heapq import *
-
+import random
 from board import *
 from game import print_game_comfortably
 from utils import F_OUTPUT_A_STAR_FILE
@@ -25,8 +25,8 @@ class GameState:
     def __lt__(self, other):
         return self.priority < other.priority
 
-    def __hash__(self):
-        return hash(self.actual_game)
+    # def __hash__(self):
+    #     return hash(self.actual_game)
 
 class AStarAlgorithm:
     def __init__(self, actual_game: Board, heuristic_function, timer, game_number):
@@ -39,6 +39,7 @@ class AStarAlgorithm:
         self.start_time = time.time()
         self.closed = {}
         self.open = []
+        self.hash_for_open = {}
         # also initial state:
         red_car_info = actual_game.cars_information.get("X")
         self.current_state = self.translate_board_to_state(actual_game, red_car_info)
@@ -46,6 +47,7 @@ class AStarAlgorithm:
         self.closed[self.actual_game.game_board_as_string] = self.current_state
         list = self.expand()
         for state in list:
+            self.hash_for_open[state.actual_game.game_board_as_string] = state
             heappush(self.open, state)
         self.algorithm()
 
@@ -119,6 +121,10 @@ class AStarAlgorithm:
             return self.heuristic_function2()
         elif self.heuristic_function == 4:
             return self.heuristic_function4()
+        elif self.heuristic_function == 5:
+            return self.heuristic_function5(car_information, red_car_end_col)
+        elif self.heuristic_function == 6:
+            return self.heuristic_function6(car_information, red_car_end_col)
         else:
             raise Exception('got a wrong HEURISTIC function number!!{}'.format(self.heuristic_function))
 
@@ -134,7 +140,6 @@ class AStarAlgorithm:
 
     def heuristic_function4(self):
         return self.get_num_of_blocked_cars_on_red_row(self.actual_game.red_car_info.end_col+1)
-
 
     def get_num_of_blocked_cars_on_red_row(self, start_col):
         counter = 0
@@ -222,8 +227,12 @@ class AStarAlgorithm:
             if flag:
                 break
 
+            index = random.randint(0, len(list_for_min_states) - 1)
+            curr_min_state = list_for_min_states[index]
             # here we didn't got our goal yet so we deal only with a one state so we push the rest
-            for i in range(1, len(list_for_min_states)):
+            for i in range(0, len(list_for_min_states)):
+                if i == index:
+                    continue
                 heappush(self.open, list_for_min_states[i])
 
 
@@ -243,23 +252,29 @@ class AStarAlgorithm:
 
             for state in list_for_expand:
                 self.total_heuristic += state.priority
-                index_for_state_in_open = self.does_it_exist_in_open(state)
-                copy_of_board: Board = deepcopy(self.actual_game)
-                copy_of_board.move_car(state.car_name, state.direction, state.steps)
-                state_in_closed: GameState = self.closed.get(copy_of_board.game_board_as_string)
+                # index_for_state_in_open = self.does_it_exist_in_open(state)
+                state_in_open: GameState = self.hash_for_open.get(state.actual_game.game_board_as_string)
+                exists_in_open = state_in_open is not None
+                # copy_of_board: Board = deepcopy(self.actual_game)
+                self.actual_game.move_car(state.car_name, state.direction, state.steps)
+                state_in_closed: GameState = self.closed.get(self.actual_game.game_board_as_string)
                 exists_in_closed: bool = state_in_closed is not None
                 # state.prev_state = curr_min_state
-                if not exists_in_closed and index_for_state_in_open == -1:
+                if not exists_in_closed and not exists_in_open:
                     state.prev_state = curr_min_state
+                    self.hash_for_open[state.actual_game.game_board_as_string] = state
                     heappush(self.open, state)
                 elif exists_in_closed:
                     if state_in_closed.priority > state.priority:
-                        self.closed.pop(copy_of_board.game_board_as_string)
+                        self.closed.pop(self.actual_game.game_board_as_string)
+                        self.hash_for_open[state.actual_game.game_board_as_string] = state
                         heappush(self.open, state)
                 else:
-                    if self.open[index_for_state_in_open].priority > state.priority:
-                        self.open.remove(self.open[index_for_state_in_open])
+                    if state_in_open.priority > state.priority:
+                        self.open.remove(state_in_open)
+                        self.hash_for_open[state.actual_game.game_board_as_string] = state
                         heappush(self.open, state)
+                self.actual_game.move_car(state.car_name, self.get_opp_side(state.direction), state.steps)
 
     def does_it_exist_in_open(self, state: GameState):
         open_length: int = len(self.open)
@@ -280,7 +295,7 @@ class AStarAlgorithm:
     def print_steps(self, another_min_state: GameState):
         list_of_steps = []
         steps_to_get_red_out = 6 - another_min_state.actual_game.red_car_info.end_col + 1
-        list_of_steps.append("XR{}".format(steps_to_get_red_out))
+        # list_of_steps.append("XR{}".format(steps_to_get_red_out))
         while another_min_state.prev_state is not None:
             list_of_steps.append(self.get_step_in_str(another_min_state))
             another_min_state = another_min_state.prev_state
@@ -298,6 +313,7 @@ class AStarAlgorithm:
             f.write("{} ".format(list_of_steps[i]))
         f.write('\ntime: {} .'.format(time.time()-self.start_time))
         f.write('.\n              ')
+        # self.print_board_after_doing_all_steps(list_of_steps, another_min_state, self.game_number)
         # f.write('\n')
 
     @staticmethod
@@ -358,3 +374,14 @@ class AStarAlgorithm:
                         if self.actual_game.game_board[car.end_col][i] != '.':
                             sum_of_moves += 1
         return sum_of_moves
+
+    @staticmethod
+    def get_opp_side(moveDir: MoveDirection):
+        if moveDir == MoveDirection.RIGHT:
+            return MoveDirection.LEFT
+        if moveDir == MoveDirection.LEFT:
+            return MoveDirection.RIGHT
+        if moveDir == MoveDirection.UP:
+            return MoveDirection.DOWN
+        if moveDir == MoveDirection.DOWN:
+            return MoveDirection.UP

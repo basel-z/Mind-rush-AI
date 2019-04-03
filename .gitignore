@@ -13,3 +13,4 @@ __pycache__/board_tests.cpython-37.pyc
 doubleAstarResult.txt
 Output/a_star.txt
 Output/output_double_a_star.txt
+Output/output_ida_star.txt

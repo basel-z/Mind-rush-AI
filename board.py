@@ -243,3 +243,45 @@ class Board:
         self.game_board[row] = ''.join(tmp)
         pass
 
+    def heuristic_function8(self):
+        amount = 0
+        start_col = self.red_car_info.start_col
+        # ZXXZ:
+        # if start_col - 1 >= 0:
+            # if self.game_board[2][start_col - 1] != '.':
+            #     amount += 1
+            #
+            # # Z . .
+            # # . X X
+            # # Z . .
+            # if self.game_board[1][start_col - 1] != '.':
+            #     amount += 1
+            # if self.game_board[3][start_col - 1] != '.':
+            #     amount += 1
+        if start_col + 2 < 6:
+            if self.game_board[2][start_col + 2] != '.':
+                amount += 1
+            # . . Z
+            # X X .
+            # . . Z
+            if self.game_board[1][start_col + 2] != '.':
+                amount += 1
+            if self.game_board[3][start_col + 2] != '.':
+                amount += 1
+
+        # . ZZ .
+        # . XX .
+        if self.game_board[1][start_col] != '.':
+            amount += 1
+        if self.game_board[1][start_col + 1] != '.':
+            amount += 1
+
+        # . XX .
+        # . ZZ .
+        if self.game_board[3][start_col] != '.':
+            amount += 1
+        if self.game_board[3][start_col + 1] != '.':
+            amount += 1
+
+        return amount
+

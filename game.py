@@ -13,7 +13,7 @@ from utils import HeuristicFunctionExplanations, str_to_int, display_colored_tex
 
 IS_DEBUGGING = 1
 HEURISTIC_FUNCTION = 1
-DEBUGGING_ALGORITHM: AlgorithmType = AlgorithmType.A_STAR
+DEBUGGING_ALGORITHM: AlgorithmType = AlgorithmType.IDA_STAR
 ALLOCATED_TIME = 300
 
 class HeuristicFunctionException(Exception):
@@ -38,7 +38,7 @@ def read_input(debugging):
         allocated_time = str_to_int(sys.argv[2])
         heuristic_function = str_to_int(sys.argv[3])
         algorithm: AlgorithmType = AlgorithmType(int_to_algorithm_enum(str_to_int(sys.argv[4])))
-        if heuristic_function not in [1, 2, 3, 4]:
+        if heuristic_function not in [1, 2, 3, 4, 5, 6, 7, 8]:
             raise HeuristicFunctionException("Incorrect Heuristic function entered, was: {}".format(heuristic_function))
     except IndexError:
         if debugging == 1:
@@ -49,7 +49,7 @@ def read_input(debugging):
             allocated_time = ALLOCATED_TIME
             heuristic_function = HEURISTIC_FUNCTION
             algorithm: AlgorithmType = DEBUGGING_ALGORITHM
-            if heuristic_function not in [1, 2, 3, 4]:
+            if heuristic_function not in [1, 2, 3, 4, 5, 6, 7, 8]:
                 raise HeuristicFunctionException("Incorrect Heuristic function entered, was: {}".format(heuristic_function))
         else:
             red = '31m'
@@ -147,10 +147,13 @@ def run_dls(actual_games, timer):
 
 
 def run_double_a_star(actual_games, sol_games):
+    _time = time.time()
     f = open(F_OUTPUT_DOUBLE_A_STAR_FILE, "w")
     f.write("")
     for i in range(0, 40):
-        doubleAstar(actual_games[i], sol_games[i], 30, i+1)
+        doubleAstar(actual_games[i], sol_games[i], ALLOCATED_TIME, i+1)
+    f = open(F_OUTPUT_DOUBLE_A_STAR_FILE, "a")
+    f.write('total time for all games: {} sec!'.format(time.time()-_time))
 
 
 def run_ida_star(actual_games, heuristic_function, allocated_time):
