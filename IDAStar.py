@@ -160,51 +160,47 @@ class IDAStarGameState:
 
     def get_game_states_in_row(self, car_name, heuristic_function):
         list_states = []
-        board_copy = deepcopy(self.actual_game)
         for i in range(4):
             move = 4 - i
             if self.actual_game.is_legal_move(car_name, move):
-                # board_copy = deepcopy(self.actual_game)
+                board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, move)
                 list_states.append(
                     # DFSNode(self.depth + 1, GameState(board_copy, car_name, MoveDirection.RIGHT, i), self) TODO: Be extra careful
                     IDAStarGameState(car_name, move, MoveDirection.RIGHT, self, board_copy,
                                      self.num_of_moves_to_get_to_state + 1, heuristic_function)
                 )
-                board_copy.do_the_move(car_name, -move)
         for i in range(-4, 0):
             if self.actual_game.is_legal_move(car_name, i):
-                # board_copy = deepcopy(self.actual_game)
+                board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
                 list_states.append(
                     # DFSNode(self.depth + 1, GameState(board_copy, car_name, MoveDirection.LEFT, -i), self) TODO: Be extra careful
                     IDAStarGameState(car_name, -i, MoveDirection.LEFT, self, board_copy,
                                      self.num_of_moves_to_get_to_state + 1, heuristic_function)
                 )
-                board_copy.do_the_move(car_name, -i)
+
         return list_states
 
     def get_game_states_in_col(self, car_name, heuristic_function):
-        board_copy = deepcopy(self.actual_game)
         list_states = []
         for i in range(4):
             if self.actual_game.is_legal_move(car_name, i):
-                # board_copy = deepcopy(self.actual_game)
+                board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
                 list_states.append(
                     IDAStarGameState(car_name, i, MoveDirection.DOWN, self, board_copy,
                                      self.num_of_moves_to_get_to_state + 1, heuristic_function)
                 )
-                board_copy.do_the_move(car_name, -i)
         for i in range(-4, 0):
             if self.actual_game.is_legal_move(car_name, i):
-                # board_copy = deepcopy(self.actual_game)
+                board_copy = deepcopy(self.actual_game)
                 board_copy.do_the_move(car_name, i)
                 list_states.append(
                     IDAStarGameState(car_name, -i, MoveDirection.UP, self, board_copy,
                                      self.num_of_moves_to_get_to_state + 1, heuristic_function)
                 )
-                board_copy.do_the_move(car_name, -i)
+
         return list_states
 
     def get_priority(self, car_information: Car, red_car_end_col, steps):
@@ -269,8 +265,6 @@ class IDAStar:
         children = node.expand(self.heuristic_function)
         for child in children:
             if hashed_path.get(child.get_hash()) is None and self.visited_nodes.get(child.get_hash()) is None:
-                if child.car_name == 'G' and child.steps == 3 and child.direction ==MoveDirection.RIGHT:
-                    print('here')
                 path.append(child)
                 hashed_path[child.get_hash()] = child
                 path, suspected_bound, is_found = self.search(path, current_bound, hashed_path)
