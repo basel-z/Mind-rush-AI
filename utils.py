@@ -39,11 +39,16 @@ class HeuristicFunctionExplanations:
     # instantiate this class if you want an explanation for heuristics:
     def __init__(self, debugging_algorithm):
         print("-----------------------------------------------------------------------------")
-        print("Heuristic Functions:\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
-        print("1: The amount of cars infront of the red car.\t\t\t\t\t\t\t\t|")
-        print("2: The amount of cars that cover the third row.\t\t\t\t\t\t\t\t|")
-        print("3: DLS.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
-        print("4: The amount of cars that cover the third row, infront of the red car.\t\t|")
+        print("Heuristic Functions:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
+        print("1: The amount of cars infront of the red car.\t\t\t\t\t\t\t\t\t\t|")
+        print("2: The amount of cars that cover the third row.\t\t\t\t\t\t\t\t\t\t|")
+        print("3: DLS.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
+        print("4: The amount of BLOCKED cars that cover the third row, infront of the red car.\t\t|")
+        print("5: The distance of the red car from the exit.\t\t\t\t\t\t\t\t\t\t|")
+        print("6: The total sum of steps we need to move the BLOCKING cars infront of the red.\t\t|")
+        print("7: Same as heuristic 2, but if 2 returns i then 7 returns 2^i\t\t\t\t\t|")
+        print("8: Number of cars surrounding the bounding box of red car\t\t\t\t\t\t|")
+        print("9: Heuristic8 + Heuristic7\t\t\t\t\t\t\t\t\t\t\t\t|")
         print("-----------------------------------------------------------------------------")
         print("Algorithms to Run:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
         for current_type in AlgorithmType:

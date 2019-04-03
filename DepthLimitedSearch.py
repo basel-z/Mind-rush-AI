@@ -3,6 +3,7 @@ from copy import deepcopy
 import time
 from utils import F_OUTPUT_DLS_FILE
 
+
 class GameState:
 
     def __init__(self, board, car_name, move_direction, steps):

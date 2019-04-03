@@ -7,6 +7,7 @@ from heapq import *
 from utils import F_OUTPUT_DOUBLE_A_STAR_FILE
 import time
 
+
 class GameState:
 
     def __init__(self, priority, car_name, steps, direction, prev_state, actual_game, num_of_moves_to_get_to_state, depth):
@@ -27,6 +28,7 @@ class GameState:
 
     # def __hash__(self):
     #     return hash(self.actual_game.game_board_as_string)
+
 
 class FromTo(Enum):
     INIT_TO_SOL = 1

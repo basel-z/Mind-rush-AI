@@ -12,9 +12,9 @@ from ReinforcementLearning import *
 from utils import HeuristicFunctionExplanations, str_to_int, display_colored_text, AlgorithmType, F_INPUT_GAME_INPUT_FILE ,F_INPUT_DOUBLE_A_STAR_BOARDS ,F_INPUT_OPTIMAL_SOLUTIONS ,F_OUTPUT_REINFORCEMENT_FILE ,F_OUTPUT_DOUBLE_A_STAR_FILE ,F_OUTPUT_IDA_STAR_FILE ,F_OUTPUT_DLS_FILE ,F_OUTPUT_A_STAR_FILE
 
 IS_DEBUGGING = 1
-HEURISTIC_FUNCTION = 1
-DEBUGGING_ALGORITHM: AlgorithmType = AlgorithmType.IDA_STAR
-ALLOCATED_TIME = 300
+HEURISTIC_FUNCTION = 9
+DEBUGGING_ALGORITHM: AlgorithmType = AlgorithmType.REINFORCEMENT_LEARNING
+ALLOCATED_TIME = pow(2, 2)
 
 class HeuristicFunctionException(Exception):
     pass
@@ -38,7 +38,7 @@ def read_input(debugging):
         allocated_time = str_to_int(sys.argv[2])
         heuristic_function = str_to_int(sys.argv[3])
         algorithm: AlgorithmType = AlgorithmType(int_to_algorithm_enum(str_to_int(sys.argv[4])))
-        if heuristic_function not in [1, 2, 3, 4, 5, 6, 7, 8]:
+        if heuristic_function not in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
             raise HeuristicFunctionException("Incorrect Heuristic function entered, was: {}".format(heuristic_function))
     except IndexError:
         if debugging == 1:
@@ -49,7 +49,7 @@ def read_input(debugging):
             allocated_time = ALLOCATED_TIME
             heuristic_function = HEURISTIC_FUNCTION
             algorithm: AlgorithmType = DEBUGGING_ALGORITHM
-            if heuristic_function not in [1, 2, 3, 4, 5, 6, 7, 8]:
+            if heuristic_function not in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
                 raise HeuristicFunctionException("Incorrect Heuristic function entered, was: {}".format(heuristic_function))
         else:
             red = '31m'

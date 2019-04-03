@@ -1,13 +1,12 @@
 import random
-from math import pow
 import time
 from copy import deepcopy
 
 from board import Board, MoveDirection, Car, Direction
 from utils import F_OUTPUT_REINFORCEMENT_FILE, INFINITY
 
-ATTEMPTS_AMOUNT = 30
-ACCEPTABLE_MOVE_THRESHOLD = 50
+ATTEMPTS_AMOUNT = 40
+ACCEPTABLE_MOVE_THRESHOLD = 46
 
 
 class GameAction:
@@ -25,7 +24,7 @@ class GameAction:
                and self.step_index == other.step_index
 
     def __hash__(self):
-        return hash((self.car_name, self.move_direction, self.steps))
+        return hash((self.car_name, self.move_direction, self.steps, self.step_index))
 
     def __str__(self):
         return '{}{}{}'.format(self.car_name, self.move_direction, self.steps)
@@ -103,7 +102,7 @@ class ReinforcementGameNode:
         print()
 
     # expands the current state
-    def get_a_random_max_child(self, seen_game_actions, hashed_path, seen_nodes):
+    def get_a_random_max_child(self, seen_game_actions, hashed_path):
         state_list = []
         for car_name in self.board_after_action.cars_information.keys():
             current_car_info: Car = self.board_after_action.cars_information.get(car_name)
@@ -144,13 +143,13 @@ class ReinforcementGameNode:
         for i in range(4):
             move = 4 - i
             if self.board_after_action.is_legal_move(car_name, move):
-                board_copy = deepcopy(self.board_after_action)
+                board_copy = self.board_after_action.copy_me()
                 board_copy.do_the_move(car_name, move)
                 new_node = ReinforcementGameNode(board_copy, car_name, MoveDirection.RIGHT, move, 0, self.action.step_index + 1, self)
                 list_states.append(self.get_new_node_initialized_correctly(new_node, seen_game_actions))
         for i in range(-4, 0):
             if self.board_after_action.is_legal_move(car_name, i):
-                board_copy = deepcopy(self.board_after_action)
+                board_copy = self.board_after_action.copy_me()
                 board_copy.do_the_move(car_name, i)
                 new_node = ReinforcementGameNode(board_copy, car_name, MoveDirection.LEFT, -i, 0, self.action.step_index + 1, self)
                 list_states.append(self.get_new_node_initialized_correctly(new_node, seen_game_actions))
@@ -161,14 +160,14 @@ class ReinforcementGameNode:
         list_states = []
         for i in range(4):
             if self.board_after_action.is_legal_move(car_name, i):
-                board_copy = deepcopy(self.board_after_action)
+                board_copy = self.board_after_action.copy_me()
                 board_copy.do_the_move(car_name, i)
                 new_node = ReinforcementGameNode(board_copy, car_name, MoveDirection.DOWN, i, 0, self.action.step_index + 1, self)
                 list_states.append(self.get_new_node_initialized_correctly(new_node, seen_game_actions))
 
         for i in range(-4, 0):
             if self.board_after_action.is_legal_move(car_name, i):
-                board_copy = deepcopy(self.board_after_action)
+                board_copy = self.board_after_action.copy_me()
                 board_copy.do_the_move(car_name, i)
                 new_node = ReinforcementGameNode(board_copy, car_name, MoveDirection.UP, -i, 0, self.action.step_index + 1, self)
                 list_states.append(self.get_new_node_initialized_correctly(new_node, seen_game_actions))
@@ -186,49 +185,34 @@ class ReinforcementGameNode:
 
 class ReinforcementLearning:
 
+
     @staticmethod
-    def allocated_time_per_attempt(allocated_total_time, game_index):
-        initial_limit = min(allocated_total_time, pow(2, 6))
-        limit = initial_limit
+    def allocated_time_per_attempt(max_allocated_time):
+        initial = 1
         allocated_times = []
-        current_time = pow(2, 0)
-        for i in range(ATTEMPTS_AMOUNT-1):
-            if current_time >= limit:
-                current_time = pow(2, 0)
-            # allocated_times += [float(allocated_total_time)/float(ATTEMPTS_AMOUNT)]
-            allocated_times += [current_time]
-            limit -= current_time
-            current_time *= 2.0
-        # for i in range(len(allocated_times), ATTEMPTS_AMOUNT):
-        #     allocated_times += [current_time]
-        used_time = sum(allocated_times)
-        last_time = 0
-        if used_time < allocated_total_time:
-            last_time = allocated_total_time - used_time
-        allocated_times += [last_time]
-        print("Game {}: sum of times = {}, all times = {}".format(game_index, sum(allocated_times), allocated_times))
+        for i in range(ATTEMPTS_AMOUNT):
+            if initial > max_allocated_time:
+                initial = 1
+            allocated_times += [initial]
+            initial *= 2
+
         return allocated_times
 
     def __init__(self, board: Board, optimal_solution, game_index: int, allocated_time: int):
         self.optimal_solution_actions = optimal_solution
         self.seen_game_actions = {}
-        self.already_seen_nodes = {}
         self.stack = list()
         self.current_time = 0
         self.shortest_path = None
         self.current_shortest_output_length = INFINITY
-        allocated_time_per_attempt = self.allocated_time_per_attempt(allocated_time, game_index)
+        allocated_time_per_attempt = self.allocated_time_per_attempt(allocated_time)
         start_time = time.time()
         for i in range(ATTEMPTS_AMOUNT):
             self.stack.clear()
-            self.already_seen_nodes.clear()
             win_node, is_path_shorter, remaining_time = self.learning_algorithm(board, allocated_time_per_attempt[i])
             allocated_time_per_attempt[-1] += remaining_time
             if is_path_shorter:
                 self.shortest_path = win_node
-            if self.current_shortest_output_length <= ACCEPTABLE_MOVE_THRESHOLD:
-                break
-
         if self.shortest_path is not None:
             self.current_time = self.shortest_path.print_steps_reinforcement(game_index, start_time)
         else:
@@ -249,7 +233,6 @@ class ReinforcementLearning:
     def learning_algorithm(self, board, allowed_time):
         run_start_time = time.time()
         remaining_time = 0
-        should_stop = False
 
         head: ReinforcementGameNode = ReinforcementGameNode(board, None, None, None, 0, -1, None)
         if head.is_win_node():
@@ -264,20 +247,17 @@ class ReinforcementLearning:
 
             current_node: ReinforcementGameNode = self.stack.pop()
             hashed_stack[current_node] = None
-            if hashed_stack.get(current_node) is not None:
+
+            if current_node.action.step_index + 1 >= self.current_shortest_output_length:
                 continue
 
-            # if self.already_seen_nodes.get(current_node.board_after_action.game_board_as_string) is not None:
-            #     continue
-            # self.already_seen_nodes[current_node.board_after_action.game_board_as_string] = 1
-
-            preferred_child: ReinforcementGameNode = current_node.get_a_random_max_child(self.seen_game_actions, hashed_stack, self.already_seen_nodes)
+            preferred_child: ReinforcementGameNode = current_node.get_a_random_max_child(self.seen_game_actions, hashed_stack)
 
             if preferred_child is None:
                 continue
             elif preferred_child.is_win_node():
                 is_shorter = False
-                path_length = len(self.stack)
+                path_length = preferred_child.action.step_index
                 if path_length < self.current_shortest_output_length:
                     self.current_shortest_output_length = path_length
                     is_shorter = True

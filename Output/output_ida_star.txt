@@ -1,0 +1,630 @@
+
+Game number1, Steps: AR2 CL3 OD3 RL1 CR2 PU1 AR2 QU1 BU1 CL2
+                     RL1 QD3 .
+              total time0.06250572204589844
+
+Game number2, Steps: BD2 OL2 CU2 XR3 PU1 AD1 OL1 XL2 BU3 QR3
+                     AD2 XL1 EL1 QL1 PD3 .
+              total time0.06250667572021484
+
+Game number3, Steps: AL1 XL1 AR1 CR1 AL1 OU2 AR3 CL1 XR1 AL3
+                     XL1 AR2 CR1 XR1 AR1 AL3 OD2 AR1 OU2 XL1
+                     CL1 OD1 AL1 CR1 AR1 XR1 AL1 CL1 AR1 OU1
+                     AR1 BU1 AR1 XL1 CR1 CL3 CR1 XR1 CR2 CL3
+                     AL1 XL1 CR3 CL2 CR1 PU3 AR2 BD1 AL1 CR2
+                     AR1 OD3 XR3 XL2 XR1 BU4 XL2 OU3 AL1 CL4
+                     PD3 AL3 OD3 .
+              total time3.975799322128296
+
+Game number4, Steps: OD3 XL1 RL1 AU3 RR1 XR1 RL1 QL1 OU3 QR1
+                     RR1 RL2 QL3 PD3 .
+              total time0.3301882743835449
+
+Game number5, Steps: EL3 GD1 AR1 ER2 AL1 EL1 AR1 FL3 QD2 AL1
+                     EL1 AR1 FR1 AL1 ER1 AR1 PU1 RL1 EL1 FL1
+                     OD3 .
+              total time0.01889657974243164
+
+Game number6, Steps: RL2 OD2 PD2 AR1 XL1 AL1 EU3 DR1 XR1 FU1
+                     XL1 RL1 QD1 .
+              total time0.03087782859802246
+
+Game number7, Steps: FD1 IR1 DD1 IL1 XL1 IL2 CD1 IR2 BR1 CD1
+                     BL1 XR1 FD1 BR2 EU1 XR1 AD3 XL1 AD1 IL2
+                     CD2 DD1 ED2 BL4 EU2 DU2 .
+              total time4.190494775772095
+
+Game number8, Steps: AL3 CU1 AR2 AL1 BL2 EU2 AL1 DU2 FR2 XR3
+                     FL2 GL2 XL3 GR1 XR3 IU2 GR1 HR1 GL1 KR1
+                     OD1 KL1 HL1 QL1 PL1 OD2 .
+              total time0.5832071304321289
+
+Game number9, Steps: OD1 XR1 PU3 QL1 DD3 EL1 FU1 HU1 EL1 XR2
+                     QR1 PD3 AD1 HD1 BL2 CL2 FU1 .
+              total time0.24557065963745117
+
+Game number10, Steps: QR1 CL1 GR1 PD1 CR1 XL1 CL1 XR3 QL1 OU1
+                     XL3 QR2 XR3 QL1 XL3 XR2 QR1 XL1 QL1 QL1
+                     OD1 CR1 XL1 CL1 XR2 CR1 XR1 QR1 XL1 CL1
+                     PU1 QL1 CR1 XL1 QR1 XR2 QL1 CL1 OU1 XL2
+                     QR2 GL1 XR2 BD2 DR2 AR1 DL1 PU2 BD2 QL3
+                     XL2 DR1 EU2 DR1 FL1 HL1 OD3 DR1 CR1 EU2 .
+              total time9.97715950012207
+
+Game number11, Steps: OD3 AL1 XL1 AR1 RL1 AL1 BU3 RR1 XR1 RL1
+                     QL1 XL1 RR1 EU4 QR1 RR1 RL2 BD3 AR1 RR2
+                     BD1 AL1 XR1 AR1 QL1 AL1 XL1 AR1 ED3 AL1
+                     XR1 AR1 QL1 AL1 XL1 AR1 EU3 AL1 XR1 AR1
+                     ED1 QR2 AL1 XL1 AR1 QL1 AL1 ED1 AR1 XR1
+                     AL1 EU1 AR1 OU3 ED2 QL2 PD2 AR3 AL2 AR1
+                     EU3 AL2 AR1 PU1 AR1 AL2 PU1 QR3 OD1 AL1
+                     OD1 AR1 QL1 AL1 ED3 AR1 OU1 AL1 EU3 AR1
+                     OU1 QL1 OD1 AL1 ED3 AR1 OD1 AL1 EU3 AR1
+                     ED1 QR2 AL1 OU1 AR1 OU1 QL3 PD2 AR3 AL2
+                     AR1 ED1 AR1 AL3 AR1 PU1 ED1 AR2 PU1 QR2
+                     OD3 XL1 QL1 XR1 OU3 OD1 QR1 OD1 QL1 EU2
+                     OD1 QR2 XL1 BU4 RL2 RR1 XR1 RR1 RL2 QL1
+                     ED2 OU3 QL2 RR2 RL3 PD3 .
+              total time20.30623173713684
+
+Game number12, Steps: PD1 BR2 BL1 RR1 BR1 BL2 PU1 BR2 PU1 RL1
+                     QL1 OD3 BR1 RR1 BL1 QL1 BR1 RL1 BL1 CU1
+                     BR1 RR2 BL1 RL1 BR1 QL1 BL1 RR1 BR1 RL2
+                     BL1 CD1 BR1 RR1 BL1 OU3 CU3 QR3 RR2 PD3
+                     BL2 CU1 BR1 XR3 BL1 XL2 BR1 AD3 BL2 BR1
+                     XL1 AD1 BR1 BL2 XR3 PU3 QL3 RL2 OD3 .
+              total time3.0524160861968994
+
+Game number13, Steps: DD2 ED1 OU1 XL3 FR1 XR3 XL2 XR1 FL1 XL1
+                     OD1 XL1 DU2 OU1 FR1 DD1 GU3 FL1 DD1 HL1
+                     KL1 OD3 XR1 CD1 BR2 GU1 AR1 XL1 AL1 DU3
+                     HL1 FL1 CD2 .
+              total time3.2733023166656494
+
+Game number14, Steps: DD1 ED1 EU2 HL1 DU2 HL1 CL1 GU2 IU1 JL1
+                     KR4 ID1 JR1 KL1 JL1 GD3 HR2 ED3 DD1 GU2
+                     JR1 DD2 HL2 XL2 BD2 JL1 GD2 AR1 GD1 AR2
+                     AL1 CR1 CL4 FU2 CR2 AL2 CL2 BU2 .
+              total time5.0227251052856445
+
+Game number15, Steps: QD1 AL1 BR1 AR2 AL1 IR1 FD1 AR1 AL2 BL2
+                     OU1 PU1 OD1 BR1 AR1 PD1 AL1 FU1 AR1 HR1
+                     RD1 AL1 BR1 AR2 AL1 XL2 AR1 AL2 BL2 BR1
+                     AR1 PU1 AL1 BL1 OU1 PD1 EU1 OD1 BR2 AR2
+                     AL1 BL1 AL1 FU1 BL1 GL2 BR2 OD1 DR1 EU2
+                     BL1 PD1 BR1 DR1 FU2 XR2 RU1 HL1 IL1 PD1
+                     QU1 HL1 IL1 OD1 .
+              total time4.783863544464111
+
+Game number16, Steps: DD2 FD1 PD1 EL2 ER1 XL3 ER1 EL2 XR2 XL1
+                     ER2 EL1 XR1 ER1 DU2 EL1 XL1 ER1 DD1 EL2
+                     ER1 XR2 EL1 XL1 ER1 ER1 XR1 DU1 EL1 FU1
+                     DD2 EL1 XL1 ER1 ER1 FU1 XR1 FD1 DU2 XL1
+                     EL1 DD1 EL1 XR1 ER1 ER1 XL1 FU1 DU1 CD1
+                     DD2 FD2 EL2 BR1 AR1 XL2 ER2 AL1 BL1 EL2
+                     BR1 ER1 AR1 XR2 AL1 BL1 XL2 PU1 EL1 BR1
+                     GR1 PU2 GR2 GL3 GR2 QL1 OD3 DD1 FD1 BR1
+                     GR1 BL1 QL1 CD2 BR1 GL1 BL1 CD1 QR1 BR1
+                     QL1 QL1 BL1 CU1 BR1 GR1 BL1 CU2 BR1 QR1
+                     GL1 BL1 CD1 BR1 GR1 BL1 QL1 BR1 GL1 BL1
+                     CU1 BR1 OU2 CD2 QR1 BL1 GR2 BR1 GL1 BL1
+                     OD1 BR1 GR1 BL1 GL2 BR1 CD1 QR1 BL1 OU2
+                     QR1 PD2 ER3 AR1 EL1 AL1 BL1 ER1 PU1 BR1
+                     PU1 DU1 PD2 AR1 EL1 AL1 BL1 ER1 PU1 BR1
+                     AR1 DD1 FU1 PD1 AL1 BL1 GL1 BR1 AR1 EL1
+                     AL1 BL1 GR1 BR1 AR1 EL2 FD1 ER1 AL1 BL1
+                     EL1 PU1 BR1 AR1 DU1 PD1 AL1 BL1 ER1 BR1
+                     AR1 FU1 ER2 AL1 BL1 GL2 PD1 BR1 AR1 XR3
+                     PU2 AL1 GR2 AR1 GL1 AL1 BL1 GR1 DD1 BR1
+                     AR1 GL1 AL1 PD1 EL3 PU2 QL1 OD3 .
+              total time85.40815925598145
+
+Game number17, Steps: OR2 OL1 FU1 OR1 OL2 GU1 OR2 OL1 FD1 OR1
+                     OL2 BL1 OR2 OL1 CL1 OR1 OL2 GD1 OR2 OL1
+                     CR1 OR1 OL2 FU1 OR2 OL1 CL1 OR1 OL2 GU4
+                     OR1 GD3 OR1 OL2 CR1 OR2 OL1 PU2 OR1 OL2
+                     QR1 OR2 OL1 RR3 OR1 OL2 QL1 OR2 OL1 RL2
+                     OR1 OL2 QR1 OR2 OL1 RR1 OR1 GU1 OL1 RL2
+                     OR1 FU1 OL2 QR2 DD1 OR2 OL1 RR3 DD1 OR1
+                     OL2 ER1 OR2 OL1 XR1 EL1 OR1 OL2 ER1 OR2
+                     AD3 BL1 OL3 PU1 XL1 ER1 AD1 BR1 XR1 BL1
+                     EL2 XL1 BR1 DU2 RL2 PD1 BL1 QL1 DU1 ER1
+                     GD1 OR1 AU1 OR2 DU1 RL1 GD1 RR1 XR1 QL1
+                     RR1 QR1 AU1 QL2 FD1 PD1 RL2 PD1 .
+              total time24.3177969455719
+
+Game number18, Steps: QR2 DR3 DL2 DR1 RR3 PD1 XL1 DR1 DL3 DR1
+                     RL2 DR2 DL3 DR2 RR1 DR1 DL3 DR1 XR1 DR2
+                     DL3 DR2 RL1 DR1 DL3 DR1 RR2 DR2 DL3 QL1
+                     XL1 DR3 DL2 DR1 RL2 DR1 DL3 DR1 RR1 DR2
+                     DL3 DR2 XR1 DR1 DL3 DR1 RR1 DR2 DL1 RL2
+                     DR1 DL3 DR1 QL1 XL1 DR2 DL3 DR2 RR2 DR1
+                     DL3 DR1 RL1 DR2 DL3 DR2 BD1 QR2 BD2 AR1
+                     CR1 AL1 DR1 AR1 CL1 AL1 RR1 BD1 AR1 CR1
+                     AL1 DL1 AR1 CL1 AL1 XR1 AR1 DR1 AL1 CR1
+                     AR1 DL1 AL1 QL1 CL1 AR1 XL1 AL1 CR1 AR1
+                     DR1 AL1 CL1 AR1 XR1 AL1 CR1 AR1 DL1 QL1
+                     CL1 AL1 XL1 AR1 CR1 AL1 DR1 AR1 CL1 AL1
+                     XR1 AR1 CR1 AL1 DL1 PU2 QR2 AR1 DR1 AL1
+                     PD1 CL1 AR1 DL1 AL1 CR1 AR1 DR1 PU2 DL1
+                     QL3 QR2 DR1 QL2 OD2 CR3 AR3 AL2 AR1 OU1
+                     AR1 OU1 QR3 PD3 XL1 DL1 XR1 QL1 XL1 DR1
+                     XR1 QL1 XL1 DL1 XR1 PU3 QR2 PD1 DR1 PD1
+                     DL1 BU1 PD1 XL1 DR1 RL2 DL1 RR1 DR1 BU3
+                     DL3 DR2 DL1 RR1 DR2 DL3 DR2 RL2 DR1 DL3
+                     DR1 XR1 PU1 QL1 RR1 RL2 PU2 QL2 DR2 OD3 .
+              total time41.56437659263611
+
+Game number19, Steps: DU2 EL2 FD1 BR1 XL2 ER4 BL1 EL1 BR1 OL1
+                     BL1 ER1 BR1 XR2 EL4 BL1 XL2 ER2 BR1 OR1
+                     BL1 JD1 BR1 OL1 BL1 XR2 EL2 BR1 XL2 BL1
+                     ER1 BR1 OR1 BL1 EL1 BR1 XR2 BL1 XL1 BR1
+                     OL1 BL1 JU1 ER4 BR1 OR1 BL1 XR1 BR1 EL3
+                     BL1 XL2 BR1 OL1 BL1 FU1 ER1 BR1 OR1 BL1
+                     XR1 EL2 BR1 XL1 BL1 ER1 BR1 OL1 EL1 BL1
+                     XR2 BR1 XL1 BL1 ER2 BR1 EL1 BL1 OR1 BR1
+                     ER1 FD1 ER1 BL1 EL3 BR1 OL1 XL1 AD1 ER4
+                     BL2 JU1 EL1 OR1 ER1 AD1 EL1 OL1 ER1 JD1
+                     BR2 BL1 EL1 BR1 BL2 OR1 BR2 BL1 ER1 BR1
+                     BL2 AU1 BR2 BL1 EL1 BR1 BL2 OL1 BR2 BL1
+                     ER1 EL2 BR1 BL2 JU1 OR1 FU1 OL1 EL2 ER1
+                     OR1 EL1 AD1 OL1 FD1 OR1 AU1 ER1 OL1 EL1
+                     FU2 ER2 OR3 OL2 OR1 EL2 ER1 OR1 EL1 AD3
+                     ER2 XR2 EL2 XL1 ER2 EL1 XL1 XR2 DD1 EL1
+                     BL2 BR1 ER1 BL1 ER1 DD2 BR2 BL1 XL2 DD1
+                     BR1 BL2 XR2 EL2 BR2 BL1 XL2 BR1 BL2 ER1
+                     BR2 BL1 XR2 BR1 BL2 XL1 EL1 BR2 BL1 AU1
+                     BR1 BL2 XL1 BR2 BL1 AU2 ER2 BR1 BL2 AU1
+                     OL1 XR2 DU3 EL2 OR1 OL3 FD2 .
+              total time30.39506220817566
+
+Game number20, Steps: OL2 OR1 CD1 BR3 OR1 DU2 EU2 FL3 ED2 CD1
+                     BL1 XR3 BR1 XL2 BL1 PU1 XL1 EU1 QL3 PD2 .
+              total time0.6554737091064453
+
+Game number21, Steps: PD2 QR2 XL1 RL2 RR1 BD3 AR1 RR1 BD1 AL1
+                     XR1 AR1 QL1 AL1 XL1 AR1 QL1 AL1 XR1 AR1
+                     PU3 QR2 PD1 AL1 PD1 AR1 QL1 AL1 PU1 AR1
+                     PU1 QL2 OD2 AR3 AL2 AR1 OU1 AR1 OU1 QR3
+                     PD3 XL1 QL1 XR1 QL1 PU3 QR1 PD1 QR1 PD1
+                     BU1 PD1 XL1 RL2 RR1 BU3 RR1 RL2 XR1 RR2
+                     RL1 QL1 XL1 RR1 RL2 XR1 RR2 QL1 PU3 QR2
+                     RL3 QL3 OD3 .
+              total time3.7974674701690674
+
+Game number22, Steps: BU1 XL1 GR1 QR1 DD1 GL1 XR1 GR1 FU1 XL1
+                     GL1 XR1 DU1 XL1 FD1 XR1 GR1 QL1 FU1 XL1
+                     GL1 QL1 GR1 QR2 AD3 FD1 DD1 OL2 OR1 XR1
+                     OR1 OL2 FU1 OR2 OL1 XL1 OR1 OL2 DU1 FD1
+                     OR1 QL1 OR1 OL2 XR1 OR2 OL1 QR1 OR1 OL2
+                     FU1 OR2 OL1 XL1 QL2 OR1 OL2 QR1 OR2 OL1
+                     XR1 OR1 OL2 QL1 OR2 OL1 BD1 OR1 OL3 PU1
+                     QR2 DD1 FD1 BD1 EL1 BU1 FU1 HU1 QR1 AD1
+                     FD1 EL3 ER2 EL1 BD1 ER2 EL1 DU1 ER1 BU1
+                     FU1 EL1 DD1 EL1 PD1 OR3 HU1 OL3 PU1 ER2
+                     GR1 FD1 EL3 PD1 OR3 AU1 PD1 OL3 CL3 HU1
+                     PU1 AD1 PU1 ER4 HU1 PD2 CR2 FU1 OR2 CL1
+                     DU1 BU1 CR1 AU1 XL1 QL3 PD1 .
+              total time20.791896104812622
+
+Game number23, Steps: OL2 OR1 QR1 OR1 OL2 QL3 DD1 OR2 OL1 EL1
+                     OR1 OL2 PD1 OR3 AU1 XL3 AD1 OL3 OR2 OL1
+                     PU1 OR1 OL2 ER1 OR2 OL1 DU1 OR1 OL2 QR3
+                     CD1 OR2 OL1 AD1 OR1 OL2 BL1 OR2 OL1 BL2
+                     OR1 OL2 BR1 OR2 OL1 DU2 OR1 EL1 OL1 PD1
+                     OR2 OL1 BL1 OR1 AU2 FL1 PD1 XR1 EL3 XL1
+                     CU1 QL3 PD1 QR2 QL1 CU1 FL3 CD1 DD2 .
+              total time5.367895126342773
+
+Game number24, Steps: OR1 FR1 DD1 BR1 CD1 BL1 HR2 DD1 CU2 XL2
+                     AD1 HL1 BL1 EU1 FL2 BR1 FR1 BL1 ED1 BR2
+                     BL1 FL1 BR1 BL2 HR1 BR1 AD1 BL1 EU2 HL1
+                     GU1 HR3 HL2 HR1 AU1 FR1 HL1 FL1 GU1 FR1
+                     OR2 FR1 OL1 HR2 OR1 HL3 OL1 HR2 OR1 OL2
+                     FL2 FR1 OR2 FL1 AD3 FR2 HR1 XR2 FL2 XL2
+                     FR1 HL1 XR2 FL1 XL1 HR1 FR2 FL1 HL1 FR1
+                     DU4 FL2 XL1 FR2 HR1 XR2 FL2 XL2 FR1 HL1
+                     XR2 DD1 DD1 CD1 DD1 BL2 HR1 BR1 DD1 FL1
+                     BR1 BL2 HL1 BR2 BL1 FR1 BR1 BL2 HR1 FR1
+                     CD2 BR2 XL2 CD1 BL2 XR2 FL2 BR2 BL1 XL2
+                     BR1 BL2 FR1 BR2 BL1 XR2 BR1 BL2 XL1 FL1
+                     BR2 BL1 HL1 BR1 BL2 XL1 BR2 FR1 BL2 XR2
+                     FL1 BR2 BL1 AU1 BR1 BL2 XL2 BR2 BL1 HR1
+                     BR1 BL2 HL2 BR2 BL1 AU2 FR2 BR1 BL2 AU1
+                     OL1 HR2 OR1 HL1 OL1 XR2 OR1 CU3 FL2 OL2
+                     GD1 .
+              total time124.45620727539062
+
+Game number25, Steps: PD1 CL1 XL1 CR1 EU1 QR1 CL1 OU1 QR1 BD3
+                     DR2 BD1 AR1 DL2 AL1 CL1 BU3 CR1 AR1 BD1
+                     DR2 BD1 DL1 XR2 AL1 DL1 DR2 BD1 PU2 DL1
+                     AR1 XL1 PD1 PU2 XR1 QL3 XL1 DR1 GU2 HL1
+                     DL1 GU1 QR3 HR1 PD3 PU2 HL1 AL1 PD2 QL1
+                     CL1 FU1 QR1 DL1 XL1 BU2 HL1 FD1 EU1 IL2
+                     HR2 BU1 HL2 IR2 IL1 QL1 OD3 HR1 IL1 HL1
+                     QL1 HR1 IR1 HL1 ED3 CR2 BU1 GU1 .
+              total time33.381025552749634
+
+Game number26, Steps: BU1 OL1 DU2 XL1 ED1 PD1 GU1 HR1 PU1 HL1
+                     XR1 RL1 CD2 XL1 HR1 PD1 HL1 GD1 PU1 XR2
+                     PD1 XL1 PU1 BD1 PD1 GU1 BU1 HR1 CD1 XL1
+                     RR1 PU1 XR2 RL1 PD1 RR1 XL1 PU1 RL1 XL1
+                     DD1 RR1 OR1 PD1 OL1 XR2 RL1 OR1 XL2 OL1
+                     CU1 OR1 HL1 OL1 PU1 OR1 HR1 OL1 XR2 DU1
+                     PD1 HL1 PU1 BD1 PD1 HR1 CD1 XL1 PU1 XR1
+                     RR1 PD1 XL1 BD1 PU1 BU1 EU1 BU1 XL1 PD1
+                     XR2 XL1 BD1 XR1 PU1 BU1 AD1 PD1 OL1 PU2
+                     ED1 RL1 PD2 OR1 RR1 OL1 PU1 RL1 OR1 RR1
+                     BD1 RL1 PD1 OL2 OR1 PU2 OL1 RR1 OR1 PD2
+                     OR1 OL2 BD1 OR2 AU1 PU1 AD1 OL2 PU1 OR1
+                     PD2 PU1 BU1 RL1 OL1 RR1 EU1 PD1 OR2 OL1
+                     PU2 OL1 RR1 AD2 OR1 BU1 XL2 ED1 AD1 XR2
+                     RL2 XL2 RR1 PD1 OR1 PD1 OL1 XR2 RL1 OR1
+                     XL2 OL1 PU1 OR1 CU1 OL1 HL1 OR1 PD1 OL1
+                     HR1 OR1 XR2 OL1 XL1 CD1 OR1 PU1 OL1 PU1
+                     CU3 RR2 XL1 HL1 GD1 RR1 XR1 EU1 XL1 FU3
+                     FD1 DD1 FD1 FU2 HL1 ED1 RL1 DU1 HR1 GU1
+                     HR1 HL2 RL1 PD3 OR1 GD1 OL1 RL1 CD2 OR1
+                     GU1 OL1 DD1 OR2 FU1 XR3 FD1 OL2 DU1 .
+              total time107.07642841339111
+
+Game number27, Steps: PU2 ER1 OD1 BR2 BL1 OD1 CR2 BR1 DU2 XR1
+                     AD3 XL1 AD1 XR1 FU1 XL1 RL2 RR1 XR1 RL1
+                     AU4 XL1 RR2 RL3 OD1 XR3 XL2 AD3 XL1 XR3
+                     XL1 AU3 AD1 XL1 AD1 XR2 AU1 DD1 AD2 BL3
+                     DU1 XL3 XR2 XL1 AU2 AD1 OU1 AD1 XL1 RR3
+                     AD1 FD1 XR1 AU1 XL1 DD1 AD1 BR3 BL2 BR1
+                     DD1 BR1 BL3 BR1 CL1 BR2 BL3 BR2 CL2 BR1
+                     DU2 OU1 XR1 OD1 AU1 XL1 OU1 XR1 FU1 OD1
+                     XL1 AD1 RL2 RR1 OU1 RR1 RL2 XR1 OD1 RR2
+                     RL1 AU1 XL1 RL2 OD1 XR3 XL2 XR1 AU1 XL1
+                     XR2 DD1 AD1 BL3 DU1 XL3 XR2 XL1 AU1 OU3
+                     AD1 XL1 EL1 PD3 RR2 AD1 RL1 XR1 RR1 AU1
+                     RL2 RR1 XL1 PU3 AD1 ER1 RR2 FD1 EL1 PD1
+                     PD1 XR1 EL3 XL1 ER2 PU2 PD1 XR1 ER1 EL3
+                     XL1 ER1 OD1 EL1 OD1 ER1 PD1 EL1 OU1 ER1
+                     OU1 PU2 EL1 OD1 ER1 OD1 EL1 DD1 BR2 PD1
+                     BR1 DD1 CR3 DU2 BR1 ER1 BL1 PD1 BR1 CR1
+                     BL1 EL1 BR1 CL1 BL1 PU2 ER1 XR1 EL1 PD1
+                     BR1 PD1 CR1 BL1 CL1 ER1 AU4 EL1 XL1 BR1
+                     FU1 RL3 OD1 PD1 .
+              total time55.721338510513306
+
+Game number28, Steps: GR1 FR1 CD1 AD1 OR3 PU1 EL1 CU1 ER1 FL1
+                     GL1 EL1 GR1 QU1 ER1 FR1 CD1 GR1 FR1 DD1
+                     EL1 EL2 ER1 AD1 BL1 EL1 BR1 PD1 OL3 AU2
+                     AD1 OR3 OL2 OR1 AD1 OL1 BL1 OR2 OL3 OR2
+                     QU2 OL2 OR1 RR1 PD1 OR1 OL2 QD1 OR3 OL2
+                     OR1 BL1 OR1 OL3 OR1 QU1 OR1 OL2 BL2 AU2
+                     BR1 QD1 BL1 PU1 RL1 QD1 QU2 RR1 AD1 RL1
+                     OR1 QD2 OR2 PU1 ER2 EL1 CU1 ER2 EL1 QU1
+                     RR1 DU1 ER1 RL1 FL2 RR1 PD3 OL3 AU1 BR1
+                     XR3 QU1 BL1 PU2 RL1 FR1 GL1 QD3 .
+              total time6.309520483016968
+
+Game number29, Steps: BU2 OR1 ER1 DR1 OL1 DL1 GU4 DR1 FR2 FL1
+                     RR2 CD1 FR1 FL2 RL1 FR2 FL1 DL2 DR1 EL1
+                     DL1 FR1 AD2 ER1 RR1 EL1 HU1 RR1 AD1 DR1
+                     XR2 DL1 XL1 DR1 CU1 XL1 XR2 BD1 XL2 CD1
+                     DL1 XR2 XL1 DR1 CU1 CU2 BU1 DL1 XR1 EL1
+                     XL1 PD1 XR1 BD1 PU1 XL1 ER1 XR1 DR1 CD3
+                     CU2 BU1 XL1 BD1 GD1 BU1 CD1 OR1 XL1 CD1
+                     OL1 DL1 OR1 XR1 OL1 DR1 OR1 CU4 DL1 XL1
+                     DR1 BD1 DL1 AU3 RL3 FL3 RR2 FR3 RL1 FL3
+                     AD1 FR3 HD1 FL2 ER1 GD2 RL1 FL1 GD1 EL1
+                     BD1 AU1 DR1 BU1 DL1 ER1 EL2 PD1 OR2 AU1
+                     PD2 XR3 XL2 FR1 XL1 XR3 AD1 OL2 BU1 .
+              total time59.958651542663574
+
+Game number30, Steps: DR1 FR1 ER1 CR1 OD3 XL1 QU2 FR1 ER1 QD1
+                     EL1 FL1 AD1 QD1 PL3 BU1 QU3 DR1 CR1 FR1
+                     ER1 CL1 DL1 EL1 DR1 BD3 PR2 PL1 ER1 PR1
+                     PL2 BU2 CR1 PR2 PL1 EL1 PR1 PL2 FL1 PR2
+                     PL1 CL1 BD2 PR1 PL2 BU2 PR2 DL1 QD3 PL1
+                     QU3 PL1 FR1 PR2 PL1 DR1 BD3 CR1 PR1 PL2
+                     CL1 PR2 DL1 PL2 PR1 QD1 PR2 AU1 XR3 QD1
+                     XL3 XR2 XL1 QU1 XR1 OU3 CL1 XL1 EL1 QD1
+                     ER1 XR2 DL1 XL2 EL1 QU1 ER1 XR2 AD1 QD1
+                     PL2 PR1 EL1 PL1 QU2 PR1 ER1 PL1 DR2 AD2
+                     PR1 XL2 PL1 EL1 AD1 BU3 FL1 DL1 QD3 PR2
+                     PL1 CR1 PR1 OD2 PL3 BU1 .
+              total time12.252488851547241
+
+Game number31, Steps: AR1 DU2 XL1 QU1 RL3 PD1 RR2 RL1 QU1 FR3
+                     QD1 RR1 RL2 QU1 FL3 FR2 FL1 RR2 FR2 FL3
+                     FR2 RL1 FL1 PU1 FR2 QD1 RR2 QD1 XR1 DD3
+                     AL1 OL1 XL1 DD1 OR1 AR1 DU1 AL1 QU3 DD1
+                     FL2 FR1 RL2 PD1 FR1 FL2 RR1 FR2 FL1 EL1
+                     FR1 FL2 RL1 FR2 FL1 EL2 ER1 FR1 EL1 FL2
+                     BD2 CL1 ER1 CR1 RR1 CL1 EL1 CR1 QD1 AR1
+                     CL1 AL1 OL1 CR1 RL1 OR1 AR1 CL1 AL1 OL1
+                     BU1 OR1 QU1 CR1 ER1 CL1 FR2 CR1 EL1 CL1
+                     FL1 CR1 ER1 CL1 RR1 CR1 EL1 CL1 FR1 CR1
+                     ER1 CL1 FL2 CR1 EL1 CL1 QD1 AR1 CR1 AL1
+                     OL1 CL1 FR2 QD1 OR1 AR1 CR1 AL1 OL1 RL1
+                     OR1 AR1 CL1 AL1 OL1 CL1 OR1 AR1 RR1 AL1
+                     OL1 CL2 OR1 AR1 CR1 AL1 OL1 RL1 OR1 AR1
+                     CL1 AL1 OL1 BU1 OR1 AR1 CR1 AL1 OL1 RR1
+                     OR1 AR1 CL1 AL1 OL1 QU1 OR1 QU1 ER3 FL2
+                     FR1 RL1 FR1 FL2 EL1 FR2 FL1 RR1 FR1 FL2
+                     EL2 BD2 ER1 RL1 EL1 QD1 AR1 RR1 AL1 OL1
+                     RL1 BU2 OR1 QU1 ER1 FR2 EL1 FL1 ER1 RR1
+                     EL1 BD1 ER1 FR1 EL1 FL2 ER1 RL1 EL1 FR2
+                     ER1 FL1 EL1 QD1 AR1 FR1 AL1 OL1 FL2 OR1
+                     AR1 RR1 AL1 OL1 FR2 OR1 AR1 FL1 AL1 OL1
+                     RL1 BU1 OR1 AR1 FR1 AL1 OL1 PU3 QD1 CR1
+                     FR1 BD2 CR2 RR2 QD1 XR3 CL3 CR1 XL3 CR1
+                     XR3 XL2 CR1 CL3 XL1 PD1 CR3 OR1 AR1 XR3
+                     CL3 AL1 OL1 CR1 OR1 AR1 XL3 CR1 AL1 OL1
+                     XR3 OR1 AR1 XL2 CR1 AL1 XR2 QU3 ER1 RL2
+                     EL1 RR1 ER1 DU1 RR1 RL3 RR1 DU2 EL1 RR2
+                     QD3 CL2 AR1 DU1 XL3 CR2 XR3 CL1 XL3 XR2
+                     CL1 XL1 CR2 CL1 DD1 CR1 AL1 OL1 PU1 CL2
+                     CR1 PD1 OR1 CL1 AR1 XR1 AL1 OL1 XL1 BU2
+                     OR1 AR1 DU1 XL1 FL1 BD1 CR2 QU2 FL3 QD2
+                     BD1 XR3 CL2 PD1 XL3 CR3 CL1 XR3 CL1 XL3
+                     PU1 XR3 QU1 CL1 PD1 RL3 PD1 .
+              total time220.31483340263367
+
+Game number32, Steps: HR1 DD1 EL1 OD2 AR1 OU1 AL1 BD1 OD1 AR2
+                     AL1 CL1 AL1 CL1 OU1 CR1 OU1 CR1 ER1 CL1
+                     DU1 CR1 HL1 CL1 PU3 FR1 ER1 HR1 DD1 EL2
+                     ER1 FL1 EL1 OD2 AR1 FR1 AL1 CL1 FL1 PD1
+                     CR2 BU1 AR1 PD1 AL1 OU2 ER1 PU1 EL1 FL1
+                     PD2 BD1 CL1 PU3 PD1 FR1 CR1 ER1 CL1 PD1
+                     CR1 EL1 CL1 OD2 AR1 CR1 AR1 AL2 CL2 OU1
+                     CR2 BU1 AR1 PU1 AL1 BD1 AR2 PD2 AL1 CL1
+                     PU3 AL1 CL1 FR1 CR1 AR1 BD1 OD1 AL1 CL1
+                     OU1 CR1 OU1 ER1 DU1 BU1 KU1 DD1 EL1 HR3
+                     OD3 AR1 HL1 AL1 CL1 HR1 KD1 CR1 AR1 FL1
+                     AL1 CL1 PD1 CR2 BU1 AR1 XR3 PD1 AL1 XL3
+                     AR1 XR2 AL1 XL1 AR1 PU1 AL1 XR2 OU3 FL1
+                     PD1 FR1 ER1 DU1 PU1 DD1 DU3 PD1 EL1 OD3
+                     AR1 DU1 XL3 PU1 XR3 XL2 PD1 XR1 PU1 DD1
+                     AL1 XL1 AR1 PD1 AL1 BD1 AR2 DU1 AL1 CL1
+                     XL1 CR1 AR1 PU1 AL1 CL1 PU1 FR1 BD1 XR1
+                     BU1 KU1 XL1 HL1 OU1 HR1 HL4 OD1 KD1 FL1
+                     PD3 CR1 BU1 .
+              total time21.041332244873047
+
+Game number33, Steps: BL1 PU3 ER1 GU1 QR1 ID1 DL1 RD1 BL1 GU2
+                     BR1 RU1 DR2 FR1 DL2 DR1 EL1 PD3 BR1 GU1
+                     DL1 FL1 DR1 IU1 FR1 QL1 FL1 GD1 BL1 FR1
+                     BR1 QR1 BL1 FL1 ID1 BR1 DL1 BL1 FR1 BR1
+                     EL1 GU1 FL1 HU1 FR1 QR1 FL1 GD1 BL1 FR1
+                     BR1 QL1 BL1 FL1 BR1 HD1 BL1 FR1 PU3 ER1
+                     FL1 DR1 ER1 GD1 DL1 FR1 DR1 IU1 FL1 QL1
+                     FR1 GU1 DR1 FL1 QR1 FR1 DL1 EL1 FL1 ER1
+                     QL1 EL1 FR1 PD1 BR1 GU1 FL1 QR1 ID1 DL1
+                     FR1 DR1 PD1 DL1 FL1 DR1 IU1 FR1 QL1 FL1
+                     GD1 BL1 FR1 BR1 QR1 ID1 BL1 DL1 BR1 FL1
+                     BL1 DR1 BR1 PU1 BL1 DL1 BR1 FR1 BL1 EL1
+                     BR1 GU1 FL1 PD1 FR1 HU1 FL1 QR2 FR1 QL1
+                     FL1 PU1 FR1 QR1 FL1 QL2 FR1 GD1 BL1 FL1
+                     BR1 QR2 BL1 FR1 BR1 QL1 BL1 FL1 BR1 PD1
+                     BL1 FR1 BR1 QR1 BL1 FL1 BR1 QL2 BL1 FR1
+                     BR1 HD1 BL1 FL1 BR1 PU1 BL1 PU1 HU1 FR1
+                     QR2 FL1 QL1 FR1 HU2 PD3 ER1 BR1 GU1 DR1
+                     FR1 DL1 FL2 DR1 QL1 DL1 FR2 DR1 FL1 DL1
+                     EL1 FR1 FL2 QR1 FR2 FL1 HD1 FR1 FL2 QL1
+                     FR2 FL1 GD1 BL1 FR1 BR1 FL2 BL1 QR1 BR1
+                     FR2 BL1 FL1 BR1 HU1 FR1 ER1 BL1 DR1 BR1
+                     FL2 BL1 DL1 BR1 QL1 BL1 DR1 BR1 FR2 BL1
+                     DL1 BR1 FL1 BL1 DR1 BR1 QR1 BL1 IU1 BR1
+                     GU1 FR1 FL2 QL2 FR2 FL1 QR1 FR1 FL2 GD1
+                     BL1 FR2 BR1 FL1 BL1 QL1 BR1 FR1 BL1 FL2
+                     BR1 QR2 BL1 FR2 BR1 PU2 GU1 ID1 DL1 FR1
+                     DR1 FL3 DL1 FR1 DR1 QR1 DL1 FR2 RD3 FL1
+                     PD1 XR2 XL1 PU1 FR1 GD1 BL2 HU1 XL1 FL1
+                     PD1 PU2 ER1 FR1 GD2 XR3 XL2 XR1 AD1 BL2
+                     BR1 XR1 BR1 BL2 RU3 DR1 QL2 DL1 QR1 DR1
+                     IU1 QR1 QL3 QR1 IU2 DL1 QR2 RD3 BR2 IU1
+                     AU1 XL3 RU1 QL3 QR2 QL1 RU1 QR2 QL3 QR2
+                     GU2 FL4 GD2 RD1 QR1 RD1 XR3 RU2 FR1 QL3
+                     GD1 EL1 PD3 .
+              total time135.2051866054535
+
+Game number34, Steps: RL2 CU2 HR1 PU1 HL1 XR1 HR1 DD1 QR3 XL1
+                     QL1 PD1 XR1 QL2 XL1 QR1 PU1 XR1 QR1 AD3
+                     QR1 RL1 BU1 XL1 XR3 QL2 XL3 QR1 XR3 XL2
+                     PD1 XL1 XR3 QL1 XL3 XR2 XL1 PU1 XR1 QR2
+                     QL1 PD1 AU2 QL2 XL1 QR2 AD1 PU1 QR1 AU1
+                     XR2 QL3 XL2 QR2 XR2 QL1 XL2 PD1 AD1 PU1
+                     XR2 XL1 QR2 AU1 QL3 QR1 PD1 AD1 XR1 AU1
+                     QL1 DU1 PU1 XL2 HL1 PD1 HR1 XR1 HL1 PU1
+                     HR1 CD1 DD1 XL1 QR3 AD2 XL1 XR2 QL2 XL2
+                     QR1 PD1 XR2 QL1 XL2 CD1 PU1 XR2 XL1 PD1
+                     CU1 QR1 PU1 XR1 AU2 CU1 AD1 PD1 XR1 PU1
+                     QR1 EU1 AD1 XL3 IR1 AD1 XR3 XL2 AU1 IL1
+                     XR1 IR1 AD1 AU3 XL1 IL1 AD1 IR1 XR2 AD1
+                     AU2 IL1 XL1 AD1 IR1 CD1 AD1 XL2 AD1 XR2
+                     XL1 AU1 IL1 XL1 XR2 AU2 ED1 QL2 XL1 AD2
+                     AU1 QR2 XR1 QL2 PD1 XL1 QR1 PU1 AU1 PD1
+                     QL2 CD1 PU1 XR1 PD1 CU1 QR1 XL1 CD1 AD1
+                     PU1 AU1 BD1 AD2 CU2 QR1 XL1 QR1 RR1 QL1
+                     PD1 RL1 XR1 RR1 QL1 RL1 XL1 RR1 PU1 RL1
+                     CD1 QR2 RR2 EU3 QL1 RL1 QL1 RR1 RL2 IR1
+                     AD1 QR1 RR2 PD1 RL1 QL1 RR1 CD1 RL1 PU1
+                     RR1 RL2 QL1 RR2 RL1 PD1 CU2 BD1 PU1 CD1
+                     RR1 RL2 PD1 RR3 RL2 RR1 CD1 RL2 BU1 RR2
+                     CU1 RR1 RL3 RR1 PU1 QR1 RR1 QL1 RL2 DU1
+                     RR2 RL1 CU1 IR1 PD1 IL1 HL1 RL1 CD1 BU1
+                     CD1 DU1 CU2 FL3 PD2 DD1 CD3 BD1 RR3 EU1
+                     XR1 CU2 XL1 CD1 XR1 PU2 CD1 XL1 HR1 IR1
+                     PD1 IL1 HL1 XR1 HR1 DD1 XL1 QR1 PU1 XR1
+                     QL1 XL1 BD1 PD1 XR1 PU1 CU2 XL1 CD1 PD1
+                     BU1 QR1 CU1 QR1 PU1 XR1 QL2 XL1 QR1 CD1
+                     XR1 QL1 XL1 DU1 IR1 PD1 IL1 HL1 CU1 HR1
+                     IR1 PU1 IL1 HL1 XR1 HR1 CD2 IR1 PD1 CU2
+                     IL1 DD1 QR2 AU4 XL1 FL1 IL1 ED1 RL1 PU2
+                     QR1 ED2 IR1 XR1 IL1 ED1 QL3 CD2 PD1 RR1
+                     RL2 DU1 RR2 RL1 AD1 DD1 RR1 RL3 BU1 PD1
+                     PU2 DU1 HL1 PD3 .
+              total time155.5299777984619
+
+Game number35, Steps: PD3 QR1 AR1 BU1 GR1 KD1 QL1 FU1 QL1 FD1
+                     EU1 GR1 FU1 GR1 GL2 BD1 AL1 GR2 AR1 GL1
+                     AL1 FD1 AR1 GL1 AL1 ED1 QR2 AR1 QL1 AL1
+                     FU1 AR1 QL1 AL1 BD1 AR1 FD1 AL1 PU3 BU1
+                     QR3 QL1 PD1 AR1 BU1 PD1 QL1 PU1 FU1 PD1
+                     QL1 PU1 FD1 PD1 EU1 GR1 PU1 GL1 FU1 GR3
+                     GL2 GR1 PD1 GR1 GL3 GR1 BD1 AL1 GR2 AR1
+                     GL3 AL1 GR2 AR1 PU1 AL1 GR1 AR1 GL3 AL1
+                     GR1 AR1 FD1 AL1 GL1 AR1 PD1 AL1 GR1 AR1
+                     FU3 BU1 PD1 GR1 GL2 FD1 GR2 GL1 BD1 AL1
+                     GR1 AR1 GL2 AL1 FU1 AR1 GR2 AL1 GL1 AR1
+                     PU2 BU1 GR2 GL3 GR2 EU1 DR3 ED1 GR1 GL3
+                     GR1 FD1 GR2 GL3 GR2 BD1 AL1 GR1 AR1 GL3
+                     AL1 GR1 AR1 FU1 AL1 GR2 AR1 GL3 AL1 GR2
+                     PU1 GR1 GL3 GR1 FD1 GR2 GL3 ED1 QR1 PD1
+                     AR1 BU1 FU1 QR1 KU1 GL1 QL1 GR1 FD1 GL1
+                     BD1 AL1 GR1 AR1 FU1 QR1 KD1 AL1 PU1 QR1
+                     OD2 AL3 KU1 AR3 AL2 OU1 AR2 OU1 GL1 OD3
+                     XR1 KU3 XL1 OU3 GR1 QL1 GL1 PD1 AR1 BU1
+                     GR1 QL1 GL1 FD1 GR1 QL1 GL1 FU1 GR1 EU1
+                     GR3 GL4 GR3 GL1 FD1 GR2 GL4 GR3 GL2 EU1
+                     DL4 PD2 ED1 FD1 DR1 GR2 DL1 GL3 DR1 GR2
+                     DL1 FD1 DR1 GL2 DL1 GR1 DR1 ED1 PU1 BD1
+                     QR1 AL1 GL1 DL1 QR1 PU2 QR1 OD3 AL2 BU1
+                     XR3 OU2 DR1 GR1 KD3 AL1 GL1 OU1 QL2 PD3 .
+              total time108.16125869750977
+
+Game number36, Steps: DD1 CR1 XR1 CL1 RR1 XL1 CR1 OD1 PL1 AL1
+                     CL1 AR1 PR1 OD1 PL1 AL1 CR1 AR1 PR1 XR1
+                     CL1 PL1 AL1 QU1 XL1 CR1 RR2 BD2 CL3 XL1
+                     CR3 OU1 CL2 CR1 OD1 CL1 XR2 RL1 CL1 XL2
+                     CR3 QD1 AR1 PR1 CL3 PL1 AL1 CR2 AR1 PR1
+                     CL1 PL1 AL1 QU1 CR1 OU1 CR1 QD1 AR1 PR1
+                     OU1 CL2 CR1 OD1 PL1 AL1 CL1 AR1 PR1 XR2
+                     PL1 AL1 QU1 XL2 XR1 RR1 OD1 CR1 OU1 CR1
+                     XR1 CL2 EU1 XL2 CR2 GR1 OD2 CL3 XL1 CR3
+                     XR3 CL3 CR1 XL3 CR1 XR3 XL2 CL1 XR1 CL1
+                     CR3 CL1 OU2 CL1 XL1 CR1 GL1 OD1 CR1 CL3
+                     GR1 CR3 CL2 CR1 XR2 CL2 CR1 XL1 CL1 GL1
+                     CR1 XL1 XR2 CL1 ED1 CR2 RL1 XL1 CL2 QD1
+                     AR1 PR1 CR1 PL1 AL1 QU1 CR2 QD1 AR1 PR1
+                     CL1 PL1 AL1 OU1 CL1 AR1 PR1 OU1 CR2 CL1
+                     OD1 PL1 CR1 PR1 XR1 CL1 PL1 AL1 QU1 XL1
+                     CR1 QD1 XR1 QU1 OD1 RR1 EU1 CL1 XL1 CR1
+                     GR1 CL1 BU2 OD1 CR1 BD1 CL3 CR1 CR1 XR1
+                     CL2 CR1 CR2 BU1 CL1 OU2 BD2 CL1 CR2 XL1
+                     GL1 CL2 CR1 XR1 ED1 BU2 RL2 XL1 CR1 RR2
+                     CL1 OD1 BD1 CL2 CR1 OU1 CR2 CL1 XR1 CL1
+                     RL1 XL1 QD1 AR1 PR1 OD1 CL1 PL1 AL1 QU1
+                     CR1 QD1 AR1 CR2 PR1 CL1 PL1 AL1 CR1 QU1
+                     RR1 XR1 CL3 RL1 CR1 CR1 XL1 OU1 CR1 QD1
+                     AR1 PR1 CL1 PL1 AL1 BU1 AR1 PR1 CR1 PL1
+                     AL1 OD1 AR1 PR1 CL1 PL1 AL1 QU1 CR1 OU1
+                     CL1 XR1 OD1 CR1 RL1 OU1 RR1 BD1 RR1 BU1
+                     OD1 CL1 BD1 CL1 EU1 CL1 XL1 GR1 CR1 GL1
+                     OU1 GR1 CR2 CL1 GL1 CR1 OD1 CL1 GR1 CR1
+                     BU1 GL1 CL1 OU1 CR1 GR1 XR1 GL1 BD2 BU1
+                     CL2 GR1 OD1 CL1 CR2 GL1 OU1 GR1 CR1 OD1
+                     BD1 BU2 CL1 GL1 OU1 EU1 BD2 CL1 GR1 OD2
+                     CL1 EU1 RL1 QD1 AR1 PR1 OU1 PL1 AL1 QU1
+                     GL1 RR1 GR1 ED1 CR1 GL1 CL1 CR2 GR1 OD1
+                     CR1 EU1 RL1 QD1 AR1 PR1 OU3 GL1 OD1 PL1
+                     AL1 QU1 GR1 OD1 GL1 RR1 GR1 ED1 GL1 OU1
+                     GR1 CL1 BU2 OD2 BD1 CL2 CR1 CR2 BU1 EU1
+                     RL2 RR1 BD1 RR1 OU2 BD1 GL1 BU2 RL2 GR1
+                     OD1 GL1 RR1 GR1 BD1 GL1 OU1 GR1 BU1 GL1
+                     QD1 RL1 AR1 PR1 GR1 OD2 PL1 AL1 RR1 AR1
+                     PR1 BD1 PL1 AL1 OU2 BD1 AR1 PR1 OD1 PL1
+                     AL1 GL1 AR1 PR1 BU2 RL1 PL1 AL1 GR1 AR1
+                     PR1 OU2 RL1 GL1 DU1 GR4 DD1 RR1 OD3 PL1
+                     AL1 QU1 RR1 BD2 BD1 RL1 QD1 AR1 PR1 RR1
+                     PL1 AL1 BU1 AR1 PR1 OU3 OD1 PL1 AL1 QU1
+                     OD1 BD1 RL1 OU1 RR1 RR1 OD2 ED2 CL3 CR1
+                     XL3 CR2 ED1 XR3 CL3 RL2 CR1 XL3 CR2 RR1
+                     XR3 CL3 CR1 XL3 CR1 RR1 XR3 RL2 XL3 QD1
+                     CR1 RR1 AR1 PR1 XR3 CL3 RL1 PL1 AL1 CR1
+                     AR1 PR1 OU1 CR2 OU2 RL1 CL1 DU1 CL1 GL1
+                     XL2 CR2 GR1 CL1 GL1 DU1 CR1 FL1 QD2 CR1
+                     DU1 RR2 OD3 PL1 DU1 .
+              total time196.6936798095703
+
+Game number37, Steps: CL1 GR1 QD1 CR1 XL1 CL1 PU1 BD1 AR1 PD1
+                     AL1 CR1 CL2 OU1 RR1 PU1 RR1 BD2 DR2 DL1
+                     XR2 DL1 XL1 DR2 DL1 QU2 DR1 GL1 BD1 DL1
+                     QD1 DL1 DR2 XR1 DL2 RL2 XL1 RR1 PD1 DR2
+                     DL1 PU1 DR1 QU1 DL1 PD1 DR1 XR1 DL1 RL1
+                     XL1 DR1 OD1 CR2 AR2 AL1 CL1 AL1 DL1 AR1
+                     CR1 AR1 AL2 CL2 QD1 DL1 CR2 AR2 AL1 CL1
+                     AL1 PU1 AR1 DR2 AL1 CL1 DL2 DR1 CR1 AR1
+                     PD1 AL1 CR1 AR2 AL1 DR1 AR1 AL2 CL2 CR1
+                     AR1 QU2 RL1 CR1 AR1 DL1 AL1 CL1 PU1 DR1
+                     XR1 DL1 PD1 CR1 AR1 DR1 AL1 CL1 EU1 DL1
+                     CR1 AR1 XL1 AL1 CL1 DR1 CR1 AR1 HL1 AL1
+                     CL1 DL1 CR1 AR1 XR1 AL1 CL1 PU1 XL1 DR1
+                     HR1 DL1 EU2 FL1 HL1 PD3 PU1 HR1 RR1 QD1
+                     AL1 CL1 PU2 OU1 RR2 BU1 FR1 GR2 QD2 DL1
+                     XL1 DR1 FL1 DL1 GL1 DR1 FR1 DL1 HL1 DR1
+                     FL1 DL1 BU2 FR1 FL3 FR1 HR1 FR2 FL3 FR2
+                     GR1 FR1 FL3 FR1 RL1 FR2 FL3 FR2 GL1 FR1
+                     FL3 HL1 PD3 FR2 FL1 RL1 FR1 FL2 OD1 CR2
+                     BU1 EU1 FR2 FL1 OD1 FL1 XR2 XL1 FR1 OU1
+                     FR1 FL2 QU1 FR1 GL1 HL1 OD2 .
+              total time32.026997566223145
+
+Game number38, Steps: OL2 OR1 RU2 OL1 ER1 OR1 GR1 CD2 BR2 OL1
+                     DU1 OR1 FU1 OL1 QL3 OR1 QR2 OL1 QL1 OR1
+                     CU1 OL1 GL1 OR1 QR2 FD1 OL1 GR1 OR1 FU1
+                     OL1 GL1 QL3 OR1 GR1 CD2 OL1 EL1 OR1 RD1
+                     OR1 DU1 XR3 XL2 AD3 XL1 DD1 OL3 OR2 OL1
+                     RU1 OR1 OL2 ER1 OR2 OL1 CU1 OR1 OL2 QR3
+                     OR2 OL1 AD1 QL2 OR1 OL2 QR1 OR2 OL1 AU1
+                     OR1 OL2 QL1 OR2 OL1 CU1 AD1 OR1 OL2 GL1
+                     OR2 OL1 QR2 FD1 OR1 OL2 DD1 OR2 OL1 BL1
+                     OR1 OL2 AU1 BR1 OR2 OL1 GR1 OR1 BL3 OL2
+                     BR2 BL1 AD1 OR2 GL1 OL1 BL1 OR1 DU1 OL1
+                     CU1 OR1 EL1 OL1 GR1 OR1 RD1 OR1 DU1 GL1
+                     RD1 XR1 EL3 XL1 ER2 RU1 GR1 DD1 OL3 OR2
+                     RU1 OL2 OR1 EL2 OR1 ER1 GL1 ER1 RD2 OL2
+                     EL2 OR2 OL1 ER1 OR1 OL2 CD1 OR3 OL2 OR1
+                     EL1 OL2 OR1 DD1 BR4 OR2 DU2 BL1 ER1 BR1
+                     CU1 ER2 XR1 EL3 XL1 ER2 XR1 EL1 CD1 EL1
+                     BL1 RU1 ER1 RD1 AU4 BR1 EL1 XL1 FU2 GL3
+                     FD2 CD1 BL1 XR3 BR1 XL2 BL1 RU1 XL1 XR3
+                     XL1 FU1 QL3 RD2 .
+              total time51.137319564819336
+
+Game number40, Steps: PU1 AR1 CU1 IR1 ED1 QR1 OD1 OD1 QR1 CD3
+                     AL2 DU1 XL2 QR1 OU1 XR2 QL1 XL2 PD1 OD1
+                     XR2 XL1 PU1 QR1 OU1 QL1 PD1 XR1 DD1 PU1
+                     AR2 AL1 OD1 OU2 AR1 CU3 OD1 QR1 CD3 AL2
+                     AR1 OD1 AR1 AL2 DU1 FU1 XL2 HR1 OD1 XL1
+                     XR3 XL1 OU2 XL1 HL1 XR2 XL1 OD1 HR1 XR1
+                     OU1 DD1 OD2 AR2 AL1 OU3 AR1 HL1 AL1 OD1
+                     AR1 AL2 OD1 AR2 AL1 HR1 AR1 AL2 CU2 DU1
+                     OD1 XL1 CD1 XR1 DD1 AR2 CU2 CD1 AL2 AR1
+                     CD1 OU3 AR1 CU2 HL1 OD1 HR1 CD3 AL1 CU2
+                     AR1 AL2 DU1 XL1 HL1 FD1 QL2 PD1 OD1 PU1
+                     QR2 CD1 OU1 XR1 QL1 XL1 PD1 OD1 PU1 CU1
+                     PD1 OU1 PU1 XR1 QL1 OD1 QR1 CD1 QR1 CU1
+                     OU1 FU1 OD1 XL1 HR1 CD1 HL1 OU1 HR1 BD1
+                     OD2 CD1 XL2 DD1 BU1 AR2 AL1 BD1 AR2 DU1
+                     XR2 XL1 OU3 HL1 FD1 OD1 OD1 XR1 OU2 OD1
+                     CU3 XL1 OD1 OU2 XR1 QL3 XL1 QR2 OD1 OD1
+                     PD1 AR1 OU2 AL1 QL2 AR1 BD1 AL1 PU1 XR1
+                     PD1 AR1 BU1 AL1 QR1 AR1 XL1 AL1 OD1 QR1
+                     AR1 XR1 QL1 AL1 OD1 AR1 XL1 AL1 BD1 AR1
+                     OU2 AL1 OD1 AR1 XR1 AL1 OD1 AR1 OU2 AL1
+                     PU1 XL1 OD1 OD1 BU1 OU2 OD1 XR1 OD1 QR2
+                     QL1 CD3 XL1 PD1 AR1 OU2 AL1 OD1 AR1 XR1
+                     AL1 OD1 AR1 OU2 AL1 PU1 XL1 OD1 XR1 CU3
+                     PD1 OD1 AR1 OU2 AL1 PU1 QL1 CD1 QL1 PD1
+                     AR1 BD1 AL1 PU1 EU1 CU1 XL1 IL1 PD1 AR1
+                     IR1 AL1 BU1 AR1 IL1 AL1 PU1 IR1 EU2 QR3
+                     GL1 IL1 GR1 OD1 GL1 IR1 GR1 OD1 GL1 IL1
+                     GR1 QL1 GL1 PD3 AR1 EU1 OU2 QL2 BD1 XR1
+                     BU1 QR1 XL1 OD1 QR1 XR1 QL1 OD1 XL1 BD1
+                     OU2 OD1 XR1 OD1 OU2 CD1 QL1 BU1 QR1 OD1
+                     OD1 PU2 GR1 OU1 QR1 CD2 XL1 OD1 OU2 IR1
+                     ED1 AL1 GL1 AR1 IL1 AL1 PD2 OD1 OD1 PU3
+                     QR1 GR1 IR1 GL1 OU2 GR1 IL1 GL1 OD1 GR1
+                     IR1 GL1 FU1 GR1 HR2 OD2 CD1 XL1 GL1 XR1
+                     CU1 XL1 GR1 HL1 GL1 IL1 GR1 DD1 AL3 DU1
+                     EU1 BU1 XR3 XL2 GL1 XL1 XR3 XL1 GR1 IR1
+                     XL2 XR3 XL2 GL1 XL1 XR3 XL1 HR1 OU1 HL2
+                     FD1 XL1 GR1 IL1 GL1 QL1 PD3 .
+              total time136.43796229362488

@@ -1,5 +1,5 @@
 from enum import Enum
-
+from copy import deepcopy
 
 class Direction(Enum):
     ROW = 1
@@ -70,6 +70,9 @@ class Car:
 
 
 class Board:
+
+    def copy_me(self):
+        return Board(self.game_board_as_string)
 
     def __init__(self, game_data):
         self.game_board = Board.convert_data(game_data)
@@ -163,6 +166,14 @@ class Board:
         self.do_the_move(car_name, steps)
         return True
 
+    def move_car_faithfully(self, car_name, move_side, steps):
+        if steps < 0:
+            raise Exception("move_car: Do not send negative steps")
+        if move_side in [MoveDirection.LEFT, MoveDirection.UP]:
+            steps = -steps
+        self.do_the_move(car_name, steps)
+        return self
+
     def is_legal_move(self, car_name, steps):
         _steps = abs(steps)
         if steps == 0:
@@ -243,21 +254,85 @@ class Board:
         self.game_board[row] = ''.join(tmp)
         pass
 
+    def num_of_cars_in_third_row(self):
+        amount = -1
+        for i in range(0,6):
+            if self.game_board[2][i] != '.':
+                amount += 1
+        return amount
+
+    def num_of_cars_blocking_red(self):
+        start_col = self.cars_information.get('X').end_col + 1
+        amount = 0
+        for i in range(start_col, 6):
+                if self.game_board[2][i] != '.':
+                    amount += 1
+        return amount
+
+    def num_of_cars_blocked_infront_of_red(self):
+        start_col = self.cars_information.get('X').end_col + 1
+        amount = 0
+        for i in range(start_col, 6):
+            current_car = self.game_board[2][i]
+            if current_car != '.':
+                amount += self.is_column_car_blocked(current_car)
+        return amount
+
+    def is_column_car_blocked(self, car_as_str: str):
+        car: Car = self.cars_information.get(car_as_str)
+        start_row = car.start_row
+        end_row = car.end_row
+        for i in range(1, start_row + 1):
+            expected_row = end_row
+            if self.is_legal_move(car_as_str, -i):
+                expected_row += -i
+                if end_row < 2:
+                    return 0
+        for i in range(end_row):
+            expected_row = start_row
+            if self.is_legal_move(car_as_str, i):
+                expected_row += i
+                if expected_row > 2:
+                    return 0
+        return 1
+
+    def heuristic_function6_haha(self):
+        sum_of_moves = 0
+        red_car_end_col = self.red_car_info.end_col
+        for car in self.cars_information.values():
+            if car.direction == Direction.ROW:
+                continue
+            if car.end_col < red_car_end_col:
+                continue
+            if 2 in range(car.start_row, car.end_row):
+                if car.length == 3:
+                    for j in range(3, 6):
+                        if self.game_board[car.end_col][j] not in ['.', car.name]:
+                            sum_of_moves += 1
+                else:
+                    for i in range(3):
+                        if self.game_board[car.end_col][i] not in ['.', car.name]:
+                            sum_of_moves += 1
+        return sum_of_moves
+
+    def heuristic_function5(self):
+        return 6 - self.red_car_info.end_col
+
     def heuristic_function8(self):
         amount = 0
         start_col = self.red_car_info.start_col
         # ZXXZ:
         # if start_col - 1 >= 0:
-            # if self.game_board[2][start_col - 1] != '.':
-            #     amount += 1
-            #
-            # # Z . .
-            # # . X X
-            # # Z . .
-            # if self.game_board[1][start_col - 1] != '.':
-            #     amount += 1
-            # if self.game_board[3][start_col - 1] != '.':
-            #     amount += 1
+        #     if self.game_board[2][start_col - 1] != '.':
+        #         amount += 1
+        #
+        #     # Z . .
+        #     # . X X
+        #     # Z . .
+        #     if self.game_board[1][start_col - 1] != '.':
+        #         amount += 1
+        #     if self.game_board[3][start_col - 1] != '.':
+        #         amount += 1
         if start_col + 2 < 6:
             if self.game_board[2][start_col + 2] != '.':
                 amount += 1
@@ -285,3 +360,11 @@ class Board:
 
         return amount
 
+
+    def heuristic_function1(self):
+        amount = 0
+        red_car_end_col = self.red_car_info.end_col
+        for i in range(red_car_end_col + 1, 6):
+            if self.game_board[2][i] != '.':
+                amount += 1
+        return amount
