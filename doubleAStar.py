@@ -36,7 +36,8 @@ class FromTo(Enum):
 
 
 class doubleAstar:
-    def __init__(self, initial_board: Board, sol_board: Board, timer, game_number):
+    def __init__(self, initial_board: Board, sol_board: Board, timer, game_number, heuristic_function):
+        self.heuristic_function = heuristic_function
         self.sol_min_state: GameState = None
         self.init_min_state: GameState = None
         self.min_depth = sys.maxsize
@@ -109,7 +110,7 @@ class doubleAstar:
         for i in range(4):
             move = 4 - i
             if which_board.is_legal_move(car_name, move):
-                board_copy = deepcopy(which_board)
+                board_copy = which_board.copy_me()
                 board_copy.do_the_move(car_name, move)
                 game_state = GameState(1 + which_state.priority, car_name, move, MoveDirection.RIGHT, which_state, board_copy, which_state.num_of_moves_to_get_to_state + 1, which_state.depth+1)
                 if is_sol:
@@ -117,7 +118,7 @@ class doubleAstar:
                 list_states.append(game_state)
         for i in range(-4, 0):
             if which_board.is_legal_move(car_name, i):
-                board_copy = deepcopy(which_board)
+                board_copy = which_board.copy_me()
                 board_copy.do_the_move(car_name, i)
                 game_state = GameState(1 + which_state.priority, car_name, abs(i), MoveDirection.LEFT, which_state, board_copy, which_state.num_of_moves_to_get_to_state + 1, which_state.depth+1)
                 if is_sol:
@@ -130,7 +131,7 @@ class doubleAstar:
         for i in range(4):
             if which_board.is_legal_move(car_name, i):
                 priority = self.get_priority(car_information, red_car_end_col, i)
-                board_copy = deepcopy(which_board)
+                board_copy = which_board.copy_me()
                 board_copy.do_the_move(car_name, i)
                 game_state = GameState(1 + priority + which_state.priority, car_name, i, MoveDirection.DOWN, which_state, board_copy, which_state.num_of_moves_to_get_to_state + 1, which_state.depth+1)
                 if is_sol:
@@ -139,7 +140,7 @@ class doubleAstar:
         for i in range(-4, 0):
             if which_board.is_legal_move(car_name, i):
                 priority = self.get_priority(car_information, red_car_end_col, i)
-                board_copy = deepcopy(which_board)
+                board_copy = which_board.copy_me()
                 board_copy.do_the_move(car_name, i)
                 game_state = GameState(1 + priority + which_state.priority, car_name, abs(i), MoveDirection.UP, which_state, board_copy, which_state.num_of_moves_to_get_to_state + 1, which_state.depth+1)
                 if is_sol:
@@ -148,25 +149,21 @@ class doubleAstar:
         return list_states
 
     def get_sol_priority(self, red_car_end_col, init_red_car_info):
-        # return abs(red_car_end_col - init_red_car_info.end_col) / 6
-        return abs(self.sol_board.heuristic_function8()-self.init_priority)
+        if self.heuristic_function == 8:
+            return abs(self.sol_board.heuristic_function8()-self.init_priority)
+        elif self.heuristic_function == 8:
+            return abs(red_car_end_col - init_red_car_info.end_col) / 6
+        else:
+            raise Exception("GOT AN WRONG HEURISTIC FUNCTION, PLEASE CHOOSE 1 OR 8")
 
     def get_priority(self, car_information: Car, red_car_end_col, steps):
-        # if car_information.direction == Direction.ROW:
-        #     return 0
-        # if red_car_end_col > car_information.start_col:
-        #     return 0
-        # final_start_row = car_information.start_row + steps
-        # final_end_row = car_information.end_row + steps
-        # car_was_near_line_3 = 2 in range(car_information.start_row, car_information.end_row + 1)
-        # car_will_be_near_line_3 = 2 in range(final_start_row, final_end_row + 1)
-        # if car_was_near_line_3 and not car_will_be_near_line_3:
-        #     return -1
-        # elif not car_was_near_line_3 and car_will_be_near_line_3:
-        #     return 1
-        # return 0
-        # return 6 - red_car_end_col / 6
-        return self.initial_board.heuristic_function8()
+        if self.heuristic_function == 8:
+            return self.initial_board.heuristic_function8()
+        elif self.heuristic_function == 8:
+            return 6 - red_car_end_col / 6
+        else:
+            raise Exception("GOT AN WRONG HEURISTIC FUNCTION, PLEASE CHOOSE 1 OR 8")
+
 
 
     def algorithm(self):
@@ -201,7 +198,7 @@ class doubleAstar:
                     continue
                 heappush(self.init_open, list_for_min_states[i])
 
-            self.initial_board = deepcopy(init_popped_state.prev_state.actual_game)  # TODO: Do we need deep copy?
+            self.initial_board = init_popped_state.prev_state.actual_game.copy_me()  # TODO: Do we need deep copy?
 
             # add the min state to closed hash
             self.initial_board.move_car(init_popped_state.car_name, init_popped_state.direction, init_popped_state.steps)
@@ -270,7 +267,7 @@ class doubleAstar:
                     continue
                 heappush(self.sol_open, list_for_min_states[i])
 
-            self.sol_board = deepcopy(sol_popped_state.prev_state.actual_game)  # TODO: Do we need deep copy?
+            self.sol_board = sol_popped_state.prev_state.actual_game.copy_me()  # TODO: Do we need deep copy?
 
             # add the min state to closed hash
             self.sol_board.move_car(sol_popped_state.car_name, sol_popped_state.direction, sol_popped_state.steps)
@@ -310,7 +307,7 @@ class doubleAstar:
 
     def print_steps(self, sol_min_state: GameState, init_min_state: GameState):
         f = open(F_OUTPUT_DOUBLE_A_STAR_FILE, "a")
-        f.write('Game No\'{}, took {} sec, {} depth\n'.format(self.game_number, time.time() - self.start_time, self.min_depth))
+        f.write('Game No\'{}, took sec, depth\n'.format(self.game_number))
         sol_list_of_steps = []
         while sol_min_state.prev_state is not None:
             sol_min_state.direction = self.get_opp_side(sol_min_state.direction)
@@ -325,20 +322,21 @@ class doubleAstar:
             init_min_state = init_min_state.prev_state
         list_of_steps.reverse()
         list_of_steps += sol_list_of_steps
-        # print(list_of_steps)
-        j = 0
-        for i in range(len(list_of_steps)):
-            if j == 10:
-                j = 0
-                f.write('\n')
-                f.write('                     ')
-            j += 1
-            f.write("{} ".format(list_of_steps[i]))
-        f.write('.\n              \n')
+        # # print(list_of_steps)
+        # j = 0
+        # for i in range(len(list_of_steps)):
+        #     if j == 10:
+        #         j = 0
+        #         f.write('\n')
+        #         f.write('                     ')
+        #     j += 1
+        #     f.write("{} ".format(list_of_steps[i]))
+        # f.write('.\n              \n')
         f.write('Searched nodes = {} !\n'.format(len(self.sol_open) + len(self.sol_closed) + len(self.init_open) + len(self.init_closed)))
+        f.write('AVG {} !\n'.format(self.total_heurstic/(len(self.sol_open) + len(self.sol_closed) + len(self.init_open) + len(self.init_closed))))
+        f.write('MIN {} \n'.format( self.min_depth))
         f.write('Max depth {} !\n'.format(self.max_depth))
-        f.write('AVG {} !\n\n'.format(self.total_heurstic/(len(self.sol_open) + len(self.sol_closed) + len(self.init_open) + len(self.init_closed))))
-
+        f.write('TIME {} \n\n'.format(time.time() - self.start_time))
 
     @staticmethod
     def get_step_in_str(prev_state: GameState):

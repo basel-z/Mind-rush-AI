@@ -38,6 +38,9 @@ class AlgorithmType(Enum):
 class HeuristicFunctionExplanations:
     # instantiate this class if you want an explanation for heuristics:
     def __init__(self, debugging_algorithm):
+        print('FOR A* PLEASE CHOOSE ONE OF THE FOLLOWING : 1/2/4/5/6/10')
+        print('FOR BI-A* PLEASE CHOOSE ONE OF THE FOLLOWING : 1/8')
+        print('FOR IDA* PLEASE CHOOSE ONE OF THE FOLLOWING : 1/2/4/5/6/7/8/9')
         print("-----------------------------------------------------------------------------")
         print("Heuristic Functions:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
         print("1: The amount of cars infront of the red car.\t\t\t\t\t\t\t\t\t\t|")
@@ -49,6 +52,7 @@ class HeuristicFunctionExplanations:
         print("7: Same as heuristic 2, but if 2 returns i then 7 returns 2^i\t\t\t\t\t|")
         print("8: Number of cars surrounding the bounding box of red car\t\t\t\t\t\t|")
         print("9: Heuristic8 + Heuristic7\t\t\t\t\t\t\t\t\t\t\t\t|")
+        print("10: Heuristic5 * Heuristic6\t\t\t\t\t\t\t\t\t\t\t\t|")
         print("-----------------------------------------------------------------------------")
         print("Algorithms to Run:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
         for current_type in AlgorithmType:

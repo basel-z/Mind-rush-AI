@@ -12,9 +12,9 @@ from ReinforcementLearning import *
 from utils import HeuristicFunctionExplanations, str_to_int, display_colored_text, AlgorithmType, F_INPUT_GAME_INPUT_FILE ,F_INPUT_DOUBLE_A_STAR_BOARDS ,F_INPUT_OPTIMAL_SOLUTIONS ,F_OUTPUT_REINFORCEMENT_FILE ,F_OUTPUT_DOUBLE_A_STAR_FILE ,F_OUTPUT_IDA_STAR_FILE ,F_OUTPUT_DLS_FILE ,F_OUTPUT_A_STAR_FILE
 
 IS_DEBUGGING = 1
-HEURISTIC_FUNCTION = 9
-DEBUGGING_ALGORITHM: AlgorithmType = AlgorithmType.REINFORCEMENT_LEARNING
-ALLOCATED_TIME = pow(2, 2)
+HEURISTIC_FUNCTION = 6
+DEBUGGING_ALGORITHM: AlgorithmType = AlgorithmType.A_STAR
+ALLOCATED_TIME = 300
 
 class HeuristicFunctionException(Exception):
     pass
@@ -38,6 +38,8 @@ def read_input(debugging):
         allocated_time = str_to_int(sys.argv[2])
         heuristic_function = str_to_int(sys.argv[3])
         algorithm: AlgorithmType = AlgorithmType(int_to_algorithm_enum(str_to_int(sys.argv[4])))
+        sol_file = F_INPUT_DOUBLE_A_STAR_BOARDS
+        steps_file = F_INPUT_OPTIMAL_SOLUTIONS
         if heuristic_function not in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
             raise HeuristicFunctionException("Incorrect Heuristic function entered, was: {}".format(heuristic_function))
     except IndexError:
@@ -49,7 +51,7 @@ def read_input(debugging):
             allocated_time = ALLOCATED_TIME
             heuristic_function = HEURISTIC_FUNCTION
             algorithm: AlgorithmType = DEBUGGING_ALGORITHM
-            if heuristic_function not in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
+            if heuristic_function not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
                 raise HeuristicFunctionException("Incorrect Heuristic function entered, was: {}".format(heuristic_function))
         else:
             red = '31m'
@@ -146,12 +148,12 @@ def run_dls(actual_games, timer):
     # f.write('\ntotal time '.format(time.time() - start_time))
 
 
-def run_double_a_star(actual_games, sol_games):
+def run_double_a_star(actual_games, sol_games, heuristic_function):
     _time = time.time()
     f = open(F_OUTPUT_DOUBLE_A_STAR_FILE, "w")
     f.write("")
     for i in range(0, 40):
-        doubleAstar(actual_games[i], sol_games[i], ALLOCATED_TIME, i+1)
+        doubleAstar(actual_games[i], sol_games[i], ALLOCATED_TIME, i+1, heuristic_function)
     f = open(F_OUTPUT_DOUBLE_A_STAR_FILE, "a")
     f.write('total time for all games: {} sec!'.format(time.time()-_time))
 
@@ -185,7 +187,7 @@ def main():
     elif algorithm == AlgorithmType.IDA_STAR:
         run_ida_star(actual_games, heuristic_function, allocated_time)
     elif algorithm == AlgorithmType.BIDIRECTIONAL_A_STAR:
-        run_double_a_star(actual_games, sol)
+        run_double_a_star(actual_games, sol, heuristic_function)
     elif algorithm == AlgorithmType.REINFORCEMENT_LEARNING:
         run_reinforcement_learning(actual_games, list_of_dics_for_steps_per_game, allocated_time)
     else:

@@ -87,13 +87,13 @@ class AStarAlgorithm:
         for i in range(4):
             if self.actual_game.is_legal_move(car_name, i):
                 priority = self.infer_priority_by_heuristic_function(Direction.ROW, -1, -1, -1)
-                board_copy = deepcopy(self.actual_game)
+                board_copy = self.actual_game.copy_me()
                 board_copy.do_the_move(car_name, i)
                 list_states.append(GameState(priority, car_name, i, MoveDirection.RIGHT, self.current_state, board_copy, self.current_state.num_of_moves_to_get_to_state + 1))
         for i in range(-4, 0):
             if self.actual_game.is_legal_move(car_name, i):
                 priority = self.infer_priority_by_heuristic_function(Direction.ROW, -1, -1, -1)
-                board_copy = deepcopy(self.actual_game)
+                board_copy = self.actual_game.copy_me()
                 board_copy.do_the_move(car_name, i)
                 list_states.append(GameState(priority, car_name, abs(i), MoveDirection.LEFT, self.current_state, board_copy, self.current_state.num_of_moves_to_get_to_state + 1))
         return list_states
@@ -103,13 +103,13 @@ class AStarAlgorithm:
         for i in range(4):
             if self.actual_game.is_legal_move(car_name, i):
                 priority = self.infer_priority_by_heuristic_function(Direction.COL, car_information, red_car_end_col, i)
-                board_copy = deepcopy(self.actual_game)
+                board_copy = self.actual_game.copy_me()
                 board_copy.do_the_move(car_name, i)
                 list_states.append(GameState(priority, car_name, i, MoveDirection.DOWN, self.current_state, board_copy, self.current_state.num_of_moves_to_get_to_state + 1))
         for i in range(-4, 0):
             if self.actual_game.is_legal_move(car_name, i):
                 priority = self.infer_priority_by_heuristic_function(Direction.COL, car_information, red_car_end_col, i)
-                board_copy = deepcopy(self.actual_game)
+                board_copy = self.actual_game.copy_me()
                 board_copy.do_the_move(car_name, i)
                 list_states.append(GameState(priority, car_name, abs(i), MoveDirection.UP, self.current_state, board_copy, self.current_state.num_of_moves_to_get_to_state + 1))
         return list_states
@@ -125,6 +125,8 @@ class AStarAlgorithm:
             return self.heuristic_function5(car_information, red_car_end_col)
         elif self.heuristic_function == 6:
             return self.heuristic_function6(car_information, red_car_end_col)
+        elif self.heuristic_function == 10:
+            return self.heuristic_function6(car_information, red_car_end_col)* self.heuristic_function5(car_information, red_car_end_col)
         else:
             raise Exception('got a wrong HEURISTIC function number!!{}'.format(self.heuristic_function))
 
@@ -238,7 +240,7 @@ class AStarAlgorithm:
 
             # switch game board
             # TODO: Optimize initializing of Board every loop
-            self.actual_game = deepcopy(curr_min_state.prev_state.actual_game)  # TODO: Do we need deep copy?
+            self.actual_game = curr_min_state.prev_state.actual_game.copy_me()  # TODO: Do we need deep copy?
 
             # add the min state to closed hash
             self.actual_game.move_car(curr_min_state.car_name, curr_min_state.direction, curr_min_state.steps)
