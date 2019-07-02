@@ -1,3 +1,1 @@
-# HW1Ai
-
-#test
+Welcome to our first homework in AI Haifa University
