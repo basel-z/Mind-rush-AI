@@ -1,1 +1,1 @@
-Welcome to our first homework in AI Haifa University
+Welcome mind rush using AI, Haifa University.
